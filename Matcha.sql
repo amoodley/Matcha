@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS Matcha;
+
+CREATE DATABASE IF NOT EXISTS Matcha;
+
+USE Matcha;
+
+CREATE TABLE `users` (
+	
+)

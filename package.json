@@ -1,0 +1,24 @@
+{
+  "name": "matcha",
+  "version": "1.0.0",
+  "description": "dating website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "ejs": "^2.5.9",
+    "express": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amoodley/Matcha.git"
+  },
+  "author": "Ashleigh Moodley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amoodley/Matcha/issues"
+  },
+  "homepage": "https://github.com/amoodley/Matcha#readme"
+}
