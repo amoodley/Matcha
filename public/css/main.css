@@ -1,0 +1,58 @@
+html {
+    height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    color: #ffffff;
+    background-color: #111111;
+    font-family: 'quicksandregular';
+}
+.heading {
+    /* font-family: 'quicksandbold'; */
+    font-weight: bold;
+}
+.form-control {
+    border-radius: 0px !important;
+}
+.btn {
+    color: #ffffff;
+    background-color: #D71717;
+    border-radius: 0px !important;
+    width: 135px;
+}
+.btn:hover {
+    color: #ffffff;
+    background-color: rgb(161, 19, 19);
+    border-radius: 0px !important;
+    width: 135px;
+}
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0px !important;
+}
+.navbar-brand>img {
+    height: 36px;
+    margin-top: -6px;
+}
+.footer {
+    min-height: 20px;
+}
+.registerContainer {
+    position: relative;
+    background: url('https://i.imgur.com/U6hX1FI.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 92% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
+.formContainer {
+    margin: 60px 35px 35px 35px;
+    padding: 35px;
+    color: #ffffff;
+    background-color: #2A2E32;
+}

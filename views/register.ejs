@@ -1,4 +1,31 @@
 <% include partials/header.ejs %>
-	<h1><%= title %></h1>
-	
+<div class="registerContainer">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-6">
+            <div class="formContainer">
+                <h3 class="text-center heading">Register</h3>
+                <% if (message) { %>
+                    <p><%= message %></p>
+                <% } %>
+                <form method="POST" action="/users/register">
+                    <div class="form-group">
+                        <label for="">Username</label>
+                        <input class="form-control" name="username" type="text">
+                    </div>
+                    <div class="form-group">
+                            <label for="">Email</label>
+                            <input class="form-control" name="email" type="email">
+                    </div>
+                    <div class="form-group">
+                            <label for="">Password</label>
+                            <input class="form-control" name="password" type="password">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn">Create account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <% include partials/footer.ejs %>
