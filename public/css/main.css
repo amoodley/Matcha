@@ -56,3 +56,7 @@ body {
     color: #ffffff;
     background-color: #2A2E32;
 }
+.formValidationMessage {
+    color: red;
+    margin: 0 !important;
+}

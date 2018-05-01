@@ -4,21 +4,35 @@
         <div class="col-md-6 col-md-offset-6">
             <div class="formContainer">
                 <h3 class="text-center heading">Register</h3>
-                <% if (message) { %>
-                    <p><%= message %></p>
-                <% } %>
-                <form method="POST" action="/users/register">
+                <form method="POST" action="/register">
                     <div class="form-group">
                         <label for="">Username</label>
+                        <% if (message.Username) { %>
+                            <p class="pull-right formValidationMessage"><%= message.Username %></p>
+                        <% } %>
+                        <% if (username) { %>
+                            <input class="form-control" name="username" value="<%= username %>" type="text">
+                        <% } else { %>
                         <input class="form-control" name="username" type="text">
+                        <% } %>
                     </div>
                     <div class="form-group">
-                            <label for="">Email</label>
+                        <label for="">Email</label>
+                        <% if (message.Email) { %>
+                            <p class="pull-right formValidationMessage"><%= message.Email %></p>
+                        <% } %>
+                        <% if (email) { %>
+                            <input class="form-control" name="email" value="<%= email %>" type="text">
+                        <% } else { %>
                             <input class="form-control" name="email" type="email">
+                        <% } %>
                     </div>
                     <div class="form-group">
-                            <label for="">Password</label>
-                            <input class="form-control" name="password" type="password">
+                        <label for="">Password</label>
+                        <% if (message.Password != '') { %>
+                            <p class="pull-right formValidationMessage"><%= message.Password %></p> 
+                        <% } %>
+                        <input class="form-control" name="password" type="password">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn">Create account</button>
