@@ -43,7 +43,7 @@ router.post('/register', (req, res) => {
 			message.Username = 'Username cannot be longer than 30';
 		} else {
             sql = 'SELECT * FROM `users` WHERE username=\'' + username +'\'';
-            var dbResult = db.query(sql, function(err, result){
+            var dbResult = db.query(sql, (err, res) => {
                 if (err) {
 					console.log(err);
                 } else {
