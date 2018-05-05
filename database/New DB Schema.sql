@@ -9,5 +9,7 @@ CREATE TABLE `users` (
     `username` varchar(32) DEFAULT NULL,
     `password_hash` varchar(60) DEFAULT NULL,
     `email` text,
+    `activated` tinyint(1),
+    `state` int(11),
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;

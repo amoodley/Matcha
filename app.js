@@ -1,36 +1,19 @@
 const express = require('express');
-const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const path = require('path');
-const bcrypt = require('bcrypt');
-
-// Load Routes
-const home = require('./routes/home');
-const account = require('./routes/account');
 
 // Set server address
 const hostname = '127.0.0.1';
 const port = 3000;
 
-// Create DB Connection
-const db = mysql.createConnection({
-	port	 : '3307',
-	host     : 'localhost',
-    user     : 'root',
-    password : 'root',
-    database : 'matcha'
-});
+// Load Routes
+const home = require('./routes/home');
+const account = require('./routes/account');
 
-// Connect to DB
-db.connect((err) => {
-    if(err){
-        console.log('Error: ', err);
-    }
-    console.log('MySql connected...')
-})
 
 // Create App
 const app = express();
+
 
 // View Engine
 app.set('view engine', 'ejs');

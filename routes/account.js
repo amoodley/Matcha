@@ -1,5 +1,12 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcrypt');
+
+// Load Model
+const db = require('../database/Connection');
+const users = require('../models/users.js');
+
+
 
 // GET: Register
 router.get('/register', (req, res) => {
@@ -23,24 +30,59 @@ router.post('/register', (req, res) => {
 		Password: '',
 		Email: ''
 	}
+
 	var username = req.body.username;
 	var password = req.body.password;
-	var email = req.body.email;
+    var email = req.body.email;
 
 	if (username != '') {
 		if (username.length < 3) {
 			message.Username = 'Username cannot be shorter than 3';
 		}
 		else if (username.length > 30) {
-			message.Username = 'Username cannot be longer than 30'
-		}
+			message.Username = 'Username cannot be longer than 30';
+		} else {
+            sql = 'SELECT * FROM `users` WHERE username=\'' + username +'\'';
+            var dbResult = db.query(sql, function(err, result){
+                if (err) {
+					console.log(err);
+                } else {
+					console.log(result);					
+					if (result.length > 0) {
+						message.Username = 'Username cannot be empty';
+					}
+				}
+			});
+			console.log(dbResult);
+        }
 	}
 	else {
 		message.Username = 'Username cannot be empty';
 	}
+
+	// console.log(message.Username);
+	// function setUsernameValidationMessage(tableExist) {
+	// 	if (tableExist == 1) {
+	// 		message.Username = 'Username already exists';
+	// 	}
+	// }
 	
-	if (req.body.email == '')	{
+	if (email == '') {
 		message.Email = 'Email cannot be empty';
+	} else {
+        sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
+		db.query(sql, function(err, result){
+			if (err) {
+				setEmailValidationMessage(0);
+			} else {
+				setEmailValidationMessage(1);
+			}
+		});
+	}
+	function setEmailValidationMessage(tableExist) {
+		if (tableExist == 1) {
+			message.Email = 'Email already exists';
+		}
 	}
 
 	if (password != '') {
@@ -50,11 +92,11 @@ router.post('/register', (req, res) => {
 		else if (password.length > 30) {
 			message.Password = 'Password cannot be longer than 30'
 		}
-	}
-	else {
+	} else {
 		message.Password = 'Password cannot be empty'
 	}
 	
+	console.log(message);
 	if ((message.Username == '') && (message.Password == '') && (message.Email == '')) {
 		var newUser = {
 			id: null,
@@ -75,8 +117,7 @@ router.post('/register', (req, res) => {
 			console.log(result);
 			res.send('User inserted...');
 		})
-	}
-	else {
+	} else {
 		res.render('register', {
 			title: 'Register',
 			username: username,
@@ -84,6 +125,35 @@ router.post('/register', (req, res) => {
 			message: message
 		});
 	}
+});
+
+// GET: Login
+router.get('/login', (req, res) => {
+    res.render('login', {
+        title: 'Login',
+        email: '',
+        message: {
+			Password: '',
+			Email: ''
+		}
+    })
+});
+
+// POST: Login
+router.post('/login', (req, res) => {
+    var message = {
+		Password: '',
+		Email: ''
+	}
+	var password = req.body.password;
+    var email = req.body.email;
+    let sql = 'SELECT * FROM `users` WHERE email=?';
+    let query = db.query(sql, req.body.email, (err, result) => {
+        if(err) {
+            console.log('Error: ', err);
+        }
+        console.log(result);
+    });
 });
 
 module.exports = router;

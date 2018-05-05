@@ -1,36 +1,20 @@
-var express   =    require("express");
-var mysql     =    require('mysql');
-var app       =    express();
+const mysql = require('mysql');
 
-var pool      =    mysql.createPool({
-    connectionLimit : 100, //important
-    host     : 'localhost',
+// Create DB Connection
+const db = mysql.createConnection({
+	port	 : '3307',
+	host     : 'localhost',
     user     : 'root',
     password : 'root',
-    database : 'matcha',
-    debug    :  false
+    database : 'matcha'
 });
 
-function handle_database(req,res) {
-    
-    pool.getConnection(function(err,connection){
-        if (err) {
-          res.json({"code" : 100, "status" : "Error in connection database"});
-          return;
-        }
+// Connect to DB
+db.connect((err) => {
+    if(err){
+        console.log('Error: ', err);
+    }
+    console.log('MySql connected...')
+})
 
-        console.log('connected as id ' + connection.threadId);
-        
-        connection.query(sql, function(err,rows){
-            connection.release();
-            if(!err) {
-                res.json(rows);
-            }
-        });
-
-        connection.on('error', function(err) {
-              res.json({"code" : 100, "status" : "Error in connection database"});
-              return;
-        });
-  });
-}
+module.exports = db;
