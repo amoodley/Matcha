@@ -47,25 +47,21 @@ router.post('/register', (req, res) => {
                 if (err) {
 					console.log(err);
                 } else {
-					console.log(result);					
-					if (result.length > 0) {
-						message.Username = 'Username cannot be empty';
-					}
+					setUsernameValidationMessage(1);
 				}
 			});
-			console.log(dbResult);
         }
 	}
 	else {
 		message.Username = 'Username cannot be empty';
 	}
 
-	// console.log(message.Username);
-	// function setUsernameValidationMessage(tableExist) {
-	// 	if (tableExist == 1) {
-	// 		message.Username = 'Username already exists';
-	// 	}
-	// }
+	console.log(message.Username);
+	function setUsernameValidationMessage(tableExist) {
+		if (tableExist == 1) {
+			message.Username = 'Username already exists';
+		}
+	}
 	
 	if (email == '') {
 		message.Email = 'Email cannot be empty';
