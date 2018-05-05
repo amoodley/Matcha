@@ -2,10 +2,10 @@ const mysql = require('mysql');
 
 // Create DB Connection
 const db = mysql.createConnection({
-	port	 : '3307',
+	port	 : '3306',
 	host     : 'localhost',
     user     : 'root',
-    password : 'root',
+    password : '724274',
     database : 'matcha'
 });
 
