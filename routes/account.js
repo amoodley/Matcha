@@ -1,11 +1,20 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt');
+const syncSql = require('sync-sql');
+
+// Create DB Connection
+const db = {
+	port	 : '3306',
+	host     : 'localhost',
+    user     : 'root',
+    password : '724274',
+    database : 'matcha'
+};
 
 // Load Model
-const db = require('../database/Connection');
-const users = require('../models/users.js');
-
+// const db = require('../database/Connection');
+// const users = require('../models/users.js');
 
 
 // GET: Register
@@ -42,41 +51,27 @@ router.post('/register', (req, res) => {
 		else if (username.length > 30) {
 			message.Username = 'Username cannot be longer than 30';
 		} else {
-            sql = 'SELECT * FROM `users` WHERE username=\'' + username +'\'';
-            var dbResult = db.query(sql, (err, res) => {
-                if (err) {
-					console.log(err);
-                } else {
-					setUsernameValidationMessage(1);
-				}
-			});
+            var sql = 'SELECT * FROM `users` WHERE username=\'' + username +'\'';
+			var result = syncSql.mysql(db, sql);
+			var json = JSON.stringify(result);
+			result = JSON.parse(json);
+			if (result.data.rows[0] != null) {
+				message.Username = 'Username already exists';
+			}
         }
 	}
 	else {
 		message.Username = 'Username cannot be empty';
 	}
-
-	console.log(message.Username);
-	function setUsernameValidationMessage(tableExist) {
-		if (tableExist == 1) {
-			message.Username = 'Username already exists';
-		}
-	}
 	
 	if (email == '') {
 		message.Email = 'Email cannot be empty';
 	} else {
-        sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
-		db.query(sql, function(err, result){
-			if (err) {
-				setEmailValidationMessage(0);
-			} else {
-				setEmailValidationMessage(1);
-			}
-		});
-	}
-	function setEmailValidationMessage(tableExist) {
-		if (tableExist == 1) {
+        var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
+		var result = syncSql.mysql(db, sql);
+		var json = JSON.stringify(result);
+		result = JSON.parse(json);
+		if (result.data.rows[0] != null) {
 			message.Email = 'Email already exists';
 		}
 	}
@@ -92,7 +87,6 @@ router.post('/register', (req, res) => {
 		message.Password = 'Password cannot be empty'
 	}
 	
-	console.log(message);
 	if ((message.Username == '') && (message.Password == '') && (message.Email == '')) {
 		var newUser = {
 			id: null,
@@ -105,14 +99,8 @@ router.post('/register', (req, res) => {
 		let hash = bcrypt.hashSync(password, 10);
 		newUser.password_hash = hash;
 		let sql = 'INSERT INTO `users` (id, username, password_hash, email, activated, state) VALUES(?)';
-		var values = [newUser.id, newUser.username, newUser.password_hash, newUser.email, newUser.activated, newUser.state]
-		let query = db.query(sql, [values], (err, result) => {
-			if(err) {
-				console.log('Error: ', err);
-			}
-			console.log(result);
-			res.send('User inserted...');
-		})
+		var values = [newUser.id, newUser.username, newUser.password_hash, newUser.email, newUser.activated, newUser.state];
+		var query = syncSql.mysql(db, sql, [values]);
 	} else {
 		res.render('register', {
 			title: 'Register',
@@ -121,6 +109,11 @@ router.post('/register', (req, res) => {
 			message: message
 		});
 	}
+});
+
+// GET: RegistrationConfirmation
+router.get('/registrationConfirmation', (req, res) => {
+	res.render('registrationConfirmation');
 });
 
 // GET: Login
@@ -151,5 +144,7 @@ router.post('/login', (req, res) => {
         console.log(result);
     });
 });
+
+
 
 module.exports = router;
