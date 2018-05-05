@@ -60,3 +60,7 @@ body {
     color: red;
     margin: 0 !important;
 }
+.confirmationImage {
+    width: 400px;
+    height: 400px;
+}
