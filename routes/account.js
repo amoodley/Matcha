@@ -1,20 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt');
-const syncSql = require('sync-sql');
-
-// Create DB Connection
-const db = {
-	port	 : '3306',
-	host     : 'localhost',
-    user     : 'root',
-    password : '724274',
-    database : 'matcha'
-};
 
 // Load Model
-// const db = require('../database/Connection');
-// const users = require('../models/users.js');
+const db = require('../database/Connection');
+// const users = require('../models/users.js')
 
 
 // GET: Register
@@ -33,7 +23,6 @@ router.get('/register', (req, res) => {
 
 // POST: Register
 router.post('/register', (req, res) => {
-	
 	var message = {
 		Username: '',
 		Password: '',
@@ -52,9 +41,7 @@ router.post('/register', (req, res) => {
 			message.Username = 'Username cannot be longer than 30';
 		} else {
             var sql = 'SELECT * FROM `users` WHERE username=\'' + username +'\'';
-			var result = syncSql.mysql(db, sql);
-			var json = JSON.stringify(result);
-			result = JSON.parse(json);
+			var result = db(sql);
 			if (result.data.rows[0] != null) {
 				message.Username = 'Username already exists';
 			}
@@ -68,9 +55,7 @@ router.post('/register', (req, res) => {
 		message.Email = 'Email cannot be empty';
 	} else {
         var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
-		var result = syncSql.mysql(db, sql);
-		var json = JSON.stringify(result);
-		result = JSON.parse(json);
+		var result = db(sql);
 		if (result.data.rows[0] != null) {
 			message.Email = 'Email already exists';
 		}
@@ -136,13 +121,13 @@ router.post('/login', (req, res) => {
 	}
 	var password = req.body.password;
     var email = req.body.email;
-    let sql = 'SELECT * FROM `users` WHERE email=?';
-    let query = db.query(sql, req.body.email, (err, result) => {
-        if(err) {
-            console.log('Error: ', err);
-        }
-        console.log(result);
-    });
+	
+	var sql = 'SELECT * FROM `users` WHERE email=?';
+    var json = JSON.stringify(syncSql.mysql(db, sql));
+	var result = JSON.parse(json);
+	if (result.data.rows[0] != null) {
+		message.Email = 'Email already exists';
+	}
 });
 
 
