@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 // Set server address
 const hostname = '127.0.0.1';
@@ -14,6 +15,9 @@ const account = require('./routes/account');
 // Create App
 const app = express();
 
+
+// Cookie Parser Middleware
+app.use(cookieParser());
 
 // View Engine
 app.set('view engine', 'ejs');
