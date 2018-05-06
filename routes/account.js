@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 // Load Model
 const db = require('../database/db');
-// const users = require('../models/users.js')
+const users = require('../models/users.js')
 
 // GET: Register
 router.get('/register', (req, res) => {
@@ -71,7 +71,9 @@ router.post('/register', (req, res) => {
 		message.Password = 'Password cannot be empty'
 	}
 	
+	// Validation ? Success : Failure
 	if ((message.Username == '') && (message.Password == '') && (message.Email == '')) {
+		// Create User Object
 		var newUser = {
 			id: null,
 			username: req.body.username,
@@ -80,13 +82,16 @@ router.post('/register', (req, res) => {
 			activated: 0,
 			state: 1
 		}
+		// Hash Password
 		let hash = bcrypt.hashSync(password, 10);
 		newUser.password_hash = hash;
-		var sql = 'INSERT INTO `users` (id, username, password_hash, email, activated, state) VALUES(?)';
-		var values = [newUser.id, newUser.username, newUser.password_hash, newUser.email, newUser.activated, newUser.state];
-		var result = db.query(sql, [values]);
-		res.redirect('account/registrationConfirmation');
+		// Insert User
+		var result = users.insert(newUser);
+		console.log(result);
+		// Success: Redirect
+		res.redirect('registrationConfirmation');
 	} else {
+		// Failure: Reload
 		res.render('account/register', {
 			title: 'Register',
 			username: username,
@@ -122,14 +127,7 @@ router.post('/login', (req, res) => {
 	var password = req.body.password;
     var email = req.body.email;
 	
-	var sql = 'SELECT * FROM `users` WHERE email=?';
-    var json = JSON.stringify(syncSql.mysql(db, sql));
-	var result = JSON.parse(json);
-	if (result.data.rows[0] != null) {
-		message.Email = 'Email already exists';
-	}
 });
-
 
 
 module.exports = router;
