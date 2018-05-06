@@ -13,3 +13,10 @@ CREATE TABLE `users` (
     `state` int(11),
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;
+
+CREATE TABLE `login_tokens` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`token` char(64) NOT NULL DEFAULT '',
+	`user_id` int(11) unsigned NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB COLLATE utf8_general_ci;
