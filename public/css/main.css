@@ -37,9 +37,9 @@ body {
     color: #ffffff;
     background-color: #D71717;
     border-radius: 0px !important;
-    width: 175px;
-    height: 45px;
-    padding: 10px 0 10px 0;
+    width: 150px;
+    height: 35px;
+    padding: 5px 0 5px 0;
     font-family: 'matcha-regular';
     font-weight: normal;
     font-size: 15px !important;
@@ -49,9 +49,9 @@ body {
     color: #ffffff;
     background-color: rgb(161, 19, 19);
     border-radius: 0px !important;
-    width: 175px;
-    height: 45px;
-    padding: 10px 0 10px 0;
+    width: 150px;
+    height: 35px;
+    padding: 5px 0 5px 0;
 }
 .navbar {
     border-radius: 0px;
