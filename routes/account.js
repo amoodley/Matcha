@@ -3,13 +3,12 @@ const router = express.Router()
 const bcrypt = require('bcrypt');
 
 // Load Model
-const db = require('../database/Connection');
+const db = require('../database/db');
 // const users = require('../models/users.js')
-
 
 // GET: Register
 router.get('/register', (req, res) => {
-	res.render('register', {
+	res.render('account/register', {
 		title: 'Register',
 		username: '',
 		email: '',
@@ -41,7 +40,7 @@ router.post('/register', (req, res) => {
 			message.Username = 'Username cannot be longer than 30';
 		} else {
             var sql = 'SELECT * FROM `users` WHERE username=\'' + username +'\'';
-			var result = db(sql);
+			var result = db.query(sql);
 			if (result.data.rows[0] != null) {
 				message.Username = 'Username already exists';
 			}
@@ -55,7 +54,7 @@ router.post('/register', (req, res) => {
 		message.Email = 'Email cannot be empty';
 	} else {
         var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
-		var result = db(sql);
+		var result = db.query(sql);
 		if (result.data.rows[0] != null) {
 			message.Email = 'Email already exists';
 		}
@@ -83,11 +82,12 @@ router.post('/register', (req, res) => {
 		}
 		let hash = bcrypt.hashSync(password, 10);
 		newUser.password_hash = hash;
-		let sql = 'INSERT INTO `users` (id, username, password_hash, email, activated, state) VALUES(?)';
+		var sql = 'INSERT INTO `users` (id, username, password_hash, email, activated, state) VALUES(?)';
 		var values = [newUser.id, newUser.username, newUser.password_hash, newUser.email, newUser.activated, newUser.state];
-		var query = syncSql.mysql(db, sql, [values]);
+		var result = db.query(sql, [values]);
+		res.redirect('account/registrationConfirmation');
 	} else {
-		res.render('register', {
+		res.render('account/register', {
 			title: 'Register',
 			username: username,
 			email: email,
@@ -98,12 +98,12 @@ router.post('/register', (req, res) => {
 
 // GET: RegistrationConfirmation
 router.get('/registrationConfirmation', (req, res) => {
-	res.render('registrationConfirmation');
+	res.render('account/registrationConfirmation');
 });
 
 // GET: Login
 router.get('/login', (req, res) => {
-    res.render('login', {
+    res.render('account/login', {
         title: 'Login',
         email: '',
         message: {
