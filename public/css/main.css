@@ -1,3 +1,4 @@
+/*___________ Global ___________*/
 html {
     height: 100%;
 }
@@ -7,26 +8,50 @@ body {
     height: 100%;
     color: #ffffff;
     background-color: #111111;
-    font-family: 'quicksandregular';
+    font-family: 'matcha-regular';
+    font-size: 15px !important;
+    letter-spacing: 0.4px;
 }
+
+/* Font-Face */
+.matcha-bold {
+    font-family: 'matcha-bold' !important;
+}
+.matcha-regular {
+    font-family: 'matcha-regular' !important;
+}
+.matcha-thin {
+    font-family: 'matcha-thin' !important;
+}
+
 .heading {
-    /* font-family: 'quicksandbold'; */
-    font-weight: bold;
+    font-family: 'matcha-regular';
+    letter-spacing: 0.4px;
+    font-weight: normal !important;
 }
 .form-control {
     border-radius: 0px !important;
+    height: 40px;
 }
 .btn {
     color: #ffffff;
     background-color: #D71717;
     border-radius: 0px !important;
-    width: 135px;
+    width: 175px;
+    height: 45px;
+    padding: 10px 0 10px 0;
+    font-family: 'matcha-regular';
+    font-weight: normal;
+    font-size: 15px !important;
+    letter-spacing: 0.4px;
 }
 .btn:hover {
     color: #ffffff;
     background-color: rgb(161, 19, 19);
     border-radius: 0px !important;
-    width: 135px;
+    width: 175px;
+    height: 45px;
+    padding: 10px 0 10px 0;
 }
 .navbar {
     border-radius: 0px;
@@ -39,6 +64,7 @@ body {
 .footer {
     min-height: 20px;
 }
+
 .registerContainer {
     position: relative;
     background: url('https://i.imgur.com/U6hX1FI.jpg') no-repeat center center fixed;
@@ -61,6 +87,11 @@ body {
     margin: 0 !important;
 }
 .confirmationImage {
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
+}
+.formLabel {
+    font-family: 'matcha-regular';
+    letter-spacing: 0.4px;
+    font-weight: normal !important;
 }
