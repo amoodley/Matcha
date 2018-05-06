@@ -163,5 +163,21 @@ router.post('/login', (req, res) => {
 	
 });
 
+// GET: Logout
+router.get('/logout', (req, res) => {
+	if (req.cookies.MID_ != undefined) {
+        var cookie_hash = crypto.createHash('sha1').update(req.cookies.MID).digest("hex");
+		db.query('DELETE FROM `login_tokens` WHERE token=\'' + cookie_hash +'\'');
+		// Set Cookie Options
+		let options = {
+			maxAge: -3000, // would expire immediately 
+			httpOnly: true, // The cookie only accessible by the web server
+		}
+		// Set cookie
+		res.cookie('MID', '1', options) // options is optional
+		res.cookie('MID_', '1', options) // options is optional
+		res.redirect('login');
+	}
+});
 
 module.exports = router;
