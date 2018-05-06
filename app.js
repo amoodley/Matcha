@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
 const cookieParser = require('cookie-parser');
+const favicon = require('serve-favicon');
+const path = require('path');
 
 // Set server address
 const hostname = '127.0.0.1';
