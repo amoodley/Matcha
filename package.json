@@ -19,6 +19,7 @@
     "json-buffer": "^3.0.0",
     "mysql": "^2.15.0",
     "pg": "^7.4.2",
+    "serve-favicon": "^2.5.0",
     "sync-sql": "^1.0.2"
   },
   "repository": {
