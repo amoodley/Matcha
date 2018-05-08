@@ -23,7 +23,9 @@ body {
 .matcha-thin {
     font-family: 'matcha-thin' !important;
 }
-
+a {
+    color: #00B75A;
+}
 .heading {
     font-family: 'matcha-regular';
     letter-spacing: 0.4px;

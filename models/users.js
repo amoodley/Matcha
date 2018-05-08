@@ -48,5 +48,19 @@ exports.insert = function(newUser){
     return(result.data.rows.insertId);
 }
 
+exports.getUserById = function(userId){
+    var sql = 'SELECT * FROM `users` WHERE id=\'' + userId +'\'';
+    var result = db.query(sql);
+
+    return(result.data.rows[0]);
+}
+
+exports.activateAccount = function(userId){
+    var sql = 'UPDATE `users` SET `activated` = \'1\' WHERE id=\'' + userId +'\'';
+    var result = db.query(sql);
+
+    return(result.data.rows[0]);
+}
+
 
 return module.exports;

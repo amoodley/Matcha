@@ -8,6 +8,9 @@ const cookieParser = require('cookie-parser');
 const db = require('../database/db');
 const users = require('../models/users.js');
 
+// Load Helpers
+const sendMail = require('../helpers/sendMail');
+
 // GET: Register
 router.get('/register', (req, res) => {
 	res.render('account/register', {
@@ -88,8 +91,9 @@ router.post('/register', (req, res) => {
 		let hash = bcrypt.hashSync(password, 10);
 		newUser.password_hash = hash;
 		// Insert User
-		var result = users.insert(newUser);
-		console.log(result);
+		var userId = users.insert(newUser);
+		// Send Activation Mail
+		sendMail.activation(userId);
 		// Success: Redirect
 		res.redirect('registrationConfirmation');
 	} else {
@@ -107,6 +111,16 @@ router.post('/register', (req, res) => {
 router.get('/registrationConfirmation', (req, res) => {
 	res.render('account/registrationConfirmation');
 });
+
+// GET: RegistrationConfirmation
+router.get('/accountConfirmation/:token', (req, res) => {
+	var userId = req.params.token;
+	users.activateAccount(userId);
+	
+	res.render('account/accountConfirmation');
+});
+
+
 
 // GET: Login
 router.get('/login', (req, res) => {
@@ -133,27 +147,9 @@ router.post('/login', (req, res) => {
 	var result = db.query(sql);
 	if (result.data.rows[0] != null) {
 		if(bcrypt.compareSync(password, result.data.rows[0].password_hash)) {
-			var token = crypto.randomBytes(64).toString('hex');
-			var token_hash = crypto.createHash('sha1').update(token).digest("hex");
-			var userId = result.data.rows[0].id;
-			var values = [ null, token_hash, userId ];
-			db.query('INSERT INTO `login_tokens`(id, token, user_id) VALUES(?)', [values]);
-			
-			// Set Cookie Options
-			let options_1 = {
-				maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
-				httpOnly: true, // The cookie only accessible by the web server
+			if (result.data.rows[0].activated != 1) {
+				message.Email = 'Account not activated';
 			}
-			let options_2 = {
-				maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
-				httpOnly: true, // The cookie only accessible by the web server
-			}
-		
-			// Set cookie
-			res.cookie('MID', token, options_1) // options is optional
-			res.cookie('MID_', '1', options_2) // options is optional
-			// Success: Redirect
-			res.redirect('/');
 		} else {
 			message.Password = 'Incorrect password';
 		}
@@ -161,6 +157,36 @@ router.post('/login', (req, res) => {
 		message.Email = 'User not registered';
 	}
 	
+	if (message.Email == '' && message.Password == ''){
+		var token = crypto.randomBytes(64).toString('hex');
+		var token_hash = crypto.createHash('sha1').update(token).digest("hex");
+		var userId = result.data.rows[0].id;
+		var values = [ null, token_hash, userId ];
+		db.query('INSERT INTO `login_tokens`(id, token, user_id) VALUES(?)', [values]);
+		
+		// Set Cookie Options
+		let options_1 = {
+			maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
+			httpOnly: true, // The cookie only accessible by the web server
+		}
+		let options_2 = {
+			maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
+			httpOnly: true, // The cookie only accessible by the web server
+		}
+	
+		// Set cookie
+		res.cookie('MID', token, options_1) // options is optional
+		res.cookie('MID_', '1', options_2) // options is optional
+		// Success: Redirect
+		res.redirect('/');
+	} else {
+		res.render('account/login', {
+			title: 'Login',
+			email: '',
+			message: message
+		})
+	}
+
 });
 
 // GET: Logout
