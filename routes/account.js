@@ -180,4 +180,57 @@ router.get('/logout', (req, res) => {
 	}
 });
 
+// GET: ForgotPassword
+router.get('/forgotPassword', (req, res) => {
+	res.render('account/forgotPassword', {
+        title: 'Login',
+        email: '',
+        message: {
+			Email: ''
+		}
+    })
+});
+
+// POST: ForgotPassword
+router.post('/forgotPassword', (req, res) => {
+	var message = {
+		Email: ''
+	};
+
+	var email = req.body.email;
+	
+	if (email == '') {
+		message.Email = 'Email cannot be empty';
+	} else {
+        var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
+		var result = db.query(sql);
+		if (result.data.rows[0] == null) {
+			message.Email = 'Account doesn\'t exist';
+		}
+	}
+
+	if (message.Email == '') {
+		// Send Email with token link
+	} else {
+		res.render('account/forgotPassword', {
+			title: 'Register',
+			email: email,
+			message: message
+		});
+	}
+});
+
+// GET: ResetPassword
+router.get('/resetPassword/:token', (req, res) => {
+	res.render('account/resetPassword', {
+		title: 'Reset password',
+		message: {
+			NewPassword: '',
+			ConfirmPassword: ''
+		}
+	});
+});
+
+
+
 module.exports = router;
