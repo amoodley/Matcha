@@ -18,6 +18,7 @@
     "jquery": "^3.3.1",
     "json-buffer": "^3.0.0",
     "mysql": "^2.15.0",
+    "nodemailer": "^4.6.4",
     "pg": "^7.4.2",
     "serve-favicon": "^2.5.0",
     "sync-sql": "^1.0.2"
