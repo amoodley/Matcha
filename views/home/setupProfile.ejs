@@ -1,0 +1,60 @@
+<% include ../partials/header.ejs %>
+    <div class="container">
+        <div class="well setupProfileContainer">
+            <div class="row">
+                <h2 class="text-center">Welcome to Matcha</h2>
+                <h4 class="text-center">Get started by creating a profile for others to see</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <form method="POST" action="/setupProfile">
+                            <label for="firstName">First name:</label>
+                            <input type="text" class="form-control" name="firstName">
+                            <label for="lastName">Last name:</label>
+                            <input type="text" class="form-control" name="lastName">
+                            <div class="halfInputLeft pull-left">
+                                <label for="gender">I am a:</label>
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="male">Man</option>
+                                    <option value="female">Women</option>
+                                    <option value="bi">Other</option>
+                                </select>
+                            </div>
+                            <div class="halfInputRight pull-right">
+                                <label for="preference">Seeking a:</label>
+                                <select name="preference" id="preference" class="form-control">
+                                    <option value="female">Women</option>
+                                    <option value="male">Man</option>
+                                    <option value="bi">Other</option>
+                                </select>
+                            </div>
+                            <label for="bio">Tell us about yourself:</label>
+                            <textarea name="bio" id="bio" rows="3" class="form-control"></textarea>
+                            <label for="interests" class="pull-left">Interests:</label>
+                            <p class="pull-right">Eg: #athletic, #vegan, #geek, #piercing</p>
+                            <input type="text" class="form-control" name="interests">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-center">Add a profile picture</h3>
+                    <div class="text-center">
+                        <img src="https://i.imgur.com/ftZbKJI.png" class="setupProfileTempImage">
+                        <br>
+                        <br>
+                        <input type="file" class="btn fileUploadButton">
+                        <br>
+                        <br>
+                        <br>
+                        <button type="submit" class="btn pull-right">Next ..</button>
+                    </div>
+                </div>
+                
+                        
+            </div>
+        </div>
+        
+    </div>
+	
+<% include ../partials/footer.ejs %>
