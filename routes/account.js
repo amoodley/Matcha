@@ -248,7 +248,6 @@ router.post('/forgotPassword', (req, res) => {
 		var userId = result.data.rows[0].id;
 		var token = crypto.randomBytes(64).toString('hex');
 		var token_hash = crypto.createHash('sha1').update(token).digest("hex");
-		console.log(token_hash);
 		var values = [ null, token_hash, userId ];
 		db.query('INSERT INTO `password_tokens`(id, token, user_id) VALUES(?)', [values]);
 		sendMail.passwordReset(userId, token);
@@ -320,8 +319,6 @@ router.post('/resetPassword/:token', (req, res) => {
 	
 	if (message.NewPassword == '' && message.ConfirmPassword == '') {
 		var token_hash = crypto.createHash('sha1').update(token).digest("hex");
-		console.log(token_hash);
-		
 		var result = db.query('SELECT * FROM `password_tokens` WHERE token=\'' + token_hash +'\'');
 		if (result.data.rows[0].user_id != undefined) {
 			userId = result.data.rows[0].user_id;
@@ -329,7 +326,6 @@ router.post('/resetPassword/:token', (req, res) => {
 			var password_hash = hash;
 			db.query('UPDATE `users` SET `password_hash`=\''+ password_hash +'\' WHERE id=\'' + userId +'\'');
 			db.query('DELETE FROM `password_tokens` WHERE token=\'' + token_hash +'\'');
-			console.log('success');
 			res.redirect('/account/passwordConfirmation');
 		} else {
 			message.NewPassword = 'Reset token expired';
