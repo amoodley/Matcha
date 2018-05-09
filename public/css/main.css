@@ -24,7 +24,10 @@ body {
     font-family: 'matcha-thin' !important;
 }
 a {
-    color: #00B75A;
+    color: cornflowerblue;
+}
+a:hover {
+    color: cornflowerblue;
 }
 .heading {
     font-family: 'matcha-regular';

@@ -112,15 +112,23 @@ router.get('/registrationConfirmation', (req, res) => {
 	res.render('account/registrationConfirmation');
 });
 
-// GET: RegistrationConfirmation
+// GET: ResetConfirmation
+router.get('/resetConfirmation', (req, res) => {
+	res.render('account/resetConfirmation');
+});
+
+// GET: PasswordConfirmation
+router.get('/passwordConfirmation', (req, res) => {
+	res.render('account/passwordConfirmation');
+});
+
+// GET: AccountConfirmation
 router.get('/accountConfirmation/:token', (req, res) => {
 	var userId = req.params.token;
 	users.activateAccount(userId);
 	
 	res.render('account/accountConfirmation');
 });
-
-
 
 // GET: Login
 router.get('/login', (req, res) => {
@@ -182,7 +190,7 @@ router.post('/login', (req, res) => {
 	} else {
 		res.render('account/login', {
 			title: 'Login',
-			email: '',
+			email: email,
 			message: message
 		})
 	}
@@ -209,7 +217,7 @@ router.get('/logout', (req, res) => {
 // GET: ForgotPassword
 router.get('/forgotPassword', (req, res) => {
 	res.render('account/forgotPassword', {
-        title: 'Login',
+        title: 'Forgot password',
         email: '',
         message: {
 			Email: ''
@@ -224,7 +232,6 @@ router.post('/forgotPassword', (req, res) => {
 	};
 
 	var email = req.body.email;
-	
 	if (email == '') {
 		message.Email = 'Email cannot be empty';
 	} else {
@@ -236,10 +243,19 @@ router.post('/forgotPassword', (req, res) => {
 	}
 
 	if (message.Email == '') {
-		// Send Email with token link
+		var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
+		var result = db.query(sql);
+		var userId = result.data.rows[0].id;
+		var token = crypto.randomBytes(64).toString('hex');
+		var token_hash = crypto.createHash('sha1').update(token).digest("hex");
+		console.log(token_hash);
+		var values = [ null, token_hash, userId ];
+		db.query('INSERT INTO `password_tokens`(id, token, user_id) VALUES(?)', [values]);
+		sendMail.passwordReset(userId, token);
+		res.redirect('resetConfirmation');
 	} else {
 		res.render('account/forgotPassword', {
-			title: 'Register',
+			title: 'Forgot password',
 			email: email,
 			message: message
 		});
@@ -248,15 +264,88 @@ router.post('/forgotPassword', (req, res) => {
 
 // GET: ResetPassword
 router.get('/resetPassword/:token', (req, res) => {
-	res.render('account/resetPassword', {
-		title: 'Reset password',
-		message: {
-			NewPassword: '',
-			ConfirmPassword: ''
-		}
-	});
+	var message = {
+		NewPassword: '',
+		ConfirmPassword: ''
+	};
+
+	var token = req.params.token;
+	var token_hash = crypto.createHash('sha1').update(token).digest("hex");
+	var action = '/account/resetPassword/' + token;
+
+	var result = db.query('SELECT * FROM `password_tokens` WHERE token=\'' + token_hash +'\'');
+	if (result.data.rows[0] != undefined) {
+		res.render('account/resetPassword', {
+			title: 'Reset password',
+			action: action,
+			message: message
+		});
+	} else {
+		message.NewPassword = 'Reset token expired';
+		res.render('account/resetPassword', {
+			title: 'Reset password',
+			action: action,
+			message: message
+		});
+	}
 });
 
+// POST: ResetPassword
+router.post('/resetPassword/:token', (req, res) => {
+	var message = {
+		NewPassword: '',
+		ConfirmPassword: ''
+	};
 
+	var token = req.params.token;
+	var action = '/account/resetPassword/' + token;
+	var password = req.body.newPassword;
+	var confirmPassword = req.body.confirmPassword;
+	
+	if (password == confirmPassword) {
+		if (password != ''){
+			if (password.length > 5){
+				if (password.length > 30){
+					message.NewPassword = 'Password cannot be longer than 30';
+				}
+			} else {
+				message.NewPassword = 'Password cannot be shorter than 6';
+			}
+		} else {
+			message.NewPassword = 'Password cannot be empty';
+		}
+	} else {
+		message.NewPassword = 'Passwords don\'t match';
+	}
+	
+	if (message.NewPassword == '' && message.ConfirmPassword == '') {
+		var token_hash = crypto.createHash('sha1').update(token).digest("hex");
+		console.log(token_hash);
+		
+		var result = db.query('SELECT * FROM `password_tokens` WHERE token=\'' + token_hash +'\'');
+		if (result.data.rows[0].user_id != undefined) {
+			userId = result.data.rows[0].user_id;
+			let hash = bcrypt.hashSync(password, 10);
+			var password_hash = hash;
+			db.query('UPDATE `users` SET `password_hash`=\''+ password_hash +'\' WHERE id=\'' + userId +'\'');
+			db.query('DELETE FROM `password_tokens` WHERE token=\'' + token_hash +'\'');
+			console.log('success');
+			res.redirect('/account/passwordConfirmation');
+		} else {
+			message.NewPassword = 'Reset token expired';
+			res.render('account/resetPassword', {
+				title: 'Reset password',
+				action: action,
+				message: message
+			});
+		}
+	} else {
+		res.render('account/resetPassword', {
+			title: 'Reset password',
+			action: action,
+			message: message
+		});
+	}
+});
 
 module.exports = router;
