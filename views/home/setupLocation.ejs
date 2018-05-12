@@ -1,0 +1,66 @@
+<% include ../partials/header.ejs %>
+    <div class="container">
+        <div class="well setupProfileContainer">
+            <div class="row">
+                <h2 class="text-center">Set your location</h2>
+                <h4 class="text-center">So we can show you matches in your area*</h4>
+            </div>
+            <div class="row">
+                <form method="POST" action="/setupLocation">
+                    <div class="col-md-6">
+                        <div class="text-center">
+                            <br>
+                            <br>
+                            <img src="https://i.imgur.com/s84PNui.png" class="locationImage">
+                            <br>
+                            <br>
+                            <br>
+                            <button type="button" onclick="getLocation()" class="btn">Get Location</button>
+                            <br>
+                            <br>
+                            <br>
+                            <div class="halfInputLeft pull-left">
+                                <label for="latitude">Latitude</label>
+                                <input type="text" name="latitude" id="latitude" class="form-control"><!-- style="display:none;" -->
+                            </div>
+                            <div class="halfInputRight pull-right">
+                                <label for="longitude">Longitude</label>
+                                <input type="text" name="longitude" id="longitude" class="form-control"><!-- style="display:none;" -->
+                            </div>
+                            <p id="locationMessage"></p>
+                            <br>
+                            <p class="text-center">*At Matcha we take your privacy very seriously and will never share your information with anyone</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="setupImageContainer">
+                            <img src="https://i.imgur.com/mvnoGSx.jpg" class="setupImage">
+                        </div>
+
+                        <button type="submit" class="btn pull-right">Continue...</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var latitude = document.getElementById("latitude");
+        var longitude = document.getElementById("longitude");
+        var message = document.getElementById("locationMessage");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(insertLocation);
+            } else {
+                message.innerHTML = 'Geolocation is not supported by this browser ';
+            }
+        }
+
+        function insertLocation(position){
+            latitude.value = position.coords.latitude;
+            longitude.value = position.coords.longitude;
+        }
+    </script>
+
+<% include ../partials/footer.ejs %>

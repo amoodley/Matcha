@@ -6,55 +6,110 @@
                 <h4 class="text-center">Get started by creating a profile for others to see</h4>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <form method="POST" action="/setupProfile">
+                <form method="POST" action="/setupProfile">
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="firstName">First name:</label>
-                            <input type="text" class="form-control" name="firstName">
+                            <% if (message.firstName) { %>
+                                <p class="pull-right formValidationMessage"><%= message.firstName %></p>
+                            <% } %>
+                            <% if (firstName) { %>
+                                <input class="form-control" name="firstName" value="<%= firstName %>" type="text">
+                            <% } else { %>
+                                <input class="form-control" name="firstName" type="text">
+                            <% } %>
                             <label for="lastName">Last name:</label>
-                            <input type="text" class="form-control" name="lastName">
+                            <% if (message.lastName) { %>
+                                <p class="pull-right formValidationMessage"><%= message.lastName %></p>
+                            <% } %>
+                            <% if (lastName) { %>
+                                <input class="form-control" name="lastName" value="<%= lastName %>" type="text">
+                            <% } else { %>
+                                <input class="form-control" name="lastName" type="text">
+                            <% } %>
+                            <div class="halfInputLeft pull-left">
+                                <label for="birthday">Birthday:</label>
+                                <% if (message.birthday) { %>
+                                    <p class="pull-right formValidationMessage"><%= message.birthday %></p>
+                                <% } %>
+                                <% if (birthday) { %>
+                                    <input type="date" name="birthday" value="<%= birthday %>" class="form-control">
+                                <% } else { %>
+                                    <input type="date" name="birthday" class="form-control">
+                                <% } %>
+                            </div>
+                            <div class="halfInputRight pull-right">
+                                <label for="city">City:</label>
+                                <% if (message.city) { %>
+                                    <p class="pull-right formValidationMessage"><%= message.city %></p>
+                                <% } %>
+                                <% if (city) { %>
+                                    <input type="text" name="city" value="<%= city %>" class="form-control">
+                                <% } else { %>
+                                    <input type="text" name="city" class="form-control">
+                                <% } %>
+                            </div>
                             <div class="halfInputLeft pull-left">
                                 <label for="gender">I am a:</label>
-                                <select name="gender" id="gender" class="form-control">
-                                    <option value="male">Man</option>
-                                    <option value="female">Women</option>
-                                    <option value="bi">Other</option>
-                                </select>
+                                <% if (message.gender) { %>
+                                    <p class="pull-right formValidationMessage"><%= message.gender %></p>
+                                <% } %>
+                                <% if (gender) { %>
+                                    <select name="gender" id="gender" value="<%= gender %>" class="form-control">
+                                        <option value="null">Select...</option>
+                                        <option value="male">Man</option>
+                                        <option value="female">Women</option>
+                                        <option value="bi">Other</option>
+                                    </select>
+                                <% } else { %>
+                                    <select name="gender" id="gender" class="form-control">
+                                        <option value="null">Select...</option>
+                                        <option value="male">Man</option>
+                                        <option value="female">Women</option>
+                                        <option value="bi">Other</option>
+                                    </select>
+                                <% } %>
                             </div>
                             <div class="halfInputRight pull-right">
                                 <label for="preference">Seeking a:</label>
-                                <select name="preference" id="preference" class="form-control">
-                                    <option value="female">Women</option>
-                                    <option value="male">Man</option>
-                                    <option value="bi">Other</option>
-                                </select>
+                                <% if (message.preference) { %>
+                                    <p class="pull-right formValidationMessage"><%= message.preference %></p>
+                                <% } %>
+                                <% if (preference) { %>
+                                    <select name="preference" id="preference" value="<%= preference %>" class="form-control">
+                                        <option value="null">Select...</option>
+                                        <option value="female">Women</option>
+                                        <option value="male">Man</option>
+                                        <option value="bi">Other</option>
+                                    </select>
+                                <% } else { %>
+                                    <select name="preference" id="preference" class="form-control">
+                                        <option value="null">Select...</option>
+                                        <option value="female">Women</option>
+                                        <option value="male">Man</option>
+                                        <option value="bi">Other</option>
+                                    </select>
+                                <% } %>
                             </div>
                             <label for="bio">Tell us about yourself:</label>
                             <textarea name="bio" id="bio" rows="3" class="form-control"></textarea>
                             <label for="interests" class="pull-left">Interests:</label>
                             <p class="pull-right">Eg: #athletic, #vegan, #geek, #piercing</p>
                             <input type="text" class="form-control" name="interests">
-                        </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <h3 class="text-center">Add a profile picture</h3>
-                    <div class="text-center">
-                        <img src="https://i.imgur.com/ftZbKJI.png" class="setupProfileTempImage">
-                        <br>
-                        <br>
-                        <input type="file" class="btn fileUploadButton">
-                        <br>
-                        <br>
-                        <br>
-                        <button type="submit" class="btn pull-right">Next ..</button>
-                    </div>
-                </div>
-                
+                    <div class="col-md-6">
+                        <div class="setupImageContainer">
+                            <img src="https://i.imgur.com/mvnoGSx.jpg" class="setupImage">
+                        </div>
                         
+                        <button type="submit" class="btn pull-right">Continue...</button>
+                        
+                    </div>
+                </form>
             </div>
         </div>
-        
     </div>
-	
+    
+
 <% include ../partials/footer.ejs %>

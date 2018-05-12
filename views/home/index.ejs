@@ -1,4 +1,29 @@
 <% include ../partials/header.ejs %>
-	<h1><%= title %></h1>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="well profileCard">
+				<div class="pull-left profileCardImage">
+					<img src="<%= profileImg %>" class="profileImage img-circle">
+				</div>
+				<div class="profileCardInfo">
+					<p class="profileCardUsername"><%= username %></p>
+					<p class="profileCardAgeCity"><%= age %>, <%= city %></p>
+				</div>
+				<br>
+				<div class="profileCardDetails">
+					<p class="profileCardBio"><%= bio %></p>
+					<p class="profileCardLabel">Interests</p>
+					<p class="profileCardInterests"><%= interests %></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9">
+			<div class="well">
+
+			</div>
+		</div>
+	</div>
+</div>
 	
 <% include ../partials/footer.ejs %>
