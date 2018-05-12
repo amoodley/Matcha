@@ -8,7 +8,7 @@ exports.query = function(sql, values){
         port	 : '3306',
         host     : 'localhost',
         user     : 'root',
-        password : 'root',
+        password : '724274',
         database : 'matcha'
     };
 

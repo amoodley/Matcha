@@ -131,7 +131,6 @@ router.post('/setupProfile', (req, res) => {
 	if (preference == 'null') {
 		message.preference = 'Required';
 	}
-	
 			
 	if (message.firstName == '' && message.lastName == '' && message.gender == '' && message.preference == '' && message.birthday == '' && message.city == '') {
 		var newProfile = {
@@ -152,8 +151,8 @@ router.post('/setupProfile', (req, res) => {
 		var values = [null, newProfile.userId, newProfile.firstName, newProfile.lastName, newProfile.birthday, newProfile.city, newProfile.gender, newProfile.preference, newProfile.bio, newProfile.interests, null, null, null];
 		var result = db.query(sql, [values]);
 		var sql = 'UPDATE `users` SET `state` = \'2\' WHERE id=\'' + userId +'\'';
-    	var result = db.query(sql);
-		 res.redirect('/');
+		var result = db.query(sql);
+		res.redirect('/');
 	} else {
 		res.render('home/setupProfile', {
 			title: 'Setup profile',

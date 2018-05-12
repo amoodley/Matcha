@@ -33,6 +33,8 @@ CREATE TABLE `profiles` (
     `user_id` varchar(32) DEFAULT NULL,
     `first_name` varchar(32) DEFAULT NULL,
 	`last_name` varchar(32) DEFAULT NULL,
+    `birthday` date DEFAULT NULL,
+    `city` varchar(32) DEFAULT NULL,
     `gender` varchar(32) DEFAULT NULL,
     `preference` varchar(32) DEFAULT NULL,
     `bio` text,

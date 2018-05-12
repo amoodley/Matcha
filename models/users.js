@@ -25,7 +25,7 @@ exports.isLoggedIn = function(req){
                     httpOnly: true, // The cookie only accessible by the web server
                 }
                 let options_2 = {
-                    maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
+                    maxAge: 1000 * 60 * 60 * 24 * 3, // would expire after 3 days
                     httpOnly: true, // The cookie only accessible by the web server
                 }
                 // Set cookie

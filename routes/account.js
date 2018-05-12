@@ -151,19 +151,30 @@ router.post('/login', (req, res) => {
 	var password = req.body.password;
 	var email = req.body.email;
 	
-	var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
-	var result = db.query(sql);
-	if (result.data.rows[0] != null) {
-		if(bcrypt.compareSync(password, result.data.rows[0].password_hash)) {
-			if (result.data.rows[0].activated != 1) {
-				message.Email = 'Account not activated';
+	if (email != '') {
+		if (password != '') {
+			var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
+			var result = db.query(sql);
+			console.log(result);
+			if (result.data.rows[0] != null) {
+				if(bcrypt.compareSync(password, result.data.rows[0].password_hash)) {
+					if (result.data.rows[0].activated != 1) {
+						message.Email = 'Account not activated';
+					}
+				} else {
+					message.Password = 'Incorrect password';
+				}
+			} else {
+				message.Email = 'User not registered';
 			}
 		} else {
-			message.Password = 'Incorrect password';
+			message.Password = 'Password cannot be empty';
 		}
 	} else {
-		message.Email = 'User not registered';
+		message.Email = 'Email cannot be empty';
 	}
+
+	
 	
 	if (message.Email == '' && message.Password == ''){
 		var token = crypto.randomBytes(64).toString('hex');
@@ -178,7 +189,7 @@ router.post('/login', (req, res) => {
 			httpOnly: true, // The cookie only accessible by the web server
 		}
 		let options_2 = {
-			maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
+			maxAge: 1000 * 60 * 60 * 24 * 3, // would expire after 3 days
 			httpOnly: true, // The cookie only accessible by the web server
 		}
 	
