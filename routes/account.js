@@ -155,7 +155,6 @@ router.post('/login', (req, res) => {
 		if (password != '') {
 			var sql = 'SELECT * FROM `users` WHERE email=\'' + email +'\'';
 			var result = db.query(sql);
-			console.log(result);
 			if (result.data.rows[0] != null) {
 				if(bcrypt.compareSync(password, result.data.rows[0].password_hash)) {
 					if (result.data.rows[0].activated != 1) {

@@ -11,6 +11,7 @@ const port = 3000;
 // Load Routes
 const home = require('./routes/home');
 const account = require('./routes/account');
+const profile = require('./routes/profile');
 
 
 // Create App
@@ -39,6 +40,7 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 // Set Routes
 app.use('/', home);
 app.use('/account', account);
+app.use('/profile', profile);
 
 
 // Start Server

@@ -183,3 +183,11 @@ a:hover {
     font-size: 18px;
     color: grey;
 }
+.navbarLogoutButton {
+    width: 36px;
+    height: 36px;
+}
+.navbarSettingsButton {
+    width: 33px;
+    height: 33px;
+}
