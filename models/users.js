@@ -8,7 +8,7 @@ exports.isLoggedIn = function(req){
         var cookie_hash = crypto.createHash('sha1').update(req.cookies.MID).digest("hex");
         var result = db.query('SELECT user_id FROM `login_tokens` WHERE token=\'' + cookie_hash +'\'');
         
-        if (result.data.rows[0] != undefined) {
+        if (result.data.rows != undefined) {
             var userId = result.data.rows[0].user_id;
 
             if (req.cookies.MID_ != undefined) {
