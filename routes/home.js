@@ -28,7 +28,7 @@ const db = require('../database/db');
 const users = require('../models/users.js');
 
 
-// Define the home page route
+// GET: Home/Index
 router.get('/', (req, res) => {
 	if (users.isLoggedIn(req)) {
 		var userId = users.isLoggedIn(req);
@@ -169,6 +169,7 @@ router.post('/setupProfile', (req, res) => {
 	}
 });
 
+// GET: Setup Image
 router.get('/setupImage', (req, res) => {
 	res.render('home/setupImage', {
 		title: 'Set profile image',
@@ -176,6 +177,7 @@ router.get('/setupImage', (req, res) => {
 	});
 });
 
+// POST: Setup Profile
 router.post('/setupImage', upload.single('profileImg'), (req, res) => {
 	var userId = users.isLoggedIn(req);
 	if (req.file){
@@ -194,12 +196,14 @@ router.post('/setupImage', upload.single('profileImg'), (req, res) => {
 	}
 });
 
+// GET: Setup 
 router.get('/setupLocation', (req, res) => {
 	res.render('home/setupLocation', {
 		title: 'Set location'
 	});
 });
 
+// POST: Setup Location
 router.post('/setupLocation', (req, res) => {
 	var userId = users.isLoggedIn(req);
 	var latitude = req.body.latitude;
