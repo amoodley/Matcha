@@ -1,0 +1,287 @@
+<% include ../partials/header.ejs %>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="jumbotron">
+					<div class="profileImageContainer">
+						<img src="https://i.imgur.com/m3CiU5r.jpg" class="img-circle">
+					</div>
+					<div class="profileCardUsernameContainer text-center">
+						<h3>
+							<%= user.username %>
+						</h3>
+						<p id="birthday" style="display: none;">
+							<%= profile.birthday %>
+						</p>
+						<p>
+							<%= age %>,
+								<%= profile.city %>
+						</p>
+					</div>
+					<div class="profileCardTagLine">
+						<p>
+							<%= profile.bio %>
+						</p>
+						<p class="profileCardLabel">Interests</p>
+						<p>
+							<%= profile.interests %>
+						</p>
+					</div>
+
+				</div>
+				<div class="jumbotron">
+					<button class="menuItem tablinks" onclick="openTab(event, 'editProfile')" id="defaultOpen">Edit profile</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'editPicture')">Upload pictures</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'editLocation')">Update location</button>
+				</div>
+			</div>
+			<div id="editProfile" class="col-md-7 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2>Edit profile</h2>
+						<hr>
+					</div>
+					<form action="/profile/editprofile">
+						<div class="form-group">
+							<div class="halfInputLeft pull-left">
+								<label for="firstName" class="">First name</label>
+								<input type="text" name="firstName" value="<%= profile.first_name %>" class="form-control">
+							</div>
+							<div class="halfInputRight pull-right">
+								<label for="lastName" class="">Last name</label>
+								<input type="text" name="lastName" value="<%= profile.last_name %>" class="form-control">
+							</div>
+							<div class="halfInputLeft pull-left">
+								<label for="birthday" class="">Birthday</label>
+								<input type="date" id="myDate" name="birthday" class="form-control">
+							</div>
+							<div class="halfInputRight pull-right">
+								<label for="city" class="">City</label>
+								<input type="text" name="city" value="<%= profile.city %>" class="form-control">
+							</div>
+							<div class="halfInputLeft pull-left">
+								<label for="gender" class="">I am a</label>
+								<select class="form-control" name="gender" value="<%= profile.gender %>">
+									<option value="male">Man</option>
+									<option value="female">Woman</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+							<div class="halfInputRight pull-right">
+								<label for="preference" class="">Seeking a</label>
+								<select class="form-control" name="preference" value="<%= profile.preference %>">
+									<option value="female">Woman</option>
+									<option value="male">Man</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+							<label for="bio" class="">Bio</label>
+							<textarea name="bio" id="" cols="8" rows="3" class="form-control"><%= profile.bio %></textarea>
+							<label for="interests" class="">Interests</label>
+							<textarea name="interests" id="" cols="8" rows="2" class="form-control"><%= profile.interests %></textarea>
+							<div class="text-center">
+								<button class="btn">Save</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="editPicture" class="col-md-7 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2>Upload pictures</h2>
+						<hr>
+					</div>
+					<form action="" class="">
+						<div class="text-center">
+							<img id="profileImg" src="<%= profile.profileimg %>" class="uploadImgTemp">
+							<br>
+							<br>
+							<input type="file" class="btn fileUploadButton" onchange="readURL(this);">
+						</div>
+						<br>
+						<div class="col-md-3 text-center">
+							<% if (profile.img1) { %>
+								<img id="img1" src="<%= profile.img1 %>" class="uploadImgSmall">
+							<% } else { %>
+								<img id="img1" src="https://i.imgur.com/ftZbKJI.png" class="uploadImgSmall">
+							<% } %>
+							<br>
+							<br>
+							<input type="file" class="btn" onchange="readURL1(this);">
+						</div>
+						<div class="col-md-3 text-center">
+							<% if (profile.img2) { %>
+								<img id="img2" src="<%= profile.img2 %>" class="uploadImgSmall">
+							<% } else { %>
+								<img id="img2" src="https://i.imgur.com/ftZbKJI.png" class="uploadImgSmall">
+							<% } %>
+							<br>
+							<br>
+							<input type="file" class="btn" onchange="readURL2(this);">
+						</div>
+						<div class="col-md-3 text-center">
+							<% if (profile.img3) { %>
+								<img id="img3" src="<%= profile.img3 %>" class="uploadImgSmall">
+							<% } else { %>
+								<img id="img3" src="https://i.imgur.com/ftZbKJI.png" class="uploadImgSmall">
+							<% } %>
+							<br>
+							<br>
+							<input type="file" class="btn" onchange="readURL3(this);">
+						</div>
+						<div class="col-md-3 text-center">
+							<% if (profile.img4) { %>
+								<img id="img4" src="<%= profile.img4 %>" class="uploadImgSmall">
+							<% } else { %>
+								<img id="img4" src="https://i.imgur.com/ftZbKJI.png" class="uploadImgSmall">
+							<% } %>
+							<br>
+							<br>
+							<input type="file" class="btn" onchange="readURL4(this);">
+						</div>
+						<br>
+						<br>
+						<br>
+						<br>
+						<div class="text-center" style="padding-top: 150px;">
+							<button class="btn">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="editLocation" class="col-md-7 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2>Update location</h2>
+						<hr>
+					</div>
+					<form action="" class="">
+						<div class="text-center">
+							<img src="https://i.imgur.com/s84PNui.png" class="locationImage">
+							<br>
+							<br>
+							<br>
+							<button type="button" onclick="getLocation()" class="btn">Get Location</button>
+						</div>
+						<br>
+						<br>
+						<br>
+						<div class="halfInputLeft pull-left">
+							<label for="latitude">Latitude</label>
+							<input type="text" name="latitude" id="latitude" value="<%= profile.latitude %>" class="form-control">
+							<!-- style="display:none;" -->
+						</div>
+						<div class="halfInputRight pull-right">
+							<label for="longitude">Longitude</label>
+							<input type="text" name="longitude" id="longitude" value="<%= profile.longitude %>" class="form-control">
+							<!-- style="display:none;" -->
+						</div>
+						<p id="locationMessage"></p>
+						<br>
+						<p class="text-center">*At Matcha we take your privacy very seriously and will never share your information with anyone</p>
+						<br>
+						<br>
+						<div class="text-center">
+							<button class="btn">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var birthday = document.getElementById("birthday").innerText;
+		birthday = birthday.substring(0, 10);
+		console.log(birthday);
+		document.getElementById("myDate").value = birthday;
+	</script>
+	<script>
+		function openTab(evt, cityName) {
+			var i, tabcontent, tablinks;
+			tabcontent = document.getElementsByClassName("tabcontent");
+			for (i = 0; i < tabcontent.length; i++) {
+				tabcontent[i].style.display = "none";
+			}
+			tablinks = document.getElementsByClassName("tablinks");
+			for (i = 0; i < tablinks.length; i++) {
+				tablinks[i].className = tablinks[i].className.replace(" active", "");
+			}
+			document.getElementById(cityName).style.display = "block";
+			evt.currentTarget.className += " active";
+		}
+
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+	</script>
+	<script>
+		var latitude = document.getElementById("latitude");
+		var longitude = document.getElementById("longitude");
+		var message = document.getElementById("locationMessage");
+
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(insertLocation);
+			} else {
+				message.innerHTML = 'Geolocation is not supported by this browser ';
+			}
+		}
+
+		function insertLocation(position) {
+			latitude.value = position.coords.latitude;
+			longitude.value = position.coords.longitude;
+		}
+	</script>
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#profileImg')
+						.attr('src', e.target.result);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		function readURL1(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#img1')
+						.attr('src', e.target.result);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		function readURL2(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#img2')
+						.attr('src', e.target.result);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		function readURL3(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#img3')
+						.attr('src', e.target.result);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		function readURL4(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function (e) {
+					$('#img4')
+						.attr('src', e.target.result);
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+	</script>
+	<% include ../partials/footer.ejs %>

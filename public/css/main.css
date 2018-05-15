@@ -45,7 +45,7 @@ a:hover {
     background-color: #D71717;
     border-radius: 0px !important;
     width: 150px;
-    height: 35px;
+    height: 40px;
     padding: 5px 0 5px 0;
     font-family: 'matcha-regular';
     font-weight: normal;
@@ -62,7 +62,6 @@ a:hover {
 }
 .navbar {
     border-radius: 0px;
-    margin-bottom: 0px !important;
 }
 .navbar-brand>img {
     height: 36px;
@@ -183,11 +182,77 @@ a:hover {
     font-size: 18px;
     color: grey;
 }
+.navbarButtonContainer {
+    margin-top: 7px;
+    width: 77px;
+}
 .navbarLogoutButton {
     width: 36px;
     height: 36px;
+    display: block;
+    float: left;
 }
 .navbarSettingsButton {
-    width: 33px;
-    height: 33px;
+    width: 36px;
+    height: 36px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+}
+.editProfileContainer {
+    margin: 0 -15px 0 -15px;
+}
+.panel {
+    background-color: #000000;
+}
+.jumbotron {
+    background-color: #232323;
+    border-radius: 0px !important;
+    padding: 20px 20px 20px 20px !important;
+}
+.jumbotron p {
+    font-size: 15px;
+}
+.profileImageContainer {
+    width: 50%;
+    height: 50%;
+    float: left;
+}
+.profileImageContainer img {
+    width: 100px;
+    height: 100px;
+}
+.profileCardUsernameContainer {
+    width: 50%;
+    float: left;
+    margin: 10px 0 10px 0;
+}
+.profileCardTagLine {
+    width: 100%;
+}
+.menuItem {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #303030;
+    margin: 10px 0 10px 0;
+    text-decoration: none !important;
+    color: #ffffff;
+    border: 0px;
+}
+.menuItem:hover {
+    background-color: darkred;
+    color: #ffffff;
+}
+.menuItem.active {
+    background-color: darkred;
+    color: #ffffff;
+}
+.uploadImgTemp {
+    width: 180px;
+    height: 180px;
+}
+.uploadImgSmall {
+    width: 150px;
+    height: 150px;
 }

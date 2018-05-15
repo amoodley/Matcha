@@ -42,5 +42,9 @@ CREATE TABLE `profiles` (
     `profileimg` varchar(255) DEFAULT NULL,
     `latitude` varchar(20),
     `longitude` varchar(20),
+    `img1` varchar(255) DEFAULT NULL,
+    `img2` varchar(255) DEFAULT NULL,
+    `img3` varchar(255) DEFAULT NULL,
+    `img4` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;

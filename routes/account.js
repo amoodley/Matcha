@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
 
-// Load Model
+// Load Models
 const db = require('../database/db');
 const users = require('../models/users.js');
 

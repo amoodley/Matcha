@@ -43,7 +43,6 @@ router.get('/', (req, res) => {
 			var user = users.getUserById(userId);
 			var profile = db.query('SELECT * FROM `profiles` WHERE user_id=\'' + userId +'\'');
 			var profileImg = profile.data.rows[0].profileimg;
-			var profileImg = profileImg.substring(6, profileImg.length);
 			var bio = profile.data.rows[0].bio;
 			var interests = profile.data.rows[0].interests;
 			var username = user.username;
@@ -178,15 +177,37 @@ router.get('/setupImage', (req, res) => {
 });
 
 // POST: Setup Profile
-router.post('/setupImage', upload.single('profileImg'), (req, res) => {
+router.post('/setupImage', upload.any('photos', 5), (req, res) => {
 	var userId = users.isLoggedIn(req);
-	if (req.file){
-		var path = req.file.path;
+	if (req.files[0]){
+		var path, path1, path2, path3, path4 = '';
+		path = req.files[0].path;
 		path = path.replace(/\\/g, '/');
-		var sql = 'UPDATE `profiles` SET `profileimg` = \'' + path +'\' WHERE user_id=\'' + userId +'\'';
+		path = path.substring(6, path.length);
+		if (req.files[1]) {
+			path1 = req.files[1].path;
+			path1 = path1.replace(/\\/g, '/');
+			path1 = path1.substring(6, path1.length);
+		}
+		if (req.files[2]) {
+			path2 = req.files[2].path;
+			path2 = path2.replace(/\\/g, '/');
+			path2 = path2.substring(6, path2.length);
+		}
+		if (req.files[3]) {
+			path3 = req.files[3].path;
+			path3 = path3.replace(/\\/g, '/');
+			path3 = path3.substring(6, path3.length);
+		}
+		if (req.files[4]) {
+			path4 = req.files[4].path;
+			path4 = path4.replace(/\\/g, '/');
+			path4 = path4.substring(6, path4.length);
+		}
+		var sql = 'UPDATE `profiles` SET `profileimg` = \'' + path +'\', `img1` = \'' + path1 +'\', `img2` = \'' + path2 +'\', `img3` = \'' + path3 +'\', `img4` = \'' + path4 +'\' WHERE user_id=\'' + userId +'\'';
 		var result = db.query(sql);
-		var sql = 'UPDATE `users` SET `state` = \'3\' WHERE id=\'' + userId +'\'';
-		var result = db.query(sql);
+		console.log(result);
+		var result = db.query('UPDATE `users` SET `state` = \'3\' WHERE id=\'' + userId +'\'');
 		res.redirect('/');
 	} else {
 		res.render('home/setupImage', {
@@ -194,6 +215,21 @@ router.post('/setupImage', upload.single('profileImg'), (req, res) => {
 			message: 'Please choose a profile picture'
 		});
 	}
+
+	// if (req.files){
+	// 	var path = req.file.path;
+	// 	path = path.replace(/\\/g, '/');
+	// 	var sql = 'UPDATE `profiles` SET `profileimg` = \'' + path +'\' WHERE user_id=\'' + userId +'\'';
+	// 	var result = db.query(sql);
+	// 	var sql = 'UPDATE `users` SET `state` = \'3\' WHERE id=\'' + userId +'\'';
+	// 	var result = db.query(sql);
+	// 	res.redirect('/');
+	// } else {
+	// 	res.render('home/setupImage', {
+	// 		title: 'Set profile image',
+	// 		message: 'Please choose a profile picture'
+	// 	});
+	// }
 });
 
 // GET: Setup 
