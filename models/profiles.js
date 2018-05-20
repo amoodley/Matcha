@@ -80,5 +80,12 @@ exports.getViews = function(userId){
     return views;
 }
 
+exports.addToLikes = function(userId, viewerId){
+    var sql = 'INSERT INTO `likes` (id, user_id, liker_id) VALUES(?)';
+    var values = [null, userId, viewerId];
+    var result = db.query(sql, [values]);
+
+    return(result.data.rows.insertId);
+}
 
 return module.exports;

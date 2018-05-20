@@ -56,3 +56,10 @@ CREATE TABLE `profile_views` (
     `viewer_id` varchar(32) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;
+
+CREATE TABLE `likes` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `user_id` varchar(32) DEFAULT NULL,
+    `liker_id` varchar(32) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB COLLATE utf8_general_ci;

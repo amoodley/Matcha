@@ -80,6 +80,16 @@ router.get('/views', (req, res) => {
 	res.send(views);
 });
 
+router.post('/like', (req, res) => {
+	var username = req.body.username;
+	var viewername = req.body.viewername;
+	var user = users.getUserByUsername(username);
+	var viewer = users.getUserByUsername(viewername);
+	profiles.addToLikes(user.id, viewer.id);
+
+	res.send('Success');
+});
+
 // GET: Setup Profile
 router.get('/setupProfile', (req, res) => {
 	res.render('home/setupProfile', {

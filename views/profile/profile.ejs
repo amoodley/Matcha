@@ -8,7 +8,7 @@
                     </div>
                     <div class="profileCardUsernameContainer text-center">
                         <h3 class="username">
-                            <a href="/profile/<%= user.username %>" class="wordwrap">
+                            <a href="/profile/<%= user.username %>" class="wordwrap" id="username">
                                 <%= user.username %>
 							</a>
                         </h3>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="viewProfileInfo">
-                        <h2>
+                        <h2 id="profileUsername">
                             <%= viewUser.username %>
                         </h2>
                         <hr>
@@ -117,7 +117,7 @@
                         </div>
                         <br>
                         <br>
-                        <button class="btn pull-left"><span class="glyphicon glyphicon-heart"></span> Like</button>
+                        <button class="btn pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
                         <button class="btn pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</button>
                         <br>
                         <br>
@@ -132,5 +132,51 @@
         birthday = birthday.trim();
         birthday = birthday.substring(0, 10);
         document.getElementById("myDate").innerHTML = birthday;
+
+        $("#like").click(function () {
+            var username = document.getElementById('profileUsername').innerHTML;
+            var username = username.trim();
+            var viewername = document.getElementById('username').innerHTML;
+            var viewername = viewername.trim();
+            $.ajax({
+                url: "/like",
+                type: "POST",
+                data: {
+                    'username': username,
+                    'viewername': viewername
+                },
+                success: (result) => {
+                    console.log(result);
+                    // if (result) {
+                    //     $('#viewResults').empty();
+                    //     var viewResults = document.getElementById('viewResults');
+                    //     result.forEach(element => {
+                    //         var birthday = element.birthday.substring(0, 10);
+                    //         $('#viewResults').append(`
+                    //             <div class="searchResultCard">
+                    //                 <div class="searchResultCardImage">
+                    //                     <img src="`+ element.profileimg + `" class="img-responsive img-circle">
+                    //                 </div>
+                    //                 <div class="searchResultCardInfo text-center">
+                    //                     <a href="/profile/`+ element.username + `">
+                    //                         <h3>`+ element.username + `</h3>
+                    //                     </a>
+                    //                     <p class="myDate">`+ element.age + `, ` + element.city + `</p>
+                    //                 </div>
+                    //                 <div class="searchResultCardTagLine">
+                    //                     <p>`+ element.bio + `</p>
+                    //                     <p class="profileCardLabel">Interests</p>
+                    //                     <p>`+ element.interests + `</p>
+                    //                 </div>
+                    //             </div>`
+                    //         );
+                    //     });
+                    // }
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            });
+        });
     </script>
     <% include ../partials/footer.ejs %>
