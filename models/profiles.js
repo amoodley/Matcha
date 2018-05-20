@@ -10,7 +10,7 @@ exports.insertNewProfile = function(newProfile){
     var sql = 'INSERT INTO `profiles` (id, user_id, first_name, last_name, birthday, city, gender, preference, bio, interests, profileimg, latitude, longitude, img1, img2, img3, img4, fame) VALUES(?)';
     var values = [null, newProfile.userId, newProfile.firstName, newProfile.lastName, newProfile.birthday, newProfile.city, newProfile.gender, newProfile.preference, newProfile.bio, newProfile.interests, null, null, null, null, null, null, null, null];
     var result = db.query(sql, [values]);
-    var sql = 'UPDATE `users` SET `state` = \'2\' WHERE id=\'' + userId +'\'';
+    var sql = 'UPDATE `users` SET `state` = \'2\' WHERE id=\'' + newProfile.userId +'\'';
     var result = db.query(sql);
     return(result.data.rows.insertId);
 }

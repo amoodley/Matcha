@@ -214,7 +214,6 @@ router.post('/setupImage', upload.any('photos', 5), (req, res) => {
 		}
 		var sql = 'UPDATE `profiles` SET `profileimg` = \'' + path +'\', `img1` = \'' + path1 +'\', `img2` = \'' + path2 +'\', `img3` = \'' + path3 +'\', `img4` = \'' + path4 +'\' WHERE user_id=\'' + userId +'\'';
 		var result = db.query(sql);
-		console.log(result);
 		var result = db.query('UPDATE `users` SET `state` = \'3\' WHERE id=\'' + userId +'\'');
 		res.redirect('/');
 	} else {
@@ -223,21 +222,6 @@ router.post('/setupImage', upload.any('photos', 5), (req, res) => {
 			message: 'Please choose a profile picture'
 		});
 	}
-
-	// if (req.files){
-	// 	var path = req.file.path;
-	// 	path = path.replace(/\\/g, '/');
-	// 	var sql = 'UPDATE `profiles` SET `profileimg` = \'' + path +'\' WHERE user_id=\'' + userId +'\'';
-	// 	var result = db.query(sql);
-	// 	var sql = 'UPDATE `users` SET `state` = \'3\' WHERE id=\'' + userId +'\'';
-	// 	var result = db.query(sql);
-	// 	res.redirect('/');
-	// } else {
-	// 	res.render('home/setupImage', {
-	// 		title: 'Set profile image',
-	// 		message: 'Please choose a profile picture'
-	// 	});
-	// }
 });
 
 // GET: Setup 

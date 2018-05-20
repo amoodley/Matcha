@@ -49,3 +49,10 @@ CREATE TABLE `profiles` (
     `fame` int DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;
+
+CREATE TABLE `profile_views` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `user_id` varchar(32) DEFAULT NULL,
+    `viewer_id` varchar(32) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB COLLATE utf8_general_ci;
