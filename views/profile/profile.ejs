@@ -1,3 +1,135 @@
 <% include ../partials/header.ejs %>
-	
-<% include ../partials/footer.ejs %>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="jumbotron">
+                    <div class="profileImageContainer">
+                        <img src="<%= userProfile.profileimg %>" class="img-circle">
+                    </div>
+                    <div class="profileCardUsernameContainer text-center">
+                        <h3 class="username">
+                            <a href="/profile/<%= user.username %>" class="wordwrap">
+                                <%= user.username %>
+							</a>
+                        </h3>
+                        <p id="birthday" style="display: none;">
+                            <%= userProfile.birthday %>
+                        </p>
+                        <p>
+                            <%= userAge %>,
+                                <%= userProfile.city %>
+                        </p>
+                    </div>
+                    <div class="profileCardTagLine">
+                        <p>
+                            <%= userProfile.bio %>
+                        </p>
+                        <p class="profileCardLabel">Interests</p>
+                        <p>
+                            <%= userProfile.interests %>
+                        </p>
+                    </div>
+                </div>
+                <!-- Profile Card -->
+            </div>
+            <div class="col-md-9 col-lg-7">
+                <div class="jumbotron">
+                    <div class="viewProfileImage">
+                        <a href="<%= viewProfile.profileimg %>" data-fancybox="gallery" data-caption="Caption #1">
+                            <img src="<%= viewProfile.profileimg %>" class="img-responsive">
+                        </a>
+                        <div class="viewProfileImageGallery">
+                            <div class="viewProfileImageThumb">
+                                <a href="<%= viewProfile.img1 %>" data-fancybox="gallery" data-caption="Caption #1">
+                                    <img src="<%= viewProfile.img1 %>" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="viewProfileImageThumb">
+                                <a href="<%= viewProfile.img2 %>" data-fancybox="gallery" data-caption="Caption #1">
+                                    <img src="<%= viewProfile.img2 %>" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="viewProfileImageThumb">
+                                <a href="<%= viewProfile.img3 %>" data-fancybox="gallery" data-caption="Caption #1">
+                                    <img src="<%= viewProfile.img3 %>" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="viewProfileImageThumb">
+                                <a href="<%= viewProfile.img4 %>" data-fancybox="gallery" data-caption="Caption #1">
+                                    <img src="<%= viewProfile.img4 %>" class="img-responsive">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="viewProfileInfo">
+                        <h2>
+                            <%= viewUser.username %>
+                        </h2>
+                        <hr>
+                        <p class="pull-left">Age</p>
+                        <p class="pull-right">
+                            <%= viewAge %>
+                        </p>
+                        <br>
+                        <br>
+                        <p class="pull-left">Birthday</p>
+                        <p class="pull-right" id="birthday" hidden>
+                            <%= viewProfile.birthday %>
+                        </p>
+                        <p class="pull-right" id="myDate"></p>
+                        <br>
+                        <br>
+                        <p class="pull-left">City</p>
+                        <p class="pull-right">
+                            <%= viewProfile.city %>
+                        </p>
+                        <br>
+                        <br>
+                        <p class="pull-left">Gender</p>
+                        <p class="pull-right">
+                            <%= viewProfile.gender %>
+                        </p>
+                        <br>
+                        <br>
+                        <p class="pull-left">Interested in</p>
+                        <p class="pull-right">
+                            <%= viewProfile.preference %>
+                        </p>
+                        <br>
+                        <br>
+                        <p class="pull-left">Fame Rating</p>
+                        <p class="pull-right">
+                            <%= viewProfile.fame %>
+                        </p>
+                        <br>
+                        <br>
+                        <button class="btn pull-left"><span class="glyphicon glyphicon-heart"></span> Like</button>
+                        <button class="btn pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</button>
+                    </div>
+                    <div class="viewProfileTagLine">
+                        <p>About <%= viewUser.username %></p>
+                        <div class="border">
+                            <p>
+                                <%= viewProfile.bio %>
+                            </p>
+                        </div>
+                        <br>
+                        <p>Likes</p>
+                        <div class="border">
+                            <p>
+                                <%= viewProfile.interests %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var birthday = document.getElementById("birthday").innerText;
+        birthday = birthday.trim();
+        birthday = birthday.substring(0, 10);
+        document.getElementById("myDate").innerHTML = birthday;
+    </script>
+    <% include ../partials/footer.ejs %>

@@ -1,29 +1,193 @@
 <% include ../partials/header.ejs %>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-3">
-			<div class="jumbotron">
-				<div class="pull-left profileCardImage">
-					<img src="<%= profileImg %>" class="profileImage img-circle">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="jumbotron">
+					<div class="profileImageContainer">
+						<img src="<%= profile.profileimg %>" class="img-circle">
+					</div>
+					<div class="profileCardUsernameContainer text-center">
+						<h3 class="username">
+							<a href="/profile/<%= user.username %>" class="wordwrap">
+								<%= user.username %>
+							</a>
+						</h3>
+						<p id="birthday" style="display: none;">
+							<%= profile.birthday %>
+						</p>
+						<p>
+							<%= age %>,
+								<%= profile.city %>
+						</p>
+					</div>
+					<div class="profileCardTagLine">
+						<p>
+							<%= profile.bio %>
+						</p>
+						<p class="profileCardLabel">Interests</p>
+						<p>
+							<%= profile.interests %>
+						</p>
+					</div>
 				</div>
-				<div class="profileCardInfo">
-					<p class="profileCardUsername"><%= username %></p>
-					<p class="profileCardAgeCity"><%= age %>, <%= city %></p>
-				</div>
-				<br>
-				<div class="profileCardDetails">
-					<p class="profileCardBio"><%= bio %></p>
-					<p class="profileCardLabel">Interests</p>
-					<p class="profileCardInterests"><%= interests %></p>
+				<div class="jumbotron">
+					<button class="menuItem tablinks" onclick="openTab(event, 'search')" id="defaultOpen">Search</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')">Suggestions</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'matches')">Matches</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'likes')">Likes</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'views')" id="viewsTab">Views</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'messages')">Messages</button>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="jumbotron">
+			<div id="search" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<form action="/home/search">
+						<label for="searchPreference">Search for</label>
+						<select name="searchPreference" id="searchPreference">
+							<option value="female" <% if (profile.preference=='female' ){ %> selected
+								<% } %>>Women</option>
+							<option value="male" <% if (profile.preference=='male' ){ %> selected
+								<% } %>>Men</option>
+							<option value="bi" <% if (profile.preference=='bi' ){ %> selected
+								<% } %>>Other</option>
+						</select>
+						<label for="searchFromAge">Between Age</label>
+						<input type="text" id="searchFromAge" class="searchAgeInput" value="18">
+						<label for="searchToAge">and</label>
+						<input type="text" id="searchToAge" class="searchAgeInput" value="59">
+						<label for="searchDistance">Within</label>
+						<select name="searchDistance" id="searchDistance">
+							<option value="5">5</option>
+							<option value="10">10</option>
+							<option value="20">20</option>
+							<option value="50">50</option>
+							<option value="100">100</option>
+						</select>
+						<label>km's from me</label>
+						<br>
+						<button class="btn pull-right" type="button" onclick="search()">Search</button>
+					</form>
+					<br>
+					<br>
+				</div>
+				<div id="searchResults">
 
+				</div>
+			</div>
+			<div id="suggestions" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2 class="pull-left">Suggestions</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
+				</div>
+			</div>
+			<div id="matches" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2 class="pull-left">Matches</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
+				</div>
+			</div>
+			<div id="likes" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2 class="pull-left">Likes</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
+				</div>
+			</div>
+			<div id="views" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2 class="pull-left">Views</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
+
+				</div>
+				<div id="viewResults">
+
+				</div>
+			</div>
+			<div id="messages" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2 class="pull-left">Messages</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-	
-<% include ../partials/footer.ejs %>
+	<script type="text/javascript" src="/js/openTab.js"></script>
+	<!-- Switch Tabs -->
+	<script type="text/javascript" src="/js/index.js"></script>
+	<!-- Ajax form submit -->
+	<script>
+		// Get the element with id="defaultOpen" and click on it
+		document.getElementById("defaultOpen").click();
+
+		$("#viewsTab").click(function () {
+			$.ajax({
+				url: "/home/views",
+				type: "GET",
+				success: (result) => {
+					if (result) {
+						console.log(result);
+						var searchResult = document.getElementById('searchResult');
+						result.forEach(element => {
+							var birthday = element.birthday.substring(0, 10);
+							$('#viewResults').append(`
+								<div class="searchResultCard">
+									<div class="searchResultCardImage">
+										<img src="`+ element.profileimg + `" class="img-responsive img-circle">
+									</div>
+									<div class="searchResultCardInfo text-center">
+										<a href="/profile/`+ element.username + `">
+											<h3>`+ element.username + `</h3>
+										</a>
+										<p class="myDate">`+ element.age + `, ` + element.city + `</p>
+									</div>
+									<div class="searchResultCardTagLine">
+										<p>`+ element.bio + `</p>
+										<p class="profileCardLabel">Interests</p>
+										<p>`+ element.interests + `</p>
+									</div>
+								</div>`
+							);
+						});
+					}
+				},
+				error: (err) => {
+					console.log(err);
+				}
+			});
+		});
+	</script>
+	<% include ../partials/footer.ejs %>

@@ -46,5 +46,6 @@ CREATE TABLE `profiles` (
     `img2` varchar(255) DEFAULT NULL,
     `img3` varchar(255) DEFAULT NULL,
     `img4` varchar(255) DEFAULT NULL,
+    `fame` int DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;

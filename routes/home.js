@@ -26,44 +26,56 @@ const upload = multer({ storage: storage });
 
 const db = require('../database/db');
 const users = require('../models/users.js');
+const profiles = require('../models/profiles.js');
 
 
 // GET: Home/Index
 router.get('/', (req, res) => {
 	if (users.isLoggedIn(req)) {
 		var userId = users.isLoggedIn(req);
-		var result = users.getUserById(userId);
-		if (result.state == 1) {
+		var user = users.getUserById(userId);
+		if (user.state == 1) {
 			res.redirect('/setupProfile');
-		} else if (result.state == 2) {
+		} else if (user.state == 2) {
 			 res.redirect('/setupImage');
-		} else if (result.state == 3) {
+		} else if (user.state == 3) {
 			 res.redirect('/setupLocation');
-		} else if (result.state == 4) {
-			var user = users.getUserById(userId);
-			var profile = db.query('SELECT * FROM `profiles` WHERE user_id=\'' + userId +'\'');
-			var profileImg = profile.data.rows[0].profileimg;
-			var bio = profile.data.rows[0].bio;
-			var interests = profile.data.rows[0].interests;
-			var username = user.username;
-			var city = profile.data.rows[0].city;
-			var birthday = profile.data.rows[0].birthday;
+		} else if (user.state == 4) {
+			var profile = profiles.getProfileById(userId);
+			var birthday = profile.birthday;
 			birthday = birthday.substring(0, 10);
 			let ageFromString = new AgeFromDateString(birthday).age;
 
 			res.render('home/index', {
 				title: 'Home',
-				profileImg: profileImg,
-				username: username,
+				user: user,
+				profile: profile,
 				age: ageFromString,
-				city: city,
-				bio: bio,
-				interests: interests
 			});
 		}
 	} else {
 		res.redirect('/account/login');
 	}
+});
+
+// POST: Search
+router.post('/search', (req, res) => {
+	var userId = users.isLoggedIn(req);
+	var profile = profiles.getProfileById(userId);
+	var searchQuery = {
+		gender: profile.gender,
+		preference: req.body.preference,
+		fromAge: req.body.fromAge,
+		toAge: req.body.toAge,
+		distance: req.body.distance
+	}
+	var searchResult = profiles.searchProfiles(searchQuery);
+	res.send(searchResult);
+});
+
+router.get('/views', (req, res) => {
+	var userId = users.isLoggedIn(req);
+	var profile = profiles.getProfileById(userId);
 });
 
 // GET: SetupProfile
@@ -146,11 +158,7 @@ router.post('/setupProfile', (req, res) => {
 			latitude: '',
 			longitude: ''
 		};
-		var sql = 'INSERT INTO `profiles` (id, user_id, first_name, last_name, birthday, city, gender, preference, bio, interests, profileimg, latitude, longitude) VALUES(?)';
-		var values = [null, newProfile.userId, newProfile.firstName, newProfile.lastName, newProfile.birthday, newProfile.city, newProfile.gender, newProfile.preference, newProfile.bio, newProfile.interests, null, null, null];
-		var result = db.query(sql, [values]);
-		var sql = 'UPDATE `users` SET `state` = \'2\' WHERE id=\'' + userId +'\'';
-		var result = db.query(sql);
+		var result = profiles.insertNewProfile(newProfile);
 		res.redirect('/');
 	} else {
 		res.render('home/setupProfile', {

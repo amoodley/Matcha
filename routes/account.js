@@ -209,7 +209,7 @@ router.post('/login', (req, res) => {
 
 // GET: Logout
 router.get('/logout', (req, res) => {
-	if (req.cookies.MID_ != undefined) {
+	if (req.cookies.MID != undefined) {
         var cookie_hash = crypto.createHash('sha1').update(req.cookies.MID).digest("hex");
 		db.query('DELETE FROM `login_tokens` WHERE token=\'' + cookie_hash +'\'');
 		// Set Cookie Options

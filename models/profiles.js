@@ -1,14 +1,19 @@
 const db = require('../database/db');
 const crypto = require('crypto');
 const cookieParser = require('cookie-parser');
+const ageCalculator = require('age-calculator');
+let {AgeFromDateString, AgeFromDate} = require('age-calculator');
 
-// exports.insert = function(newUser){
-//     var sql = 'INSERT INTO `users` (id, username, password_hash, email, activated, state) VALUES(?)';
-//     var values = [newUser.id, newUser.username, newUser.password_hash, newUser.email, newUser.activated, newUser.state];
-//     var result = db.query(sql, [values]);
+const users = require('./users');
 
-//     return(result.data.rows.insertId);
-// }
+exports.insertNewProfile = function(newProfile){
+    var sql = 'INSERT INTO `profiles` (id, user_id, first_name, last_name, birthday, city, gender, preference, bio, interests, profileimg, latitude, longitude, img1, img2, img3, img4, fame) VALUES(?)';
+    var values = [null, newProfile.userId, newProfile.firstName, newProfile.lastName, newProfile.birthday, newProfile.city, newProfile.gender, newProfile.preference, newProfile.bio, newProfile.interests, null, null, null, null, null, null, null, null];
+    var result = db.query(sql, [values]);
+    var sql = 'UPDATE `users` SET `state` = \'2\' WHERE id=\'' + userId +'\'';
+    var result = db.query(sql);
+    return(result.data.rows.insertId);
+}
 
 exports.getProfileById = function(userId){
     var sql = 'SELECT * FROM `profiles` WHERE user_id=\'' + userId +'\'';
@@ -17,12 +22,48 @@ exports.getProfileById = function(userId){
     return(result.data.rows[0]);
 }
 
-// exports.activateAccount = function(userId){
-//     var sql = 'UPDATE `users` SET `activated` = \'1\' WHERE id=\'' + userId +'\'';
-//     var result = db.query(sql);
+exports.updateProfile = function(user){
+    var sql = 'UPDATE `profiles` SET `first_name` = \''+ user.firstName +'\', `last_name` = \''+ user.lastName +'\', `birthday` = \''+ user.birthday +'\', `city` = \''+ user.city +'\', `gender` = \''+ user.gender +'\', `preference` = \''+ user.preference +'\', `bio` = \''+ user.bio +'\', `interests` = \''+ user.interests +'\' WHERE id=\'' + user.userId +'\'';
+    var result = db.query(sql);
+    return(result.data.rows);
+}
 
-//     return(result.data.rows[0]);
-// }
+exports.updateLocation = function(user){
+    var sql = 'UPDATE `profiles` SET `latitude` = \''+ user.latitude +'\', `longitude` = \''+ user.longitude +'\' WHERE id=\'' + user.userId +'\'';
+    var result = db.query(sql);
+    return(result.data.rows);
+}
+
+exports.searchProfiles = function(searchQuery){
+    var sql = 'SELECT * FROM `profiles` WHERE gender=\''+ searchQuery.preference +'\' AND preference=\''+ searchQuery.gender +'\'';
+    var searchResult = db.query(sql).data.rows;
+    for(i in searchResult) {
+        if (searchResult.hasOwnProperty(i)) {
+            var user = users.getUserById(searchResult[i].user_id);
+            var birthday = searchResult[i].birthday.substring(0, 10);
+            searchResult[i].username = user.username;
+            searchResult[i].age = new AgeFromDateString(birthday).age;
+        }
+    }
+    return(searchResult);
+    
+}
+
+exports.updateFameRating = function(userId){
+    var currentFame = db.query('SELECT * FROM `profiles` WHERE user_id=\'' + userId +'\'').data.rows[0].fame;
+    var newFame = currentFame + 1;
+    var result = db.query('UPDATE `profiles` SET `fame` = \'' + newFame +'\' WHERE id=\'' + userId +'\'');
+
+    return(result.data.rows[0]);
+}
+
+exports.addToProfileViews = function(userId, viewerId){
+    var sql = 'INSERT INTO `profile_views` (id, user_id, viewer_id) VALUES(?)';
+    var values = [null, userId, viewerId];
+    var result = db.query(sql, [values]);
+
+    return(result.data.rows.insertId);
+}
 
 
 return module.exports;

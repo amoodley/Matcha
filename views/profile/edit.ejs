@@ -4,7 +4,7 @@
 			<div class="col-md-3">
 				<div class="jumbotron">
 					<div class="profileImageContainer">
-						<img src="https://i.imgur.com/m3CiU5r.jpg" class="img-circle">
+						<img src="<%= profile.profileimg %>" class="img-circle">
 					</div>
 					<div class="profileCardUsernameContainer text-center">
 						<h3>
@@ -27,7 +27,6 @@
 							<%= profile.interests %>
 						</p>
 					</div>
-
 				</div>
 				<div class="jumbotron">
 					<button class="menuItem tablinks" onclick="openTab(event, 'editProfile')" id="defaultOpen">Edit profile</button>
@@ -35,80 +34,96 @@
 					<button class="menuItem tablinks" onclick="openTab(event, 'editLocation')">Update location</button>
 				</div>
 			</div>
-			<div id="editProfile" class="col-md-7 tabcontent">
+			<div id="editProfile" class="col-md-9 col-lg-7 tabcontent">
 				<div class="jumbotron">
 					<div>
-						<h2>Edit profile</h2>
+						<h2 class="pull-left">Edit profile</h2>
+						<p id="successMessage" class="pull-right successMessage" hidden>Updated successfully</p>
+						<br>
+						<br>
+						<br>
 						<hr>
 					</div>
-					<form action="/profile/editprofile">
+					<form action="/profile/editprofile" id="editprofile">
 						<div class="form-group">
 							<div class="halfInputLeft pull-left">
 								<label for="firstName" class="">First name</label>
-								<input type="text" name="firstName" value="<%= profile.first_name %>" class="form-control">
+								<p id="firstNameMessage" class="pull-right formValidationMessage"></p>
+								<input type="text" name="firstName" id="firstName" value="<%= profile.first_name %>" class="form-control">
 							</div>
 							<div class="halfInputRight pull-right">
 								<label for="lastName" class="">Last name</label>
-								<input type="text" name="lastName" value="<%= profile.last_name %>" class="form-control">
+								<p id="lastNameMessage" class="pull-right formValidationMessage"></p>
+								<input type="text" name="lastName" id="lastName" value="<%= profile.last_name %>" class="form-control">
 							</div>
 							<div class="halfInputLeft pull-left">
 								<label for="birthday" class="">Birthday</label>
+								<p id="birthdayMessage" class="pull-right formValidationMessage"></p>
 								<input type="date" id="myDate" name="birthday" class="form-control">
 							</div>
 							<div class="halfInputRight pull-right">
 								<label for="city" class="">City</label>
-								<input type="text" name="city" value="<%= profile.city %>" class="form-control">
+								<p id="cityMessage" class="pull-right formValidationMessage"></p>
+								<input type="text" name="city" id="city" value="<%= profile.city %>" class="form-control">
 							</div>
 							<div class="halfInputLeft pull-left">
 								<label for="gender" class="">I am a</label>
-								<select class="form-control" name="gender" value="<%= profile.gender %>">
-									<option value="male">Man</option>
-									<option value="female">Woman</option>
-									<option value="other">Other</option>
+								<p id="genderMessage" class="pull-right formValidationMessage"></p>
+								<select class="form-control" id="gender" name="gender" value="<%= profile.gender %>">
+									<option value="male" <% if (profile.gender == 'male'){ %> selected <% } %>>Man</option>
+									<option value="female" <% if (profile.gender == 'female'){ %> selected <% } %>>Woman</option>
+									<option value="other" <% if (profile.gender == 'bi'){ %> selected <% } %>>Other</option>
 								</select>
 							</div>
 							<div class="halfInputRight pull-right">
 								<label for="preference" class="">Seeking a</label>
-								<select class="form-control" name="preference" value="<%= profile.preference %>">
-									<option value="female">Woman</option>
-									<option value="male">Man</option>
-									<option value="other">Other</option>
+								<p id="preferenceMessage" class="pull-right formValidationMessage"></p>
+								<select class="form-control" id="preference" name="preference" value="<%= profile.preference %>">
+									<option value="female" <% if (profile.preference == 'female'){ %> selected <% } %>>Woman</option>
+									<option value="male" <% if (profile.preference == 'male'){ %> selected <% } %>>Man</option>
+									<option value="other" <% if (profile.preference == 'bi'){ %> selected <% } %>>Other</option>
 								</select>
 							</div>
 							<label for="bio" class="">Bio</label>
-							<textarea name="bio" id="" cols="8" rows="3" class="form-control"><%= profile.bio %></textarea>
+							<textarea name="bio" id="bio" cols="8" rows="3" class="form-control"><%= profile.bio %></textarea>
 							<label for="interests" class="">Interests</label>
-							<textarea name="interests" id="" cols="8" rows="2" class="form-control"><%= profile.interests %></textarea>
+							<textarea name="interests" id="interests" cols="8" rows="2" class="form-control"><%= profile.interests %></textarea>
 							<div class="text-center">
-								<button class="btn">Save</button>
+								<button class="btn" type="button" onclick="editProfile()">Save</button>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-			<div id="editPicture" class="col-md-7 tabcontent">
+			<div id="editPicture" class="col-md-9 col-lg-7 tabcontent">
 				<div class="jumbotron">
 					<div>
-						<h2>Upload pictures</h2>
+						<h2 class="pull-left">Upload pictures</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
 						<hr>
 					</div>
-					<form action="" class="">
+					<form action="/profile/editphotos" id="editphotos" enctype="multipart/form-data" method="POST" class="">
 						<div class="text-center">
 							<img id="profileImg" src="<%= profile.profileimg %>" class="uploadImgTemp">
 							<br>
 							<br>
-							<input type="file" class="btn fileUploadButton" onchange="readURL(this);">
+							<input id="profileImg_" type="file" class="btn fileUploadButton" onchange="readURL(this);">
 						</div>
 						<br>
 						<div class="col-md-3 text-center">
 							<% if (profile.img1) { %>
 								<img id="img1" src="<%= profile.img1 %>" class="uploadImgSmall">
-							<% } else { %>
-								<img id="img1" src="https://i.imgur.com/ftZbKJI.png" class="uploadImgSmall">
-							<% } %>
-							<br>
-							<br>
-							<input type="file" class="btn" onchange="readURL1(this);">
+								<% } else { %>
+									<img id="img1" src="https://i.imgur.com/ftZbKJI.png" class="uploadImgSmall">
+									<% } %>
+										<br>
+										<br>
+										<input id="img1_" type="file" class="btn" onchange="readURL1(this);" style="margin: 0 auto;">
+										<span id="status"></span>
 						</div>
 						<div class="col-md-3 text-center">
 							<% if (profile.img2) { %>
@@ -118,7 +133,7 @@
 							<% } %>
 							<br>
 							<br>
-							<input type="file" class="btn" onchange="readURL2(this);">
+							<input id="img2_" type="file" class="btn" onchange="readURL2(this);" style="margin: 0 auto;">
 						</div>
 						<div class="col-md-3 text-center">
 							<% if (profile.img3) { %>
@@ -128,7 +143,7 @@
 							<% } %>
 							<br>
 							<br>
-							<input type="file" class="btn" onchange="readURL3(this);">
+							<input id="img3_" type="file" class="btn" onchange="readURL3(this);" style="margin: 0 auto;">
 						</div>
 						<div class="col-md-3 text-center">
 							<% if (profile.img4) { %>
@@ -138,25 +153,29 @@
 							<% } %>
 							<br>
 							<br>
-							<input type="file" class="btn" onchange="readURL4(this);">
+							<input id="img4_" type="file" class="btn" onchange="readURL4(this);" style="margin: 0 auto;">
 						</div>
 						<br>
 						<br>
 						<br>
 						<br>
 						<div class="text-center" style="padding-top: 150px;">
-							<button class="btn">Save</button>
+							<button class="btn" id="upload-button" type="submit" value="submit" form="editphotos">Save</button>
 						</div>
 					</form>
 				</div>
 			</div>
-			<div id="editLocation" class="col-md-7 tabcontent">
+			<div id="editLocation" class="col-md-9 col-lg-7 tabcontent">
 				<div class="jumbotron">
 					<div>
-						<h2>Update location</h2>
+						<h2 class="pull-left">Update location</h2>
+						<p id="successMessage2" class="pull-right successMessage" hidden>Updated successfully</p>
+						<br>
+						<br>
+						<br>
 						<hr>
 					</div>
-					<form action="" class="">
+					<form action="/profile/editlocation" class="">
 						<div class="text-center">
 							<img src="https://i.imgur.com/s84PNui.png" class="locationImage">
 							<br>
@@ -169,11 +188,13 @@
 						<br>
 						<div class="halfInputLeft pull-left">
 							<label for="latitude">Latitude</label>
+							<p id="latitudeMessage" class="pull-right formValidationMessage"></p>
 							<input type="text" name="latitude" id="latitude" value="<%= profile.latitude %>" class="form-control">
 							<!-- style="display:none;" -->
 						</div>
 						<div class="halfInputRight pull-right">
 							<label for="longitude">Longitude</label>
+							<p id="longitudeMessage" class="pull-right formValidationMessage"></p>
 							<input type="text" name="longitude" id="longitude" value="<%= profile.longitude %>" class="form-control">
 							<!-- style="display:none;" -->
 						</div>
@@ -183,105 +204,96 @@
 						<br>
 						<br>
 						<div class="text-center">
-							<button class="btn">Save</button>
+							<button class="btn" type="button" onclick="editLocation()">Save</button>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="/js/openTab.js"></script>
+	<!-- Switch Tabs -->
+	<script type="text/javascript" src="/js/getLocation.js"></script>
+	<!-- Get Location Data -->
+	<script type="text/javascript" src="/js/showImage.js"></script>
+	<!-- Show uploaded images -->
+	<script type="text/javascript" src="/js/edit.js"></script>
+	<!-- Ajax form submit -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i"
+	 crossorigin="anonymous"></script>
 	<script>
+		// Trim Extra from Birthday
 		var birthday = document.getElementById("birthday").innerText;
+		birthday = birthday.trim();
 		birthday = birthday.substring(0, 10);
-		console.log(birthday);
 		document.getElementById("myDate").value = birthday;
-	</script>
-	<script>
-		function openTab(evt, cityName) {
-			var i, tabcontent, tablinks;
-			tabcontent = document.getElementsByClassName("tabcontent");
-			for (i = 0; i < tabcontent.length; i++) {
-				tabcontent[i].style.display = "none";
-			}
-			tablinks = document.getElementsByClassName("tablinks");
-			for (i = 0; i < tablinks.length; i++) {
-				tablinks[i].className = tablinks[i].className.replace(" active", "");
-			}
-			document.getElementById(cityName).style.display = "block";
-			evt.currentTarget.className += " active";
-		}
 
 		// Get the element with id="defaultOpen" and click on it
 		document.getElementById("defaultOpen").click();
 	</script>
 	<script>
-		var latitude = document.getElementById("latitude");
-		var longitude = document.getElementById("longitude");
-		var message = document.getElementById("locationMessage");
 
-		function getLocation() {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(insertLocation);
-			} else {
-				message.innerHTML = 'Geolocation is not supported by this browser ';
+		var form = document.getElementById('editphotos');
+		var fileSelect = document.getElementById('profileImg_');
+		var fileSelect1 = document.getElementById('img1_');
+		var fileSelect2 = document.getElementById('img2_');
+		var fileSelect3 = document.getElementById('img3_');
+		var fileSelect4 = document.getElementById('img4_');
+		var uploadButton = document.getElementById('upload-button');
+
+		form.onsubmit = function(event) {
+			event.preventDefault();
+			uploadButton.innerHTML = 'Uploading...';
+			document.getElementById('successMessage1').hidden = true;
+			document.getElementById('errorMessage1').hidden = true;
+
+			var formData = new FormData();
+			
+			if (fileSelect.files[0] != undefined) {
+				var file = fileSelect.files[0];
+				if (file.type.match('image.*')) {
+					formData.append('profileImg', file, file.name);
+				}
 			}
+			if (fileSelect1.files[0] != undefined) {
+				var file1 = fileSelect1.files[0];
+				if (file1.type.match('image.*')) {
+					formData.append('img1', file1, file1.name);
+				}
+			}
+			if (fileSelect2.files[0] != undefined) {
+				var file2 = fileSelect2.files[0];
+				if (file2.type.match('image.*')) {
+					formData.append('img2', file2, file2.name);
+				}
+			}
+			if (fileSelect3.files[0] != undefined) {
+				var file3 = fileSelect3.files[0];
+				if (file3.type.match('image.*')) {
+					formData.append('img3', file3, file3.name);
+				}
+			}
+			if (fileSelect4.files[0] != undefined) {
+				var file4 = fileSelect4.files[0];
+				if (file4.type.match('image.*')) {
+					formData.append('img4', file4, file4.name);
+				}
+			}
+
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/profile/editphotos', true);
+			xhr.onload = function () {
+				if (xhr.status === 200) {
+					console.log(xhr);
+					uploadButton.innerHTML = 'Save';
+					document.getElementById('successMessage1').hidden = false;
+				} else {
+					document.getElementById('errorMessage1').hidden = false;
+				}
+			};
+			xhr.send(formData);
 		}
 
-		function insertLocation(position) {
-			latitude.value = position.coords.latitude;
-			longitude.value = position.coords.longitude;
-		}
 	</script>
-	<script>
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#profileImg')
-						.attr('src', e.target.result);
-				};
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-		function readURL1(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#img1')
-						.attr('src', e.target.result);
-				};
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-		function readURL2(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#img2')
-						.attr('src', e.target.result);
-				};
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-		function readURL3(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#img3')
-						.attr('src', e.target.result);
-				};
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-		function readURL4(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				reader.onload = function (e) {
-					$('#img4')
-						.attr('src', e.target.result);
-				};
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-	</script>
+
 	<% include ../partials/footer.ejs %>
