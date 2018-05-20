@@ -21,7 +21,6 @@ const storage = multer.diskStorage({
       }
     }
 });
-
 const upload = multer({ storage: storage });
 
 const db = require('../database/db');
@@ -73,12 +72,15 @@ router.post('/search', (req, res) => {
 	res.send(searchResult);
 });
 
+// GET: Profile Views
 router.get('/views', (req, res) => {
 	var userId = users.isLoggedIn(req);
 	var profile = profiles.getProfileById(userId);
+	var views = profiles.getViews(userId);
+	res.send(views);
 });
 
-// GET: SetupProfile
+// GET: Setup Profile
 router.get('/setupProfile', (req, res) => {
 	res.render('home/setupProfile', {
 		title: 'Setup profile',
@@ -101,7 +103,7 @@ router.get('/setupProfile', (req, res) => {
 	});
 });
 
-// POST: SetupProfile
+// POST: Setup Profile
 router.post('/setupProfile', (req, res) => {
 
 	var message = {
@@ -224,7 +226,7 @@ router.post('/setupImage', upload.any('photos', 5), (req, res) => {
 	}
 });
 
-// GET: Setup 
+// GET: Setup Location
 router.get('/setupLocation', (req, res) => {
 	res.render('home/setupLocation', {
 		title: 'Set location'

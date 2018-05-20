@@ -65,5 +65,20 @@ exports.addToProfileViews = function(userId, viewerId){
     return(result.data.rows.insertId);
 }
 
+exports.getViews = function(userId){
+    var sql = 'SELECT * FROM `profile_views` WHERE user_id=\'' + userId +'\'';
+    var result = db.query(sql).data.rows;
+    var views = [];
+    result.forEach(element => {
+        var viewerProfile = this.getProfileById(element.viewer_id);
+        var user = users.getUserById(viewerProfile.user_id);
+        var birthday = viewerProfile.birthday.substring(0, 10);
+        viewerProfile.username = user.username;
+        viewerProfile.age = new AgeFromDateString(birthday).age;
+        views.push(viewerProfile);
+    })
+    return views;
+}
+
 
 return module.exports;

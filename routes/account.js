@@ -107,22 +107,22 @@ router.post('/register', (req, res) => {
 	}
 });
 
-// GET: RegistrationConfirmation
+// GET: Registration Confirmation
 router.get('/registrationConfirmation', (req, res) => {
 	res.render('account/registrationConfirmation');
 });
 
-// GET: ResetConfirmation
+// GET: Reset Confirmation
 router.get('/resetConfirmation', (req, res) => {
 	res.render('account/resetConfirmation');
 });
 
-// GET: PasswordConfirmation
+// GET: Password Confirmation
 router.get('/passwordConfirmation', (req, res) => {
 	res.render('account/passwordConfirmation');
 });
 
-// GET: AccountConfirmation
+// GET: Account Confirmation
 router.get('/accountConfirmation/:token', (req, res) => {
 	var userId = req.params.token;
 	users.activateAccount(userId);
@@ -224,7 +224,7 @@ router.get('/logout', (req, res) => {
 	}
 });
 
-// GET: ForgotPassword
+// GET: ForgotP assword
 router.get('/forgotPassword', (req, res) => {
 	res.render('account/forgotPassword', {
         title: 'Forgot password',
@@ -235,7 +235,7 @@ router.get('/forgotPassword', (req, res) => {
     })
 });
 
-// POST: ForgotPassword
+// POST: Forgot Password
 router.post('/forgotPassword', (req, res) => {
 	var message = {
 		Email: ''
@@ -271,7 +271,7 @@ router.post('/forgotPassword', (req, res) => {
 	}
 });
 
-// GET: ResetPassword
+// GET: Reset Password
 router.get('/resetPassword/:token', (req, res) => {
 	var message = {
 		NewPassword: '',
@@ -299,7 +299,7 @@ router.get('/resetPassword/:token', (req, res) => {
 	}
 });
 
-// POST: ResetPassword
+// POST: Reset Password
 router.post('/resetPassword/:token', (req, res) => {
 	var message = {
 		NewPassword: '',

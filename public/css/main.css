@@ -300,10 +300,8 @@ a:hover {
 }
 .viewProfileInfo {
     position: relative;
-    width: 50%;
-    float: right;
     padding: 0px 20px 0 20px;
-    margin-bottom: 40px;
+    margin-left: 50%;
 }
 @media only screen and (max-width: 768px){
     .viewProfileInfo {
@@ -314,10 +312,6 @@ a:hover {
 }
 .viewProfileInfo p {
     margin-bottom: 0px;
-}
-.viewProfileTagLine {
-    width: 100%;
-    margin-top: 500px;
 }
 .border {
     border: 1px solid black;
@@ -367,8 +361,19 @@ a:hover {
  }
  .searchResultCardInfo {
      padding: 15px;
+     margin-bottom: 70px;
  }
  .searchResultCardTagLine {
      width: 100%;
      padding: 10px;
+ }
+ .image_input {
+     width: 100% !important;
+ }
+ .card {
+     width: 100%;
+     height: 100%;
+     overflow: hidden;
+     padding: 20px;
+     background-color: #303030;
  }

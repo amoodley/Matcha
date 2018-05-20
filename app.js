@@ -21,8 +21,6 @@ const app = express();
 // Cookie Parser Middleware
 app.use(cookieParser());
 
-// File Upload Middleware
-
 // View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
