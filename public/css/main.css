@@ -79,6 +79,11 @@ a:hover {
     height: 40px;
     padding: 8px 0 5px 0;
 }
+.btn:focus {
+    color: #ffffff;
+    background-color: rgb(161, 19, 19);
+    border-radius: 0px !important;
+}
 .navbar {
     border-radius: 0px;
 }
@@ -377,3 +382,22 @@ a:hover {
      padding: 20px;
      background-color: #303030;
  }
+ .modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba(48, 48, 48, .3 ) 
+                url('https://i.imgur.com/miC3HBs.gif') 
+                50% 50% 
+                no-repeat;
+}
+body.loading {
+    overflow: hidden;   
+}
+body.loading .modal {
+    display: block;
+}
