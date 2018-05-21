@@ -66,7 +66,7 @@ exports.addToProfileViews = function(userId, viewerId){
 }
 
 exports.getViews = function(userId){
-    var sql = 'SELECT * FROM `profile_views` WHERE user_id=\'' + userId +'\'';
+    var sql = 'SELECT * FROM `profile_views` WHERE user_id=\'' + userId +'\' ORDER BY id DESC';
     var result = db.query(sql).data.rows;
     var views = [];
     result.forEach(element => {
@@ -89,7 +89,7 @@ exports.addToLikes = function(userId, likerId){
 }
 
 exports.getLikes = function(userId){
-    var sql = 'SELECT * FROM `likes` WHERE user_id=\'' + userId +'\'';
+    var sql = 'SELECT * FROM `likes` WHERE user_id=\'' + userId +'\' ORDER BY id DESC';
     var result = db.query(sql).data.rows;
     var likes = [];
     result.forEach(element => {
