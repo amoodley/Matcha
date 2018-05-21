@@ -78,19 +78,6 @@ function editProfile() {
     }
 }
 
-// function editPhotos() {
-//     var profile = {
-//         profileImg: document.getElementById('profileImg_'),
-//         img1: document.getElementById('img1_'),
-//         img2: document.getElementById('img2_'),
-//         img3: document.getElementById('img3_'),
-//         img4: document.getElementById('img4')
-//     };
-//     console.log(profile.profileImg.files);
-    
-    
-// }
-
 function editLocation() {
     var profile = {
         latitude: document.getElementById('latitude').value,
