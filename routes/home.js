@@ -80,6 +80,15 @@ router.get('/views', (req, res) => {
 	res.send(views);
 });
 
+// GET: Profile Views
+router.get('/likes', (req, res) => {
+	var userId = users.isLoggedIn(req);
+	var profile = profiles.getProfileById(userId);
+	var likes = profiles.getLikes(userId);
+	res.send(likes);
+});
+
+// POST: Like
 router.post('/like', (req, res) => {
 	var username = req.body.username;
 	var viewername = req.body.viewername;
