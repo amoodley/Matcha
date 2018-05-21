@@ -80,12 +80,27 @@ exports.getViews = function(userId){
     return views;
 }
 
-exports.addToLikes = function(userId, viewerId){
+exports.addToLikes = function(userId, likerId){
     var sql = 'INSERT INTO `likes` (id, user_id, liker_id) VALUES(?)';
-    var values = [null, userId, viewerId];
+    var values = [null, userId, likerId];
     var result = db.query(sql, [values]);
 
     return(result.data.rows.insertId);
+}
+
+exports.getLikes = function(userId){
+    var sql = 'SELECT * FROM `likes` WHERE user_id=\'' + userId +'\'';
+    var result = db.query(sql).data.rows;
+    var likes = [];
+    result.forEach(element => {
+        var likerProfile = this.getProfileById(element.liker_id);
+        var user = users.getUserById(likerProfile.user_id);
+        var birthday = likerProfile.birthday.substring(0, 10);
+        likerProfile.username = user.username;
+        likerProfile.age = new AgeFromDateString(birthday).age;
+        likes.push(likerProfile);
+    })
+    return likes;
 }
 
 return module.exports;
