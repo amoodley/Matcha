@@ -2,6 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
+				<!-- Profile Card -->
 				<div class="jumbotron">
 					<div class="profileImageContainer">
 						<img src="<%= profile.profileimg %>" class="img-circle">
@@ -30,11 +31,12 @@
 						</p>
 					</div>
 				</div>
+				<!-- Tab Links -->
 				<div class="jumbotron">
 					<button class="menuItem tablinks" onclick="openTab(event, 'search')" id="defaultOpen">Search</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')">Suggestions</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'matches')">Matches</button>
-					<button class="menuItem tablinks" onclick="openTab(event, 'likes')">Likes</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'likes')" id="likesTab">Likes</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'views')" id="viewsTab">Views</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'messages')">Messages</button>
 				</div>
@@ -65,7 +67,7 @@
 						</select>
 						<label>km's from me</label>
 						<br>
-						<button class="btn pull-right" type="button" onclick="search()">Search</button>
+						<button class="btn pull-right" type="button" id="searchButton" onclick="search()">Search</button>
 					</form>
 					<br>
 					<br>
@@ -112,6 +114,9 @@
 						<hr>
 					</div>
 				</div>
+				<div id="likesResults">
+
+				</div>
 			</div>
 			<div id="views" class="col-md-9 tabcontent">
 				<div class="jumbotron">
@@ -145,6 +150,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal"></div>
 	<script type="text/javascript" src="/js/openTab.js"></script>
 	<!-- Switch Tabs -->
 	<script type="text/javascript" src="/js/index.js"></script>
@@ -152,5 +158,11 @@
 	<script>
 		// Get the element with id="defaultOpen" and click on it
 		document.getElementById("defaultOpen").click();
+
+		$body = $("body");
+		$(document).on({
+			ajaxStart: function () { $body.addClass("loading"); },
+			ajaxStop: function () { $body.removeClass("loading"); }
+		});
 	</script>
 	<% include ../partials/footer.ejs %>
