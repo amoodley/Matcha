@@ -94,9 +94,9 @@ router.post('/like', (req, res) => {
 	var viewername = req.body.viewername;
 	var user = users.getUserByUsername(username);
 	var viewer = users.getUserByUsername(viewername);
-	profiles.addToLikes(user.id, viewer.id);
+	var result = profiles.addToLikes(user.id, viewer.id);
 
-	res.send('Success');
+	res.send(result);
 });
 
 // GET: Setup Profile
