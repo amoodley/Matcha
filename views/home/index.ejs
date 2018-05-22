@@ -33,12 +33,25 @@
 				</div>
 				<!-- Tab Links -->
 				<div class="jumbotron">
-					<button class="menuItem tablinks" onclick="openTab(event, 'search')" id="defaultOpen">Search</button>
-					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')">Suggestions</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')" id="defaultOpen">Suggestions</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'search')">Search</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'matches')">Matches</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'likes')" id="likesTab">Likes</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'views')" id="viewsTab">Views</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'messages')">Messages</button>
+				</div>
+			</div>
+			<div id="suggestions" class="col-md-9 tabcontent">
+				<div class="jumbotron">
+					<div>
+						<h2 class="pull-left">Suggestions</h2>
+						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
+						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
 				</div>
 			</div>
 			<div id="search" class="col-md-9 tabcontent">
@@ -74,19 +87,6 @@
 				</div>
 				<div id="searchResults">
 
-				</div>
-			</div>
-			<div id="suggestions" class="col-md-9 tabcontent">
-				<div class="jumbotron">
-					<div>
-						<h2 class="pull-left">Suggestions</h2>
-						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
-						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
-						<br>
-						<br>
-						<br>
-						<hr>
-					</div>
 				</div>
 			</div>
 			<div id="matches" class="col-md-9 tabcontent">
