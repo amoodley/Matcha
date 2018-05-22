@@ -117,7 +117,11 @@
                         </div>
                         <br>
                         <br>
-                        <button class="btn pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
+                        <% if (isLiked) { %>
+                            <button class="btn pull-left" id="like"><span class="glyphicon glyphicon-heart-empty"></span> Unlike</button>
+                        <% } else { %>
+                            <button class="btn pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
+                        <% } %>
                         <button class="btn pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</button>
                         <br>
                         <br>
@@ -146,7 +150,13 @@
                     'viewername': viewername
                 },
                 success: (result) => {
-                    console.log(result);
+                    if (result == 'liked') {
+                        $('#like').empty();
+                        $('#like').append('<span class="glyphicon glyphicon-heart-empty"></span> Unlike');
+                    } else {
+                        $('#like').empty();
+                        $('#like').append('<span class="glyphicon glyphicon-heart"></span> Like');
+                    }
                 },
                 error: (err) => {
                     console.log(err);
