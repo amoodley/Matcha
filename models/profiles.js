@@ -81,11 +81,17 @@ exports.getViews = function(userId){
 }
 
 exports.addToLikes = function(userId, likerId){
-    var sql = 'INSERT INTO `likes` (id, user_id, liker_id) VALUES(?)';
-    var values = [null, userId, likerId];
-    var result = db.query(sql, [values]);
-
-    return(result.data.rows.insertId);
+	var isLiked = db.query('SELECT * FROM `likes` WHERE user_id=\'' + userId +'\' AND liker_id=\'' + likerId +'\'').data.rows[0];
+    if (!isLiked) {
+        var sql = 'INSERT INTO `likes` (id, user_id, liker_id) VALUES(?)';
+        var values = [null, userId, likerId];
+        var result = db.query(sql, [values]);
+        return('liked');
+    } else {
+        var sql = 'DELETE FROM `likes` WHERE id=\'' + isLiked.id +'\'';
+        var result = db.query(sql);
+        return('unliked');
+    }
 }
 
 exports.getLikes = function(userId){
