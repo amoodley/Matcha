@@ -134,6 +134,8 @@ router.get('/:username', (req, res) => {
 	viewBirthday = viewBirthday.substring(0, 10);
 	var viewAgeFromString = new AgeFromDateString(viewBirthday).age;
 
+	var isLiked = db.query('SELECT * FROM `likes` WHERE user_id=\'' + viewUser.id +'\' AND liker_id=\'' + userId +'\'').data.rows[0];
+
 	if (userId != viewUser.id) {
 		profiles.updateFameRating(viewUser.id);
 		profiles.addToProfileViews(viewUser.id, userId);
@@ -146,7 +148,8 @@ router.get('/:username', (req, res) => {
 		userAge: userAgeFromString,
 		viewUser: viewUser,
 		viewProfile: viewProfile,
-		viewAge: viewAgeFromString
+		viewAge: viewAgeFromString,
+		isLiked: isLiked
 	});
 });
 
