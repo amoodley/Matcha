@@ -391,10 +391,10 @@ a:hover {
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba(48, 48, 48, .3 ) 
-                url('https://i.imgur.com/miC3HBs.gif') 
+    background: rgba(48, 48, 48, .4 ) 
+                url('https://i.imgur.com/WVcDnHG.gif') 
                 50% 50% 
-                no-repeat;
+                no-repeat/10%;
 }
 body.loading {
     overflow: hidden;   
