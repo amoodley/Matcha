@@ -380,6 +380,7 @@ a:hover {
      height: 100%;
      overflow: hidden;
      padding: 20px;
+     margin-bottom: 35px;
      background-color: #303030;
  }
  .modal {
