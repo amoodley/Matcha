@@ -109,4 +109,33 @@ exports.getLikes = function(userId){
     return likes;
 }
 
+exports.getSuggestions = function(userId){
+    var user = users.getUserById(userId);
+    var profile = this.getProfileById(userId);
+    var birthday = profile.birthday.substring(0, 10);
+    var age = new AgeFromDateString(birthday).age;
+    var ageMax = age + 5;
+    var ageMin = (age / 2) + 7;
+    console.log('Min: ' + ageMin + '; Max: ' + ageMax);
+    console.log(profile.preference);
+    console.log(profile.gender);
+    if (ageMin < 18){
+        ageMin = 18;
+    }
+    var sql = 'SELECT * FROM `profiles` WHERE gender=\''+ profile.preference +'\' AND preference=\''+ profile.gender +'\'';
+    var result = db.query(sql).data.rows;
+    var suggestions = [];
+    result.forEach(element => {
+        var suggestionProfile = this.getProfileById(element.user_id);
+        var suggestionUser = users.getUserById(element.user_id);
+        var suggestionBirthday = suggestionProfile.birthday.substring(0, 10);
+        suggestionProfile.username = suggestionUser.username;
+        suggestionProfile.age = new AgeFromDateString(suggestionBirthday).age;
+        if (suggestionProfile.age > ageMin && suggestionProfile.age < ageMax) {
+            suggestions.push(suggestionProfile);
+        }
+    })
+    return suggestions;
+}
+
 return module.exports;
