@@ -122,3 +122,41 @@ $("#likesTab").click(function () {
         }
     });
 });
+
+$("#suggestionsTab").click(function () {
+    $.ajax({
+        url: "/suggestions",
+        type: "GET",
+        success: (result) => {
+            if (result) {
+                console.log(result);
+                $('#suggestionResults').empty();
+                var suggestionResults = document.getElementById('suggestionResults');
+                result.forEach(element => {
+                    var birthday = element.birthday.substring(0, 10);
+                    $('#suggestionResults').append(`
+                        <div class="searchResultCard">
+                            <div class="searchResultCardImage">
+                                <img src="`+ element.profileimg + `" class="img-responsive img-circle">
+                            </div>
+                            <div class="searchResultCardInfo text-center">
+                                <a href="/profile/`+ element.username + `">
+                                    <h3>`+ element.username + `</h3>
+                                </a>
+                                <p class="myDate">`+ element.age + `, ` + element.city + `</p>
+                            </div>
+                            <div class="searchResultCardTagLine">
+                                <p>`+ element.bio + `</p>
+                                <p class="profileCardLabel">Interests</p>
+                                <p>`+ element.interests + `</p>
+                            </div>
+                        </div>`
+                    );
+                });
+            }
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    });
+});
