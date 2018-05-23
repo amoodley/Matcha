@@ -33,12 +33,12 @@
 				</div>
 				<!-- Tab Links -->
 				<div class="jumbotron">
-					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')" id="defaultOpen">Suggestions</button>
-					<button class="menuItem tablinks" onclick="openTab(event, 'search')">Search</button>
-					<button class="menuItem tablinks" onclick="openTab(event, 'matches')">Matches</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')" id="suggestionsTab">Suggestions</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'search')" id="searchTab">Search</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'matches')" id="matchesTab">Matches</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'likes')" id="likesTab">Likes</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'views')" id="viewsTab">Views</button>
-					<button class="menuItem tablinks" onclick="openTab(event, 'messages')">Messages</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'messages')" id="messagesTab">Messages</button>
 				</div>
 			</div>
 			<div id="suggestions" class="col-md-9 tabcontent">
@@ -52,6 +52,9 @@
 						<br>
 						<hr>
 					</div>
+				</div>
+				<div id="suggestionResults">
+
 				</div>
 			</div>
 			<div id="search" class="col-md-9 tabcontent">
@@ -157,7 +160,7 @@
 	<!-- Ajax form submit -->
 	<script>
 		// Get the element with id="defaultOpen" and click on it
-		document.getElementById("defaultOpen").click();
+		document.getElementById("suggestionsTab").click();
 
 		$body = $("body");
 		$(document).on({
