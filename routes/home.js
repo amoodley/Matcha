@@ -80,7 +80,7 @@ router.get('/views', (req, res) => {
 	res.send(views);
 });
 
-// GET: Profile Views
+// GET: likes
 router.get('/likes', (req, res) => {
 	var userId = users.isLoggedIn(req);
 	var profile = profiles.getProfileById(userId);
@@ -97,6 +97,13 @@ router.post('/like', (req, res) => {
 	var result = profiles.addToLikes(user.id, viewer.id);
 
 	res.send(result);
+});
+
+// GET: Suggestions
+router.get('/suggestions', (req, res) => {
+	var userId = users.isLoggedIn(req);
+	var suggestions = profiles.getSuggestions(userId);
+	res.send(suggestions);
 });
 
 // GET: Setup Profile
