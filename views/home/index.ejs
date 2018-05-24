@@ -1,18 +1,25 @@
 <% include ../partials/header.ejs %>
+	<script>
+		$body = $("body");
+		$(document).on({
+			ajaxStart: function () { $body.addClass("loading"); },
+			ajaxStop: function () { $body.removeClass("loading"); }
+		});
+	</script>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
-				<!-- Profile Card -->
-				<div class="jumbotron">
+				<div class="">
+					<!-- Profile Card -->
 					<div class="profileImageContainer">
 						<img src="<%= profile.profileimg %>" class="img-circle">
 					</div>
 					<div class="profileCardUsernameContainer text-center">
-						<h3 class="username">
+						<h4 class="username">
 							<a href="/profile/<%= user.username %>" class="wordwrap">
 								<%= user.username %>
 							</a>
-						</h3>
+						</h4>
 						<p id="birthday" style="display: none;">
 							<%= profile.birthday %>
 						</p>
@@ -30,9 +37,8 @@
 							<%= profile.interests %>
 						</p>
 					</div>
-				</div>
-				<!-- Tab Links -->
-				<div class="jumbotron">
+					<hr>
+					<!-- Tab Links -->
 					<button class="menuItem tablinks" onclick="openTab(event, 'suggestions')" id="suggestionsTab">Suggestions</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'search')" id="searchTab">Search</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'matches')" id="matchesTab">Matches</button>
@@ -42,23 +48,22 @@
 				</div>
 			</div>
 			<div id="suggestions" class="col-md-9 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
-						<h2 class="pull-left">Suggestions</h2>
+						<h3 class="pull-left">Suggestions</h3>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
-						<br>
 						<br>
 						<br>
 						<hr>
 					</div>
 				</div>
-				<div id="suggestionResults">
-
+				<div id="suggestionResults" class="grid">
+					<div class="grid-sizer"></div>
 				</div>
 			</div>
 			<div id="search" class="col-md-9 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<form action="/home/search">
 						<label for="searchPreference">Search for</label>
 						<select name="searchPreference" id="searchPreference">
@@ -83,89 +88,100 @@
 						</select>
 						<label>km's from me</label>
 						<br>
-						<button class="btn pull-right" type="button" id="searchButton" onclick="search()">Search</button>
+						<button class="btn button pull-right" type="button" id="searchButton" onclick="search()">Search</button>
 					</form>
 					<br>
 					<br>
 				</div>
-				<div id="searchResults">
-
+				<hr>
+				<div id="searchResults" class="grid">
+					<div class="grid-sizer"></div>
 				</div>
 			</div>
 			<div id="matches" class="col-md-9 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
-						<h2 class="pull-left">Matches</h2>
+						<h3 class="pull-left">Matches</h3>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
 						<br>
 						<br>
 						<br>
-						<hr>
 					</div>
 				</div>
+				<hr>
 			</div>
 			<div id="likes" class="col-md-9 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
-						<h2 class="pull-left">Likes</h2>
+						<h3 class="pull-left">Likes</h3>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
 						<br>
 						<br>
 						<br>
-						<hr>
 					</div>
 				</div>
-				<div id="likesResults">
-
+				<hr>
+				<div id="likesResults" class="grid">
+					<div class="grid-sizer"></div>
 				</div>
 			</div>
 			<div id="views" class="col-md-9 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
-						<h2 class="pull-left">Views</h2>
+						<h3 class="pull-left">Views</h3>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
 						<br>
 						<br>
 						<br>
-						<hr>
+						<p>Sort</p>
+						<div class="btn-group">
+							<button type="button" class="btn sortButton">Age</button>
+							<button type="button" class="btn sortButton">Distance</button>
+							<button type="button" class="btn sortButton">Tags</button>
+							<button type="button" class="btn sortButton">Fame</button>
+						</div>
 					</div>
-
 				</div>
-				<div id="viewResults">
-
+				<hr>
+				<div id="viewResults" class="grid">
+					<div class="grid-sizer"></div>
 				</div>
 			</div>
 			<div id="messages" class="col-md-9 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
-						<h2 class="pull-left">Messages</h2>
+						<h3 class="pull-left">Messages</h3>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
 						<br>
 						<br>
 						<br>
-						<hr>
 					</div>
 				</div>
+				<hr>
 			</div>
 		</div>
-	</div>
-	<div class="modal"></div>
-	<script type="text/javascript" src="/js/openTab.js"></script>
-	<!-- Switch Tabs -->
-	<script type="text/javascript" src="/js/index.js"></script>
-	<!-- Ajax form submit -->
-	<script>
-		// Get the element with id="defaultOpen" and click on it
-		document.getElementById("suggestionsTab").click();
+		<div class="modal"></div>
+		<script type="text/javascript" src="/js/openTab.js"></script>
+		<!-- Switch Tabs -->
+		<script type="text/javascript" src="/js/index.js"></script>
+		<!-- Ajax form submit -->
+		<script>
+			// Get the element with id="defaultOpen" and click on it
+			document.getElementById("suggestionsTab").click();
 
-		$body = $("body");
-		$(document).on({
-			ajaxStart: function () { $body.addClass("loading"); },
-			ajaxStop: function () { $body.removeClass("loading"); }
-		});
-	</script>
-	<% include ../partials/footer.ejs %>
+			$('.grid').masonry({
+				// options
+				itemSelector: '.grid-item',
+				columnWidth: 245
+			});
+
+
+		</script>
+		<script>
+
+		</script>
+		<% include ../partials/footer.ejs %>
