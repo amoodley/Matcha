@@ -2,14 +2,16 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="jumbotron">
+				<div class="">
 					<div class="profileImageContainer">
 						<img src="<%= profile.profileimg %>" class="img-circle">
 					</div>
 					<div class="profileCardUsernameContainer text-center">
-						<h3>
-							<%= user.username %>
-						</h3>
+						<h4 class="username">
+							<a href="/profile/<%= user.username %>" class="wordwrap">
+								<%= user.username %>
+							</a>
+						</h4>
 						<p id="birthday" style="display: none;">
 							<%= profile.birthday %>
 						</p>
@@ -27,15 +29,14 @@
 							<%= profile.interests %>
 						</p>
 					</div>
-				</div>
-				<div class="jumbotron">
+					<hr>
 					<button class="menuItem tablinks" onclick="openTab(event, 'editProfile')" id="defaultOpen">Edit profile</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'editPicture')">Upload pictures</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'editLocation')">Update location</button>
 				</div>
 			</div>
 			<div id="editProfile" class="col-md-9 col-lg-7 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
 						<h2 class="pull-left">Edit profile</h2>
 						<p id="successMessage" class="pull-right successMessage" hidden>Updated successfully</p>
@@ -89,14 +90,14 @@
 							<label for="interests" class="">Interests</label>
 							<textarea name="interests" id="interests" cols="8" rows="2" class="form-control"><%= profile.interests %></textarea>
 							<div class="text-center">
-								<button class="btn" type="button" onclick="editProfile()">Save</button>
+								<button class="btn button" type="button" onclick="editProfile()">Save</button>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div id="editPicture" class="col-md-9 col-lg-7 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
 						<h2 class="pull-left">Upload pictures</h2>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
@@ -111,7 +112,7 @@
 							<img id="profileImg" src="<%= profile.profileimg %>" class="uploadImgTemp">
 							<br>
 							<br>
-							<input id="profileImg_" type="file" class="btn fileUploadButton" onchange="readURL(this);">
+							<input id="profileImg_" type="file" class="btn button fileUploadButton" onchange="readURL(this);">
 						</div>
 						<br>
 						<div class="col-md-3 text-center">
@@ -122,7 +123,7 @@
 									<% } %>
 										<br>
 										<br>
-										<input id="img1_" type="file" class="btn" onchange="readURL1(this);" style="margin: 0 auto;">
+										<input id="img1_" type="file" class="btn button" onchange="readURL1(this);" style="margin: 0 auto;">
 										<span id="status"></span>
 						</div>
 						<div class="col-md-3 text-center">
@@ -133,7 +134,7 @@
 							<% } %>
 							<br>
 							<br>
-							<input id="img2_" type="file" class="btn" onchange="readURL2(this);" style="margin: 0 auto;">
+							<input id="img2_" type="file" class="btn button" onchange="readURL2(this);" style="margin: 0 auto;">
 						</div>
 						<div class="col-md-3 text-center">
 							<% if (profile.img3) { %>
@@ -143,7 +144,7 @@
 							<% } %>
 							<br>
 							<br>
-							<input id="img3_" type="file" class="btn" onchange="readURL3(this);" style="margin: 0 auto;">
+							<input id="img3_" type="file" class="btn button" onchange="readURL3(this);" style="margin: 0 auto;">
 						</div>
 						<div class="col-md-3 text-center">
 							<% if (profile.img4) { %>
@@ -153,20 +154,20 @@
 							<% } %>
 							<br>
 							<br>
-							<input id="img4_" type="file" class="btn" onchange="readURL4(this);" style="margin: 0 auto;">
+							<input id="img4_" type="file" class="btn button" onchange="readURL4(this);" style="margin: 0 auto;">
 						</div>
 						<br>
 						<br>
 						<br>
 						<br>
 						<div class="text-center" style="padding-top: 150px;">
-							<button class="btn" id="upload-button" type="submit" value="submit" form="editphotos">Save</button>
+							<button class="btn button" id="upload-button" type="submit" value="submit" form="editphotos">Save</button>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div id="editLocation" class="col-md-9 col-lg-7 tabcontent">
-				<div class="jumbotron">
+				<div class="">
 					<div>
 						<h2 class="pull-left">Update location</h2>
 						<p id="successMessage2" class="pull-right successMessage" hidden>Updated successfully</p>
@@ -181,7 +182,7 @@
 							<br>
 							<br>
 							<br>
-							<button type="button" onclick="getLocation()" class="btn">Get Location</button>
+							<button type="button" onclick="getLocation()" class="btn button">Get Location</button>
 						</div>
 						<br>
 						<br>
@@ -204,7 +205,7 @@
 						<br>
 						<br>
 						<div class="text-center">
-							<button class="btn" type="button" onclick="editLocation()">Save</button>
+							<button class="btn button" type="button" onclick="editLocation()">Save</button>
 						</div>
 					</form>
 				</div>
