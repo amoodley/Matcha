@@ -1,3 +1,26 @@
+function createProfileDIv(element){
+    var profileDiv = `
+    <div class="grid-item">
+        <div class="searchResultCardImage">
+            <img src="`+ element.profileimg + `" class="img-responsive">
+        </div>
+        <div class="searchResultCardInfo">
+            <a href="/profile/`+ element.username + `">
+                <h4>`+ element.username + `</h4>
+            </a>
+            <p class="myDate">`+ element.age + `, ` + element.city + `</p>
+        </div>
+        <div class="searchResultCardTagLine">
+            <p>`+ element.bio + `</p>
+            <p class="profileCardLabel">Interests</p>
+            <p>`+ element.interests + `</p>
+        </div>
+    </div>`
+
+    return profileDiv;
+}
+
+
 function search() {
     $('#searchButton').html('Searching');
     $('#searchResults').empty();
@@ -22,24 +45,7 @@ function search() {
                 var searchResult = document.getElementById('searchResult');
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
-                    $('#searchResults').append(`
-                        <div class="grid-item">
-                            <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive">
-                            </div>
-                            <div class="searchResultCardInfo">
-                                <a href="/profile/`+ element.username + `">
-                                    <h4>`+ element.username + `</h4>
-                                </a>
-                                <p class="myDate">`+ element.age + `, ` + element.city + `</p>
-                            </div>
-                            <div class="searchResultCardTagLine">
-                                <p>`+ element.bio + `</p>
-                                <p class="profileCardLabel">Interests</p>
-                                <p>`+ element.interests + `</p>
-                            </div>
-                        </div>`
-                    );
+                    $('#searchResults').append(createProfileDIv(element));
                 });
             }
         },
@@ -59,24 +65,7 @@ $("#viewsTab").click(function () {
                 var viewResults = document.getElementById('viewResults');
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
-                    $('#viewResults').append(`
-                        <div class="grid-item">
-                            <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive">
-                            </div>
-                            <div class="searchResultCardInfo">
-                                <a href="/profile/`+ element.username + `">
-                                    <h4>`+ element.username + `</h4>
-                                </a>
-                                <p class="myDate">`+ element.age + `, ` + element.city + `</p>
-                            </div>
-                            <div class="searchResultCardTagLine">
-                                <p>`+ element.bio + `</p>
-                                <p class="profileCardLabel">Interests</p>
-                                <p>`+ element.interests + `</p>
-                            </div>
-                        </div>`
-                    );
+                    $('#viewResults').append(createProfileDIv(element));
                 });
             }
         },
@@ -96,24 +85,7 @@ $("#likesTab").click(function () {
                 var likesResults = document.getElementById('likesResults');
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
-                    $('#likesResults').append(`
-                        <div class="grid-item">
-                            <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive">
-                            </div>
-                            <div class="searchResultCardInfo">
-                                <a href="/profile/`+ element.username + `">
-                                    <h4>`+ element.username + `</h4>
-                                </a>
-                                <p class="myDate">`+ element.age + `, ` + element.city + `</p>
-                            </div>
-                            <div class="searchResultCardTagLine">
-                                <p>`+ element.bio + `</p>
-                                <p class="profileCardLabel">Interests</p>
-                                <p>`+ element.interests + `</p>
-                            </div>
-                        </div>`
-                    );
+                    $('#likesResults').append(createProfileDIv(element));
                 });
             }
         },
@@ -133,24 +105,7 @@ $("#suggestionsTab").click(function () {
                 var suggestionResults = document.getElementById('suggestionResults');
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
-                    $('#suggestionResults').append(`
-                        <div class="grid-item">
-                            <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive">
-                            </div>
-                            <div class="searchResultCardInfo">
-                                <a href="/profile/`+ element.username + `">
-                                    <h4>`+ element.username + `</h4>
-                                </a>
-                                <p class="myDate">`+ element.age + `, ` + element.city + `</p>
-                            </div>
-                            <div class="searchResultCardTagLine">
-                                <p>`+ element.bio + `</p>
-                                <p class="profileCardLabel">Interests</p>
-                                <p>`+ element.interests + `</p>
-                            </div>
-                        </div>`
-                    );
+                    $('#suggestionResults').append(createProfileDIv(element));
                 });
             }
         },
