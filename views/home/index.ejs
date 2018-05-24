@@ -136,12 +136,13 @@
 						<br>
 						<br>
 						<br>
-						<p>Sort</p>
+						<p>Filter</p>
 						<div class="btn-group">
-							<button type="button" class="btn sortButton">Age</button>
-							<button type="button" class="btn sortButton">Distance</button>
-							<button type="button" class="btn sortButton">Tags</button>
-							<button type="button" class="btn sortButton">Fame</button>
+							<a href="" data-filter="*" class="btn sortButton">All</a>
+							<a href="" data-filter=".18-25" class="btn sortButton">18-25</a>
+							<a href="" data-filter=".25-35" class="btn sortButton">25-35</a>
+							<a href="" data-filter=".35-45" class="btn sortButton">35-45</a>
+							<a href="" data-filter=".45 +" class="btn sortButton">45+</a>
 						</div>
 					</div>
 				</div>
@@ -173,7 +174,7 @@
 			// Get the element with id="defaultOpen" and click on it
 			document.getElementById("suggestionsTab").click();
 
-			$('.grid').masonry({
+			$('.grid').isotope({
 				// options
 				itemSelector: '.grid-item',
 				columnWidth: 245
