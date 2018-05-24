@@ -1,6 +1,18 @@
-function createProfileDIv(element){
-    var profileDiv = `
-    <div class="grid-item">
+function createProfileDIv(element) {
+
+    var gridItem = '';
+
+    if (element.age >= 18 && element.age <= 25) {
+        gridItem = '<div class="grid-item ageGroup1">';
+    } else if (element.age > 25 && element.age <= 35) {
+        gridItem = '<div class="grid-item ageGroup2">';
+    } else if (element.age > 35 && element.age <= 45) {
+        gridItem = '<div class="grid-item ageGroup3">';
+    } else {
+        gridItem = '<div class="grid-item ageGroup4">';
+    }
+
+    var profileDiv = gridItem + `
         <div class="searchResultCardImage">
             <img src="`+ element.profileimg + `" class="img-responsive">
         </div>
@@ -15,7 +27,7 @@ function createProfileDIv(element){
             <p class="profileCardLabel">Interests</p>
             <p>`+ element.interests + `</p>
         </div>
-    </div>`
+    </div>`;
 
     return profileDiv;
 }
@@ -67,6 +79,7 @@ $("#viewsTab").click(function () {
                     var birthday = element.birthday.substring(0, 10);
                     $('#viewResults').append(createProfileDIv(element));
                 });
+                iso();
             }
         },
         error: (err) => {
@@ -114,3 +127,31 @@ $("#suggestionsTab").click(function () {
         }
     });
 });
+
+
+function iso() {
+    var $container = $('#viewResults');
+    $container.isotope('destroy'); //destroying isotope
+    $container.isotope({
+        filter: '*',
+        animationOptions: {
+            duration: 750,
+            easing: 'linear',
+            queue: false,
+        }
+    });
+
+    $('#nav a').click(function () {
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+            filter: selector,
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false,
+            }
+        });
+        return false;
+    });
+
+}

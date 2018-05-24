@@ -274,6 +274,13 @@ router.post('/setupLocation', (req, res) => {
 	} 
 });
 
+// Test
+router.get('/test', (req, res) => {
+	res.render('home/test', {
+		title: 'test'
+	});
+})
+
 
 
 module.exports = router;

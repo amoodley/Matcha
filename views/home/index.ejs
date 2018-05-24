@@ -5,6 +5,8 @@
 			ajaxStart: function () { $body.addClass("loading"); },
 			ajaxStop: function () { $body.removeClass("loading"); }
 		});
+
+		
 	</script>
 	<div class="container-fluid">
 		<div class="row">
@@ -137,12 +139,24 @@
 						<br>
 						<br>
 						<p>Filter</p>
-						<div class="btn-group">
-							<a href="" data-filter="*" class="btn sortButton">All</a>
-							<a href="" data-filter=".18-25" class="btn sortButton">18-25</a>
-							<a href="" data-filter=".25-35" class="btn sortButton">25-35</a>
-							<a href="" data-filter=".35-45" class="btn sortButton">35-45</a>
-							<a href="" data-filter=".45 +" class="btn sortButton">45+</a>
+						<div id="nav"  class="btn-group">
+							<ul>
+								<li>
+									<a href="" data-filter="*">All</a>
+								</li>
+								<li>
+									<a href="" data-filter=".ageGroup1">18-25</a>
+								</li>
+								<li>
+									<a href="" data-filter=".ageGroup2">25-35</a>
+								</li>
+								<li>
+									<a href="" data-filter=".ageGroup3">35-45</a>
+								</li>
+								<li>
+									<a href="" data-filter=".ageGroup4">45 +</a>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -173,14 +187,6 @@
 		<script>
 			// Get the element with id="defaultOpen" and click on it
 			document.getElementById("suggestionsTab").click();
-
-			$('.grid').isotope({
-				// options
-				itemSelector: '.grid-item',
-				columnWidth: 245
-			});
-
-
 		</script>
 		<script>
 
