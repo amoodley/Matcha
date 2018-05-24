@@ -23,13 +23,13 @@ function search() {
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
                     $('#searchResults').append(`
-                        <div class="searchResultCard">
+                        <div class="grid-item">
                             <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive img-circle">
+                                <img src="`+ element.profileimg + `" class="img-responsive">
                             </div>
-                            <div class="searchResultCardInfo text-center">
+                            <div class="searchResultCardInfo">
                                 <a href="/profile/`+ element.username + `">
-                                    <h3>`+ element.username + `</h3>
+                                    <h4>`+ element.username + `</h4>
                                 </a>
                                 <p class="myDate">`+ element.age + `, ` + element.city + `</p>
                             </div>
@@ -60,13 +60,13 @@ $("#viewsTab").click(function () {
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
                     $('#viewResults').append(`
-                        <div class="searchResultCard">
+                        <div class="grid-item">
                             <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive img-circle">
+                                <img src="`+ element.profileimg + `" class="img-responsive">
                             </div>
-                            <div class="searchResultCardInfo text-center">
+                            <div class="searchResultCardInfo">
                                 <a href="/profile/`+ element.username + `">
-                                    <h3>`+ element.username + `</h3>
+                                    <h4>`+ element.username + `</h4>
                                 </a>
                                 <p class="myDate">`+ element.age + `, ` + element.city + `</p>
                             </div>
@@ -97,13 +97,13 @@ $("#likesTab").click(function () {
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
                     $('#likesResults').append(`
-                        <div class="searchResultCard">
+                        <div class="grid-item">
                             <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive img-circle">
+                                <img src="`+ element.profileimg + `" class="img-responsive">
                             </div>
-                            <div class="searchResultCardInfo text-center">
+                            <div class="searchResultCardInfo">
                                 <a href="/profile/`+ element.username + `">
-                                    <h3>`+ element.username + `</h3>
+                                    <h4>`+ element.username + `</h4>
                                 </a>
                                 <p class="myDate">`+ element.age + `, ` + element.city + `</p>
                             </div>
@@ -129,19 +129,18 @@ $("#suggestionsTab").click(function () {
         type: "GET",
         success: (result) => {
             if (result) {
-                console.log(result);
                 $('#suggestionResults').empty();
                 var suggestionResults = document.getElementById('suggestionResults');
                 result.forEach(element => {
                     var birthday = element.birthday.substring(0, 10);
                     $('#suggestionResults').append(`
-                        <div class="searchResultCard">
+                        <div class="grid-item">
                             <div class="searchResultCardImage">
-                                <img src="`+ element.profileimg + `" class="img-responsive img-circle">
+                                <img src="`+ element.profileimg + `" class="img-responsive">
                             </div>
-                            <div class="searchResultCardInfo text-center">
+                            <div class="searchResultCardInfo">
                                 <a href="/profile/`+ element.username + `">
-                                    <h3>`+ element.username + `</h3>
+                                    <h4>`+ element.username + `</h4>
                                 </a>
                                 <p class="myDate">`+ element.age + `, ` + element.city + `</p>
                             </div>
