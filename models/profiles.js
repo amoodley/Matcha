@@ -114,11 +114,8 @@ exports.getSuggestions = function(userId){
     var profile = this.getProfileById(userId);
     var birthday = profile.birthday.substring(0, 10);
     var age = new AgeFromDateString(birthday).age;
-    var ageMax = age + 5;
+    var ageMax = age + 10;
     var ageMin = (age / 2) + 7;
-    console.log('Min: ' + ageMin + '; Max: ' + ageMax);
-    console.log(profile.preference);
-    console.log(profile.gender);
     if (ageMin < 18){
         ageMin = 18;
     }
