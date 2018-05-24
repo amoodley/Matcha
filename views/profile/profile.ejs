@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
-                <div class="jumbotron">
+                <div class="">
                     <div class="profileImageContainer">
                         <img src="<%= userProfile.profileimg %>" class="img-circle">
                     </div>
@@ -29,9 +29,10 @@
                             <%= userProfile.interests %>
                         </p>
                     </div>
+                    <hr>
                 </div><!-- Profile Card -->
             </div>
-            <div class="col-md-9 col-lg-7">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="viewProfileImage">
                         <a href="<%= viewProfile.profileimg %>" data-fancybox="gallery" data-caption="Caption #1">
@@ -118,11 +119,11 @@
                         <br>
                         <br>
                         <% if (isLiked) { %>
-                            <button class="btn pull-left" id="like"><span class="glyphicon glyphicon-heart-empty"></span> Unlike</button>
+                            <button class="btn button pull-left" id="like"><span class="glyphicon glyphicon-heart-empty"></span> Unlike</button>
                         <% } else { %>
-                            <button class="btn pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
+                            <button class="btn button pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
                         <% } %>
-                        <button class="btn pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</button>
+                        <button class="btn button pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</button>
                         <br>
                         <br>
                     </div>
