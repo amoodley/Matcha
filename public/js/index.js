@@ -20,7 +20,8 @@ function createProfileDIv(element) {
             <a href="/profile/`+ element.username + `">
                 <h4>`+ element.username + `</h4>
             </a>
-            <p class="myDate">`+ element.age + `, ` + element.city + `</p>
+            <p class="myDate pull-right age">`+ element.age + `</p>
+            <p>` + element.city + `</p>
         </div>
         <div class="searchResultCardTagLine">
             <p>`+ element.bio + `</p>
@@ -138,10 +139,16 @@ function iso() {
             duration: 750,
             easing: 'linear',
             queue: false,
+        },
+        getSortData: {
+            age: '.age',
+            fame: '.fame',
+            tags: '.tags',
+            distance: '.distance',
         }
     });
 
-    $('#nav a').click(function () {
+    $('.filter-by-btn-group a').click(function () {
         var selector = $(this).attr('data-filter');
         $container.isotope({
             filter: selector,
@@ -152,6 +159,11 @@ function iso() {
             }
         });
         return false;
+    });
+
+    $('.sort-by-btn-group').on( 'click', 'button', function() {
+        var sortByValue = $(this).attr('data-sort-by');
+        $container.isotope({ sortBy: sortByValue });
     });
 
 }
