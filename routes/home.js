@@ -62,6 +62,7 @@ router.post('/search', (req, res) => {
 	var userId = users.isLoggedIn(req);
 	var profile = profiles.getProfileById(userId);
 	var searchQuery = {
+		userId: userId,
 		gender: profile.gender,
 		preference: req.body.preference,
 		fromAge: req.body.fromAge,
