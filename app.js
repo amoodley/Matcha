@@ -37,8 +37,6 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.use('/js', express.static(__dirname + '/node_modules/masonry-layout/dist')); // redirect Masonry Layout
 app.use('/js', express.static(__dirname + '/node_modules/isotope-layout/dist')); // redirect Isotope Layout
 
-
-
 // Set Routes
 app.use('/', home);
 app.use('/account', account);
