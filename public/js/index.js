@@ -1,39 +1,3 @@
-function createProfileDIv(element) {
-
-    var gridItem = '';
-
-    if (element.age >= 18 && element.age <= 25) {
-        gridItem = '<div class="grid-item ageGroup1">';
-    } else if (element.age > 25 && element.age <= 35) {
-        gridItem = '<div class="grid-item ageGroup2">';
-    } else if (element.age > 35 && element.age <= 45) {
-        gridItem = '<div class="grid-item ageGroup3">';
-    } else {
-        gridItem = '<div class="grid-item ageGroup4">';
-    }
-
-    var profileDiv = gridItem + `
-        <div class="searchResultCardImage">
-            <img src="`+ element.profileimg + `" class="img-responsive">
-        </div>
-        <div class="searchResultCardInfo">
-            <a href="/profile/`+ element.username + `">
-                <h4>`+ element.username + `</h4>
-            </a>
-            <p class="myDate pull-right age">`+ element.age + `</p>
-            <p>` + element.city + `</p>
-        </div>
-        <div class="searchResultCardTagLine">
-            <p>`+ element.bio + `</p>
-            <p class="profileCardLabel">Interests</p>
-            <p>`+ element.interests + `</p>
-        </div>
-    </div>`;
-
-    return profileDiv;
-}
-
-
 function search() {
     $('#searchButton').html('Searching');
     $('#searchResults').empty();
@@ -60,6 +24,8 @@ function search() {
                     var birthday = element.birthday.substring(0, 10);
                     $('#searchResults').append(createProfileDIv(element));
                 });
+                var $container = $('#searchResults');
+                createIsotope($container);
             }
         },
         error: (err) => {
@@ -80,7 +46,8 @@ $("#viewsTab").click(function () {
                     var birthday = element.birthday.substring(0, 10);
                     $('#viewResults').append(createProfileDIv(element));
                 });
-                iso();
+                var $container = $('#viewResults');
+                createIsotope($container);
             }
         },
         error: (err) => {
@@ -101,6 +68,8 @@ $("#likesTab").click(function () {
                     var birthday = element.birthday.substring(0, 10);
                     $('#likesResults').append(createProfileDIv(element));
                 });
+                var $container = $('#likesResults');
+                createIsotope($container);
             }
         },
         error: (err) => {
@@ -121,6 +90,8 @@ $("#suggestionsTab").click(function () {
                     var birthday = element.birthday.substring(0, 10);
                     $('#suggestionResults').append(createProfileDIv(element));
                 });
+                var $container = $('#suggestionResults');
+                createIsotope($container);
             }
         },
         error: (err) => {
@@ -130,9 +101,9 @@ $("#suggestionsTab").click(function () {
 });
 
 
-function iso() {
-    var $container = $('#viewResults');
-    $container.isotope('destroy'); //destroying isotope
+function createIsotope($container) {
+    $container.isotope();
+    $container.isotope('destroy'); //destroying any previous isotope session
     $container.isotope({
         filter: '*',
         animationOptions: {
@@ -166,4 +137,39 @@ function iso() {
         $container.isotope({ sortBy: sortByValue });
     });
 
+}
+
+function createProfileDIv(element) {
+
+    var gridItem = '';
+
+    if (element.age >= 18 && element.age <= 25) {
+        gridItem = '<div class="grid-item ageGroup1">';
+    } else if (element.age > 25 && element.age <= 35) {
+        gridItem = '<div class="grid-item ageGroup2">';
+    } else if (element.age > 35 && element.age <= 45) {
+        gridItem = '<div class="grid-item ageGroup3">';
+    } else {
+        gridItem = '<div class="grid-item ageGroup4">';
+    }
+
+    var profileDiv = gridItem + `
+        <div class="searchResultCardImage">
+            <img src="`+ element.profileimg + `" class="img-responsive">
+        </div>
+        <div class="searchResultCardInfo">
+            <a href="/profile/`+ element.username + `">
+                <h4>`+ element.username + `</h4>
+            </a>
+            <p class="myDate pull-right age">`+ element.age + `</p>
+            <p>` + element.city + `</p>
+        </div>
+        <div class="searchResultCardTagLine">
+            <p>`+ element.bio + `</p>
+            <p class="profileCardLabel">Interests</p>
+            <p>`+ element.interests + `</p>
+        </div>
+    </div>`;
+
+    return profileDiv;
 }
