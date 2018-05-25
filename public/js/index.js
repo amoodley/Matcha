@@ -153,12 +153,26 @@ function createProfileDIv(element) {
         gridItem = '<div class="grid-item ageGroup4 ';
     }
 
-    if (element.fame <= 50) {
-        gridItem += 'fameGroup1">';
+    if (element.fame <= 25) {
+        gridItem += 'fameGroup1 ';
+    } else if (element.fame > 25 && element.fame <= 50) {
+        gridItem += 'fameGroup2 ';
     } else if (element.fame > 50 && element.fame <= 100) {
-        gridItem += 'fameGroup2">';
+        gridItem += 'fameGroup3 ';
     } else {
-        gridItem += 'fameGroup3">';
+        gridItem += 'fameGroup4 ';
+    }
+
+    if (element.distance <= 5) {
+        gridItem += 'distanceGroup1">';
+    } else if (element.distance > 5 && element.distance <= 10) {
+        gridItem += 'distanceGroup2">';
+    } else if (element.distance > 10 && element.distance <= 20) {
+        gridItem += 'distanceGroup3">';
+    } else if (element.distance > 20 && element.distance <= 50) {
+        gridItem += 'distanceGroup4">';
+    } else {
+        gridItem += 'distanceGroup5">';
     }
     var profileDiv = gridItem + `
         <div class="searchResultCardImage">
@@ -170,11 +184,11 @@ function createProfileDIv(element) {
             </a>
             <p class="myDate pull-right age">`+ element.age + `</p>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            <p class="pull-left">Fame</p>
+            <p class="pull-left">Fame Rating</p>
             <p class="pull-right fame">` + element.fame + `</p>
             <br><br>
             <p class="pull-left">Distance</p>
-            <p class="pull-right fame"></p>
+            <p class="pull-right distance">Within ` + element.distance + ` KM's</p>
             <br>
         </div>
         <div class="searchResultCardTagLine">
