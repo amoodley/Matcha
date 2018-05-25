@@ -5,8 +5,6 @@
 			ajaxStart: function () { $body.addClass("loading"); },
 			ajaxStop: function () { $body.removeClass("loading"); }
 		});
-
-
 	</script>
 	<div class="container-fluid">
 		<div class="row">
@@ -57,6 +55,64 @@
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
 						<br>
 						<br>
+						<br>
+						<div class="pull-left">
+							<p>Filter</p>
+							<div class="filter-by-btn-group">
+								<div class="dropdown">
+									<button class="btn sortButton">Age</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">18-25</a>
+										<a href="" data-filter=".ageGroup2">26-35</a>
+										<a href="" data-filter=".ageGroup3">36-45</a>
+										<a href="" data-filter=".ageGroup4">45 +</a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Fame</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">0-50</a>
+										<a href="" data-filter=".ageGroup2">51-100</a>
+										<a href="" data-filter=".ageGroup3">100 +</a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Tags</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1"> - </a>
+										<a href="" data-filter=".ageGroup2"> - </a>
+										<a href="" data-filter=".ageGroup3"> - </a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Distance</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">5 km</a>
+										<a href="" data-filter=".ageGroup2">10 km</a>
+										<a href="" data-filter=".ageGroup3">20 km</a>
+										<a href="" data-filter=".ageGroup4">50 km</a>
+										<a href="" data-filter=".ageGroup4">50+</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="pull-right">
+							<p>Sort</p>
+							<div class="sort-by-btn-group">
+								<button type="button" class="btn sortButton" data-sort-by="original-order">Default</button>
+								<button type="button" class="btn sortButton" data-sort-by="age">Age</button>
+								<button type="button" class="btn sortButton" data-sort-by="fame">Fame</button>
+								<button type="button" class="btn sortButton" data-sort-by="tags">Tags</button>
+								<button type="button" class="btn sortButton" data-sort-by="distance">Distance</button>
+							</div>
+						</div>
+						<br>
+						<br>
+						<br>
 						<hr>
 					</div>
 				</div>
@@ -94,6 +150,63 @@
 					</form>
 					<br>
 					<br>
+					<div class="pull-left">
+						<p>Filter</p>
+						<div class="filter-by-btn-group">
+							<div class="dropdown">
+								<button class="btn sortButton">Age</button>
+								<div class="dropdown-content">
+									<a href="" data-filter="*">All</a>
+									<a href="" data-filter=".ageGroup1">18-25</a>
+									<a href="" data-filter=".ageGroup2">26-35</a>
+									<a href="" data-filter=".ageGroup3">36-45</a>
+									<a href="" data-filter=".ageGroup4">45 +</a>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button type="button" class="btn sortButton">Fame</button>
+								<div class="dropdown-content">
+									<a href="" data-filter="*">All</a>
+									<a href="" data-filter=".ageGroup1">0-50</a>
+									<a href="" data-filter=".ageGroup2">51-100</a>
+									<a href="" data-filter=".ageGroup3">100 +</a>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button type="button" class="btn sortButton">Tags</button>
+								<div class="dropdown-content">
+									<a href="" data-filter="*">All</a>
+									<a href="" data-filter=".ageGroup1"> - </a>
+									<a href="" data-filter=".ageGroup2"> - </a>
+									<a href="" data-filter=".ageGroup3"> - </a>
+								</div>
+							</div>
+							<div class="dropdown">
+								<button type="button" class="btn sortButton">Distance</button>
+								<div class="dropdown-content">
+									<a href="" data-filter="*">All</a>
+									<a href="" data-filter=".ageGroup1">5 km</a>
+									<a href="" data-filter=".ageGroup2">10 km</a>
+									<a href="" data-filter=".ageGroup3">20 km</a>
+									<a href="" data-filter=".ageGroup4">50 km</a>
+									<a href="" data-filter=".ageGroup4">50+</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="pull-right">
+						<p>Sort</p>
+						<div class="sort-by-btn-group">
+							<button type="button" class="btn sortButton" data-sort-by="original-order">Default</button>
+							<button type="button" class="btn sortButton" data-sort-by="age">Age</button>
+							<button type="button" class="btn sortButton" data-sort-by="fame">Fame</button>
+							<button type="button" class="btn sortButton" data-sort-by="tags">Tags</button>
+							<button type="button" class="btn sortButton" data-sort-by="distance">Distance</button>
+						</div>
+					</div>
+					<br>
+					<br>
+					<br>
 				</div>
 				<hr>
 				<div id="searchResults" class="grid">
@@ -119,6 +232,63 @@
 						<h3 class="pull-left">Likes</h3>
 						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
 						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
+						<br>
+						<br>
+						<br>
+						<div class="pull-left">
+							<p>Filter</p>
+							<div class="filter-by-btn-group">
+								<div class="dropdown">
+									<button class="btn sortButton">Age</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">18-25</a>
+										<a href="" data-filter=".ageGroup2">26-35</a>
+										<a href="" data-filter=".ageGroup3">36-45</a>
+										<a href="" data-filter=".ageGroup4">45 +</a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Fame</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">0-50</a>
+										<a href="" data-filter=".ageGroup2">51-100</a>
+										<a href="" data-filter=".ageGroup3">100 +</a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Tags</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1"> - </a>
+										<a href="" data-filter=".ageGroup2"> - </a>
+										<a href="" data-filter=".ageGroup3"> - </a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Distance</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">5 km</a>
+										<a href="" data-filter=".ageGroup2">10 km</a>
+										<a href="" data-filter=".ageGroup3">20 km</a>
+										<a href="" data-filter=".ageGroup4">50 km</a>
+										<a href="" data-filter=".ageGroup4">50+</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="pull-right">
+							<p>Sort</p>
+							<div class="sort-by-btn-group">
+								<button type="button" class="btn sortButton" data-sort-by="original-order">Default</button>
+								<button type="button" class="btn sortButton" data-sort-by="age">Age</button>
+								<button type="button" class="btn sortButton" data-sort-by="fame">Fame</button>
+								<button type="button" class="btn sortButton" data-sort-by="tags">Tags</button>
+								<button type="button" class="btn sortButton" data-sort-by="distance">Distance</button>
+							</div>
+						</div>
 						<br>
 						<br>
 						<br>
@@ -224,8 +394,5 @@
 		<script>
 			// Get the element with id="defaultOpen" and click on it
 			document.getElementById("suggestionsTab").click();
-		</script>
-		<script>
-
 		</script>
 		<% include ../partials/footer.ejs %>
