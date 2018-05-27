@@ -179,11 +179,12 @@ function createProfileDIv(element) {
             <img src="`+ element.profileimg + `" class="img-responsive">
         </div>
         <div class="searchResultCardInfo">
-            <a href="/profile/`+ element.username + `" class="pull-left">
-                <h4>`+ element.username + `</h4>
-            </a>
-            <p class="myDate pull-right age">`+ element.age + `</p>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="searchResultName">
+                <a href="/profile/`+ element.username + `" class="pull-left">
+                    <h4>`+ element.username + `</h4>
+                </a>
+                <p class="myDate pull-right age">`+ element.age + `</p>
+            </div>
             <p class="pull-left">Fame Rating</p>
             <p class="pull-right fame">` + element.fame + `</p>
             <br><br>

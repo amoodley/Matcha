@@ -350,7 +350,6 @@ p, label {
  .searchResultCardImage {
      width: 100%;
      padding: 10px;
-     float: left;
  }
 
 .searchResultCardInfo {
@@ -524,4 +523,9 @@ body.loading .modal {
 
 .dropdown:hover .dropbtn {
     background-color: #3e8e41;
+}
+.searchResultName {
+    width: 100%;
+    position: relative;
+    height: 55px;
 }
