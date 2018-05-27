@@ -13,11 +13,16 @@ const home = require('./routes/home');
 const account = require('./routes/account');
 const profile = require('./routes/profile');
 
+var connections = [];
 
 // Create App
 const app = express();
-const server = require('http').createServer(app);
-const io = require('socket.io').listen(server);
+
+// Run server to listen on port 3000.
+const server = app.listen(3000, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+const io = require('socket.io')(server);
 
 // Cookie Parser Middleware
 app.use(cookieParser());
@@ -37,6 +42,7 @@ app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redi
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
 app.use('/js', express.static(__dirname + '/node_modules/masonry-layout/dist')); // redirect Masonry Layout
 app.use('/js', express.static(__dirname + '/node_modules/isotope-layout/dist')); // redirect Isotope Layout
+app.use('/js', express.static(__dirname + '/node_modules/socket.io-client/dist')); // redirect Socket.io
 
 // Set Routes
 app.use('/', home);
@@ -44,18 +50,26 @@ app.use('/account', account);
 app.use('/profile', profile);
 
 
-// Start Server
-server.listen(3000, function(){
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+// // Start Server
+// server.listen(3000, function(){
+//   console.log(`Server running at http://${hostname}:${port}/`);
+// });
 
 io.sockets.on('connection', function(socket){
-  connections.push('Connected: %s sockets connected', connections.length);
+  connections.push(socket);
+  console.log('Connected: %s sockets connected', connections.length);
 
   // Disconnect
   socket.on('disconnect', function(data){
     connections.splice(connections.indexOf(socket), 1);
     console.log('Disconnected: %s sockets', connections.length);
+  });
+
+  // Send Message
+  socket.on('send message', function(data){
+    data.username = data.username.trim();
+    console.log(data);
+    io.sockets.emit('new message', {msg: data.msg, username: data.username});
   });
   
 });

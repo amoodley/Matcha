@@ -97,6 +97,33 @@ exports.getViews = function (userId) {
     return views;
 }
 
+exports.getMatches = function (userId) {
+    var sql = 'SELECT * FROM `likes` WHERE user_id=\'' + userId + '\' ORDER BY id DESC';
+    var profile = this.getProfileById(userId);
+    var result = db.query(sql).data.rows;
+    var matches = [];
+    result.forEach(element => {
+        var matchProfile = this.getProfileById(element.liker_id);
+        var user = users.getUserById(matchProfile.user_id);
+        var birthday = matchProfile.birthday.substring(0, 10);
+        matchProfile.username = user.username;
+        matchProfile.age = new AgeFromDateString(birthday).age;
+        var distance = geolib.getDistance(
+            { lat: profile.latitude, lng: profile.longitude },
+            { lat: matchProfile.latitude, lng: matchProfile.longitude }
+        );
+        distance = distance / 1000;
+        distance = parseInt(distance);
+        matchProfile.distance = distance;
+        var sql = 'SELECT * FROM `likes` WHERE liker_id=\'' + userId + '\' AND user_id=\'' + user.id + '\'';
+        var result = db.query(sql).data.rows;
+        if (result[0] != undefined) {
+            matches.push(matchProfile);
+        }
+    })
+    return matches;
+}
+
 exports.addToLikes = function (userId, likerId) {
     var isLiked = db.query('SELECT * FROM `likes` WHERE user_id=\'' + userId + '\' AND liker_id=\'' + likerId + '\'').data.rows[0];
     if (!isLiked) {

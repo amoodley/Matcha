@@ -81,6 +81,14 @@ router.get('/views', (req, res) => {
 	res.send(views);
 });
 
+// GET: Matches
+router.get('/matches', (req, res) => {
+	var userId = users.isLoggedIn(req);
+	var profile = profiles.getProfileById(userId);
+	var matches = profiles.getMatches(userId);
+	res.send(matches);
+});
+
 // GET: likes
 router.get('/likes', (req, res) => {
 	var userId = users.isLoggedIn(req);

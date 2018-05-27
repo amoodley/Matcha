@@ -16,7 +16,7 @@
 					</div>
 					<div class="profileCardUsernameContainer text-center">
 						<h4 class="username">
-							<a href="/profile/<%= user.username %>" class="wordwrap">
+							<a href="/profile/<%= user.username %>" id="username" class="wordwrap">
 								<%= user.username %>
 							</a>
 						</h4>
@@ -224,9 +224,70 @@
 						<br>
 						<br>
 						<br>
+						<div class="pull-left">
+							<p>Filter</p>
+							<div class="filter-by-btn-group">
+								<div class="dropdown">
+									<button class="btn sortButton">Age</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1">18-25</a>
+										<a href="" data-filter=".ageGroup2">26-35</a>
+										<a href="" data-filter=".ageGroup3">36-45</a>
+										<a href="" data-filter=".ageGroup4">45 +</a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Fame</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".fameGroup1">0-25</a>
+										<a href="" data-filter=".fameGroup2">26-50</a>
+										<a href="" data-filter=".fameGroup3">51-100</a>
+										<a href="" data-filter=".fameGroup4">100 +</a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Tags</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".ageGroup1"> - </a>
+										<a href="" data-filter=".ageGroup2"> - </a>
+										<a href="" data-filter=".ageGroup3"> - </a>
+									</div>
+								</div>
+								<div class="dropdown">
+									<button type="button" class="btn sortButton">Distance</button>
+									<div class="dropdown-content">
+										<a href="" data-filter="*">All</a>
+										<a href="" data-filter=".distanceGroup1">5 km</a>
+										<a href="" data-filter=".distanceGroup2">10 km</a>
+										<a href="" data-filter=".distanceGroup3">20 km</a>
+										<a href="" data-filter=".distanceGroup4">50 km</a>
+										<a href="" data-filter=".distanceGroup5">50+</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="pull-right">
+							<p>Sort</p>
+							<div class="sort-by-btn-group">
+								<button type="button" class="btn sortButton" data-sort-by="original-order">Default</button>
+								<button type="button" class="btn sortButton" data-sort-by="age">Age</button>
+								<button type="button" class="btn sortButton" data-sort-by="fame">Fame</button>
+								<button type="button" class="btn sortButton" data-sort-by="tags">Tags</button>
+								<button type="button" class="btn sortButton" data-sort-by="distance">Distance</button>
+							</div>
+						</div>
+						<br>
+						<br>
+						<br>
 					</div>
 				</div>
 				<hr>
+				<div id="matchResults" class="grid">
+					<div class="grid-sizer"></div>
+				</div>
 			</div>
 			<div id="likes" class="col-md-9 tabcontent">
 				<div class="">
@@ -389,24 +450,18 @@
 				</div>
 				<hr>
 				<div class="container">
-					<div class="row">
+					<div id="messageArea" class="row">
 						<div class="col-md-3">
 							<div class="well">
-								<h3>Online Users</h3>
+								<h3>Matches</h3>
 								<ul class="list-group" id="users">
 
 								</ul>
 							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="chat" id="chat">
-								<form action="" id="messageForm">
-									<div class="form-group">
-										<label for="">Enter message</label>
-										<textarea class="form-control" name="" id="message" cols="30" rows="10"></textarea>
-										<input type="submit" class="btn btn-primary" value="Send Message">
-									</div>
-								</form>
+							<div class="messages" id="messagesBox">
+
 							</div>
 						</div>
 					</div>
@@ -421,10 +476,27 @@
 		<script>
 			// Get the element with id="defaultOpen" and click on it
 			document.getElementById("suggestionsTab").click();
-
+			
 			$(function(){
 				var socket = io.connect();
-				
-			});
+				var $messageForm = $('#messageForm');
+				var $message = $('#message');
+				var $chat = $('#chat');
+				var $username = $('#username');
+
+				console.log($message.val());
+
+				$('#SendButton').click(function(e){
+					socket.emit('send message', { 
+						msg: $message.val(), 
+						username: $username.html()
+					});
+					$message.val('');
+				});
+
+				socket.on('new message', function(data){
+					$chat.append('<div class="well">'+ data.username +' : '+ data.msg +'</div>');
+				});
+    		});
 		</script>
 		<% include ../partials/footer.ejs %>
