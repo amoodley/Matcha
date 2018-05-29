@@ -123,7 +123,7 @@
                         <% } else { %>
                             <button class="btn button pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
                         <% } %>
-                        <a href="/message/<%= viewUser.username %>" class="btn button pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</a>
+                        <button type="button" id="sendMessage" class="btn button pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</a>
                         <br>
                         <br>
                     </div>
@@ -132,11 +132,35 @@
         </div>
     </div>
 
+    <div class="modal fade" id="unmatchedModal" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">You aren't Matched (-_-)</h4>
+            </div>
+            <div class="modal-body">
+              <p>Sorry, You can only send messages to people who have liked your profile</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
     <script>
         var birthday = document.getElementById("birthday").innerText;
         birthday = birthday.trim();
         birthday = birthday.substring(0, 10);
         document.getElementById("myDate").innerHTML = birthday;
+
+        $('#modalButton').click(function(){
+            $("#unmatchedModal").modal();
+        });
 
         $("#like").click(function () {
             var username = document.getElementById('profileUsername').innerHTML;
@@ -164,5 +188,31 @@
                 }
             });
         });
+        
+        $('#sendMessage').click(function() {
+            var username = document.getElementById('profileUsername').innerHTML;
+            var username = username.trim();
+            var viewername = document.getElementById('username').innerHTML;
+            var viewername = viewername.trim();
+            $.ajax({
+                url: "/verifyMatch",
+                type: "GET",
+                data: {
+                    'username': username,
+                    'viewername': viewername
+                },
+                success: (result) => {
+                    if (result == true) {
+                        window.location.href = "/message/"+ username;
+                    } else {
+                        $("#unmatchedModal").modal("show");
+                    }
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            });
+        });
+
     </script>
     <% include ../partials/footer.ejs %>
