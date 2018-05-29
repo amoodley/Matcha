@@ -108,6 +108,22 @@ router.post('/like', (req, res) => {
 	res.send(result);
 });
 
+// GET: Verify Match
+router.get('/verifyMatch', (req, res) => {
+	var username = req.query.username;
+	var viewername = req.query.viewername;
+	var user = users.getUserByUsername(username);
+	var viewer = users.getUserByUsername(viewername);
+	var matches = profiles.getMatches(viewer.id);
+	var matched = false;
+	matches.forEach(element => {
+		if (element.username == username){
+			matched = true;
+		}
+	});
+	res.send(matched);
+});
+
 // GET: Suggestions
 router.get('/suggestions', (req, res) => {
 	var userId = users.isLoggedIn(req);
@@ -126,13 +142,26 @@ router.get('/message/:username', (req, res) => {
 	var recipientUsername = req.params.username;
 	var recipientUser = users.getUserByUsername(recipientUsername);
 	var recipientProfile = profiles.getProfileById(recipientUser.id);
+
+	var chatId = db.query('SELECT chat_id FROM chats WHERE user_id=\'' + user.username + '\' AND recipient_id=\'' + recipientUser.username + '\'').data.rows[0];
+	if (chatId == undefined) {
+		var chatId = db.query('SELECT chat_id FROM chats WHERE user_id=\'' + recipientUser.username + '\' AND recipient_id=\'' + user.username + '\'').data.rows[0];
+		if (chatId == undefined) {
+			var messages = '';
+		} else {
+			var messages = db.query('SELECT * from `chats` WHERE chat_id=\'' + chatId.chat_id + '\'').data.rows;
+		}
+	} else {
+		var messages = db.query('SELECT * from `chats` WHERE chat_id=\'' + chatId.chat_id + '\'').data.rows;
+	}
 	res.render('home/message', {
 		title: 'Messages',
 		user: user,
 		profile: profile,
 		age: ageFromString,
 		recipientUser: recipientUser,
-		recipientProfile: recipientProfile
+		recipientProfile: recipientProfile,
+		messages: messages
 	});
 })
 
