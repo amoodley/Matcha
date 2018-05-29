@@ -115,6 +115,27 @@ router.get('/suggestions', (req, res) => {
 	res.send(suggestions);
 });
 
+router.get('/message/:username', (req, res) => {
+	var userId = users.isLoggedIn(req);
+	var user = users.getUserById(userId);
+	var profile = profiles.getProfileById(userId);
+	var birthday = profile.birthday;
+	birthday = birthday.substring(0, 10);
+	let ageFromString = new AgeFromDateString(birthday).age;
+
+	var recipientUsername = req.params.username;
+	var recipientUser = users.getUserByUsername(recipientUsername);
+	var recipientProfile = profiles.getProfileById(recipientUser.id);
+	res.render('home/message', {
+		title: 'Messages',
+		user: user,
+		profile: profile,
+		age: ageFromString,
+		recipientUser: recipientUser,
+		recipientProfile: recipientProfile
+	});
+})
+
 // GET: Setup Profile
 router.get('/setupProfile', (req, res) => {
 	res.render('home/setupProfile', {
