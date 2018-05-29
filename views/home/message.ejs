@@ -44,7 +44,23 @@
 							</h3>
 						</a>
 					</div>
-					<div id="chat"></div>
+					<div id="chat">
+						<% if (messages != '') { %>
+							<% messages.forEach(element => { %>
+								<div class="messageContainer">
+								<% if (element.user_id == user.username) { %>
+									<div class="recipientMessage">
+								<% } else { %>
+									<div class="userMessage">
+								<% } %>
+										<p class="messageName"><%= element.recipient_id %></p>
+										<hr class="messageLine">
+										<p class="messageText"><%= element.message %></p>
+									</div>
+								</div>
+							<% }); %>
+						<% } %>
+					</div>
 					<div class="inputArea">
 						<form action="" id="messageForm">
 							<div class="form-group">
@@ -60,6 +76,8 @@
 	</div>
 	</div>
 	<script>
+		$("#chat").scrollTop($("#chat")[0].scrollHeight);
+
 		$(function () {
 			var socket = io.connect();
 			var $messageForm = $('#messageForm');
@@ -74,8 +92,6 @@
 			var $recipient = $recipient.html();
 			$recipient = $recipient.trim();
 
-			console.log($message.val());
-
 			$('#messageForm').submit(function (e) {
 				e.preventDefault();
 				socket.emit('send message', {
@@ -87,7 +103,9 @@
 			});
 
 			socket.on('new message', function (data) {
-				if (data.recipient  == $username) {
+				console.log(data);
+				console.log($username);
+				if (data.recipient  == $username && data.username == $recipient) {
 					$chat.append(`<div class="messageContainer">
                             		<div class="recipientMessage">
 										<p class="messageName">` + data.username + `</p>
@@ -95,7 +113,7 @@
 										<p class="messageText">` + data.msg + `</p>
                             		</div>
 								</div>`);
-				} else if (data.username == $username) {
+				} else if (data.username == $username && data.recipient == $recipient) {
 					$chat.append(`<div class="messageContainer">
                             		<div class="userMessage">
                                 		<p class="messageName">` + data.username + `</p>
@@ -104,6 +122,7 @@
                             		</div>
                         		</div>`);
 				}
+				$("#chat").scrollTop($("#chat")[0].scrollHeight);
 			});
 		});
 	</script>
