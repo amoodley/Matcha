@@ -1,0 +1,111 @@
+<% include ../partials/header.ejs %>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="">
+					<div class="profileImageContainer">
+						<img src="<%= profile.profileimg %>" class="img-circle">
+					</div>
+					<div class="profileCardUsernameContainer text-center">
+						<h4 class="username">
+							<a href="/profile/<%= user.username %>" class="wordwrap" id="username">
+								<%= user.username %>
+							</a>
+						</h4>
+						<p id="birthday" style="display: none;">
+							<%= profile.birthday %>
+						</p>
+						<p>
+							<%= age %>,
+								<%= profile.city %>
+						</p>
+					</div>
+					<div class="profileCardTagLine">
+						<p>
+							<%= profile.bio %>
+						</p>
+						<p class="profileCardLabel">Interests</p>
+						<p>
+							<%= profile.interests %>
+						</p>
+					</div>
+					<hr>
+				</div>
+			</div>
+			<div id="messageBox" class="col-md-9">
+				<div class="messageArea">
+					<div class="messageRecipientInfo">
+						<div class="messageRecipientInfoImage pull-left">
+							<img src="<%= recipientProfile.profileimg %>" class="img-circle messageRecipientInfoProfileImage">
+						</div>
+						<a href="/profile/<%= recipientUser.username %>">
+							<h3 class="messageRecipientInfoName" id="recipient">
+								<%= recipientUser.username %>
+							</h3>
+						</a>
+					</div>
+					<div id="chat"></div>
+					<div class="inputArea">
+						<form action="" id="messageForm">
+							<div class="form-group">
+								<label for="">Enter message</label>
+								<textarea class="form-control" name="" id="message" cols="5" rows="2"></textarea>
+								<input type="submit" class="btn button pull-right" id="SendButton" value="Send Message">
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<script>
+		$(function () {
+			var socket = io.connect();
+			var $messageForm = $('#messageForm');
+			var $message = $('#message');
+			var $chat = $('#chat');
+			var $username = $('#username');
+			var $recipient = $('#recipient');
+
+			var $username = $username.html();
+			$username = $username.trim();
+			
+			var $recipient = $recipient.html();
+			$recipient = $recipient.trim();
+
+			console.log($message.val());
+
+			$('#messageForm').submit(function (e) {
+				e.preventDefault();
+				socket.emit('send message', {
+					msg: $message.val(),
+					username: $username,
+					recipient: $recipient
+				});
+				$message.val('');
+			});
+
+			socket.on('new message', function (data) {
+				if (data.recipient  == $username) {
+					$chat.append(`<div class="messageContainer">
+                            		<div class="recipientMessage">
+										<p class="messageName">` + data.username + `</p>
+										<hr class="messageLine">
+										<p class="messageText">` + data.msg + `</p>
+                            		</div>
+								</div>`);
+				} else if (data.username == $username) {
+					$chat.append(`<div class="messageContainer">
+                            		<div class="userMessage">
+                                		<p class="messageName">` + data.username + `</p>
+                                		<hr class="messageLine">
+										<p class="messageText">` + data.msg + `</p>
+                            		</div>
+                        		</div>`);
+				}
+			});
+		});
+	</script>
+
+	<% include ../partials/footer.ejs %>
