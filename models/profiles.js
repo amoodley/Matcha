@@ -39,7 +39,7 @@ exports.searchProfiles = function (searchQuery) {
     var profile = this.getProfileById(searchQuery.userId);
     var sql = 'SELECT * FROM `profiles` WHERE gender=\'' + searchQuery.preference + '\' AND preference=\'' + searchQuery.gender + '\'';
     var searchResult = db.query(sql).data.rows;
-    for (var i = searchResult.length-1; i >= 0; i--) {
+    for (var i = searchResult.length - 1; i >= 0; i--) {
         if (searchResult.hasOwnProperty(i)) {
             var birthday = searchResult[i].birthday.substring(0, 10);
             var age = new AgeFromDateString(birthday).age;
@@ -50,11 +50,22 @@ exports.searchProfiles = function (searchQuery) {
                 );
                 distance = distance / 1000;
                 distance = parseInt(distance);
-                if (distance <= searchQuery.distance){
+                if (distance <= searchQuery.distance) {
                     var user = users.getUserById(searchResult[i].user_id);
                     searchResult[i].username = user.username;
                     searchResult[i].age = age;
                     searchResult[i].distance = distance;
+                    var userTags = profile.interests.split(" ");
+                    var profileTags = searchResult[i].interests.split(" ");
+                    var commonTags = [];
+                    for (var j = 0; j < userTags.length; j++) {
+                        for (var k = 0; k < profileTags.length; k++) {
+                            if (userTags[j] == profileTags[k]) {
+                                commonTags.push(userTags[j]);
+                            }
+                        }
+                    }
+                    searchResult[i].commonTags = commonTags;
                 } else {
                     searchResult.splice(i, 1);
                 }
@@ -101,6 +112,17 @@ exports.getViews = function (userId) {
         distance = distance / 1000;
         distance = parseInt(distance);
         viewerProfile.distance = distance;
+        var userTags = profile.interests.split(" ");
+        var profileTags = viewerProfile.interests.split(" ");
+        var commonTags = [];
+        for (var j = 0; j < userTags.length; j++) {
+            for (var k = 0; k < profileTags.length; k++) {
+                if (userTags[j] == profileTags[k]) {
+                    commonTags.push(userTags[j]);
+                }
+            }
+        }
+        viewerProfile.commonTags = commonTags;
         views.push(viewerProfile);
     })
     return views;
@@ -124,6 +146,17 @@ exports.getMatches = function (userId) {
         distance = distance / 1000;
         distance = parseInt(distance);
         matchProfile.distance = distance;
+        var userTags = profile.interests.split(" ");
+        var profileTags = matchProfile.interests.split(" ");
+        var commonTags = [];
+        for (var j = 0; j < userTags.length; j++) {
+            for (var k = 0; k < profileTags.length; k++) {
+                if (userTags[j] == profileTags[k]) {
+                    commonTags.push(userTags[j]);
+                }
+            }
+        }
+        matchProfile.commonTags = commonTags;
         var sql = 'SELECT * FROM `likes` WHERE liker_id=\'' + userId + '\' AND user_id=\'' + user.id + '\'';
         var result = db.query(sql).data.rows;
         if (result[0] != undefined) {
@@ -165,6 +198,17 @@ exports.getLikes = function (userId) {
         distance = distance / 1000;
         distance = parseInt(distance);
         likerProfile.distance = distance;
+        var userTags = profile.interests.split(" ");
+        var profileTags = likerProfile.interests.split(" ");
+        var commonTags = [];
+        for (var j = 0; j < userTags.length; j++) {
+            for (var k = 0; k < profileTags.length; k++) {
+                if (userTags[j] == profileTags[k]) {
+                    commonTags.push(userTags[j]);
+                }
+            }
+        }
+        likerProfile.commonTags = commonTags;
         likes.push(likerProfile);
     })
     return likes;
@@ -195,6 +239,17 @@ exports.getSuggestions = function (userId) {
         distance = distance / 1000;
         distance = parseInt(distance);
         suggestionProfile.distance = distance;
+        var userTags = profile.interests.split(" ");
+        var profileTags = suggestionProfile.interests.split(" ");
+        var commonTags = [];
+        for (var j = 0; j < userTags.length; j++) {
+            for (var k = 0; k < profileTags.length; k++) {
+                if (userTags[j] == profileTags[k]) {
+                    commonTags.push(userTags[j]);
+                }
+            }
+        }
+        suggestionProfile.commonTags = commonTags;
         suggestionProfile.age = new AgeFromDateString(suggestionBirthday).age;
         if (suggestionProfile.age > ageMin && suggestionProfile.age < ageMax) {
             suggestions.push(suggestionProfile);
