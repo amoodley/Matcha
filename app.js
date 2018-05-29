@@ -67,9 +67,8 @@ io.sockets.on('connection', function(socket){
 
   // Send Message
   socket.on('send message', function(data){
-    data.username = data.username.trim();
     console.log(data);
-    io.sockets.emit('new message', {msg: data.msg, username: data.username});
+    io.sockets.emit('new message', {msg: data.msg, username: data.username, recipient: data.recipient});
   });
   
 });
