@@ -99,58 +99,6 @@ $("#matchesTab").click(function () {
         }
     });
 });
-$("#messagesTab").click(function () {
-    $.ajax({
-        url: "/matches",
-        type: "GET",
-        success: (result) => {
-            if (result) {
-                $('#users').empty();
-                $('#messagesBox').empty();
-                var matchResults = document.getElementById('users');
-                var first = true;
-                var open = '';
-                result.forEach(element => {
-                    var birthday = element.birthday.substring(0, 10);
-                    if (first == true){
-                        open = element.username + 'MessageTab';
-                        first = false;
-                    }
-                    $('#users').append(`
-                        <button href="" class="messageLink" onclick="openMessageTab(event, '`+ element.username +`')" id="`+ element.username +`MessageTab">
-                            <div class="messageUser">
-                                <img src="`+ element.profileimg +`" class="messageImg">
-                                <div class="pull-right">
-                                    <h4 class="messageUsername">`+ element.username +`</h4>
-                                </div>
-                            </div>
-                        </button>
-                    `);
-
-                    $('#messagesBox').append(`
-                        <div id="`+ element.username +`" class="chat">
-                            <div class="well">
-                                <h3>`+ element.username +`</h3>
-                                <div id="chat"></div>
-                                <form action="" id="messageForm">
-                                    <div class="form-group">
-                                        <label for="">Enter message</label>
-                                        <textarea class="form-control" name="" id="message" cols="5" rows="2"></textarea>
-                                        <button type="button" class="btn btn-primary" id="SendButton" value="Send Message">Send Message</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    `);
-                });
-                document.getElementById(open).click();
-            }
-        },
-        error: (err) => {
-            console.log(err);
-        }
-    });
-});
 
 $("#suggestionsTab").click(function () {
     $.ajax({
