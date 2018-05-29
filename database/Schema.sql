@@ -63,3 +63,11 @@ CREATE TABLE `likes` (
     `liker_id` varchar(32) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;
+
+CREATE TABLE `chats` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `chat_id` varchar(32) DEFAULT NULL,
+    `user_id` varchar(32) DEFAULT NULL,
+    `recipient_id` varchar(32) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB COLLATE utf8_general_ci;
