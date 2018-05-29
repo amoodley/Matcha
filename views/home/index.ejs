@@ -44,7 +44,6 @@
 					<button class="menuItem tablinks" onclick="openTab(event, 'matches')" id="matchesTab">Matches</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'likes')" id="likesTab">Likes</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'views')" id="viewsTab">Views</button>
-					<button class="menuItem tablinks" onclick="openTab(event, 'messages')" id="messagesTab">Messages</button>
 				</div>
 			</div>
 			<div id="suggestions" class="col-md-9 tabcontent">
@@ -437,36 +436,6 @@
 					<div class="grid-sizer"></div>
 				</div>
 			</div>
-			<div id="messages" class="col-md-9 tabcontent">
-				<div class="">
-					<div>
-						<h3 class="pull-left">Messages</h3>
-						<p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
-						<p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
-						<br>
-						<br>
-						<br>
-					</div>
-				</div>
-				<hr>
-				<div class="container">
-					<div id="messageArea" class="row">
-						<div class="col-md-3">
-							<div class="well">
-								<h3>Matches</h3>
-								<ul class="list-group" id="users">
-
-								</ul>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="messages" id="messagesBox">
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 		<div class="modal"></div>
 		<script type="text/javascript" src="/js/openTab.js"></script>
@@ -476,27 +445,5 @@
 		<script>
 			// Get the element with id="defaultOpen" and click on it
 			document.getElementById("suggestionsTab").click();
-			
-			$(function(){
-				var socket = io.connect();
-				var $messageForm = $('#messageForm');
-				var $message = $('#message');
-				var $chat = $('#chat');
-				var $username = $('#username');
-
-				console.log($message.val());
-
-				$('#SendButton').click(function(e){
-					socket.emit('send message', { 
-						msg: $message.val(), 
-						username: $username.html()
-					});
-					$message.val('');
-				});
-
-				socket.on('new message', function(data){
-					$chat.append('<div class="well">'+ data.username +' : '+ data.msg +'</div>');
-				});
-    		});
 		</script>
 		<% include ../partials/footer.ejs %>
