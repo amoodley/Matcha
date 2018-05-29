@@ -186,15 +186,24 @@ function createProfileDIv(element) {
     }
 
     if (element.distance <= 5) {
-        gridItem += 'distanceGroup1">';
+        gridItem += 'distanceGroup1 ';
     } else if (element.distance > 5 && element.distance <= 10) {
-        gridItem += 'distanceGroup2">';
+        gridItem += 'distanceGroup2 ';
     } else if (element.distance > 10 && element.distance <= 20) {
-        gridItem += 'distanceGroup3">';
+        gridItem += 'distanceGroup3 ';
     } else if (element.distance > 20 && element.distance <= 50) {
-        gridItem += 'distanceGroup4">';
+        gridItem += 'distanceGroup4 ';
     } else {
-        gridItem += 'distanceGroup5">';
+        gridItem += 'distanceGroup5 ';
+    }
+    if (element.commonTags.length >= 5) {
+        gridItem += 'tagGroup1">';
+    } else if (element.commonTags.length < 5 && element.commonTags.length > 1) {
+        gridItem += 'tagGroup2">';
+    } else if (element.commonTags.length == 1) {
+        gridItem += 'tagGroup3">';
+    } else {
+        gridItem += 'tagGroup4">';
     }
     var profileDiv = gridItem + `
         <div class="searchResultCardImage">
@@ -215,8 +224,8 @@ function createProfileDIv(element) {
             <br>
         </div>
         <div class="searchResultCardTagLine">
-            <p class="profileCardLabel">Interests</p>
-            <p>`+ element.interests + `</p>
+            <p class="profileCardLabel">Common interests</p>
+            <p class="tags">`+ element.commonTags + `</p>
         </div>
     </div>`;
 
