@@ -7,11 +7,11 @@
                         <img src="<%= userProfile.profileimg %>" class="img-circle">
                     </div>
                     <div class="profileCardUsernameContainer text-center">
-                        <h3 class="username">
+                        <h4 class="username">
                             <a href="/profile/<%= user.username %>" class="wordwrap" id="username">
                                 <%= user.username %>
 							</a>
-                        </h3>
+                        </h4>
                         <p id="birthday" style="display: none;">
                             <%= userProfile.birthday %>
                         </p>
@@ -123,7 +123,7 @@
                         <% } else { %>
                             <button class="btn button pull-left" id="like"><span class="glyphicon glyphicon-heart"></span> Like</button>
                         <% } %>
-                        <button class="btn button pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</button>
+                        <a href="/message/<%= viewUser.username %>" class="btn button pull-right"><span class="glyphicon glyphicon-envelope"></span> Message</a>
                         <br>
                         <br>
                     </div>
