@@ -39,19 +39,28 @@ exports.searchProfiles = function (searchQuery) {
     var profile = this.getProfileById(searchQuery.userId);
     var sql = 'SELECT * FROM `profiles` WHERE gender=\'' + searchQuery.preference + '\' AND preference=\'' + searchQuery.gender + '\'';
     var searchResult = db.query(sql).data.rows;
-    for (i in searchResult) {
+    for (var i = searchResult.length-1; i >= 0; i--) {
         if (searchResult.hasOwnProperty(i)) {
-            var user = users.getUserById(searchResult[i].user_id);
             var birthday = searchResult[i].birthday.substring(0, 10);
-            searchResult[i].username = user.username;
-            searchResult[i].age = new AgeFromDateString(birthday).age;
-            var distance = geolib.getDistance(
-                { lat: profile.latitude, lng: profile.longitude },
-                { lat: searchResult[i].latitude, lng: searchResult[i].longitude }
-            );
-            distance = distance / 1000;
-            distance = parseInt(distance);
-            searchResult[i].distance = distance;
+            var age = new AgeFromDateString(birthday).age;
+            if (age >= searchQuery.fromAge && age <= searchQuery.toAge) {
+                var distance = geolib.getDistance(
+                    { lat: profile.latitude, lng: profile.longitude },
+                    { lat: searchResult[i].latitude, lng: searchResult[i].longitude }
+                );
+                distance = distance / 1000;
+                distance = parseInt(distance);
+                if (distance <= searchQuery.distance){
+                    var user = users.getUserById(searchResult[i].user_id);
+                    searchResult[i].username = user.username;
+                    searchResult[i].age = age;
+                    searchResult[i].distance = distance;
+                } else {
+                    searchResult.splice(i, 1);
+                }
+            } else {
+                searchResult.splice(i, 1);
+            }
         }
     }
     return (searchResult);
