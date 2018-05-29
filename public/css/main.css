@@ -48,6 +48,9 @@ a {
 a:hover {
     color: #D71717;
 }
+a:visited {
+    color: darkred !important;
+}
 p, label { 
     font-size: 14px;
     font-weight: normal;
@@ -207,22 +210,40 @@ p, label {
     font-size: 18px;
     color: grey;
 }
+.navbarLeftButtonContainer {
+    margin-top: 9px;
+    width: 150px;
+}
 .navbarButtonContainer {
-    margin-top: 7px;
+    margin-top: 9px;
+    margin-left: 15px;
     width: 77px;
 }
+.navbarHomeButton {
+    width: 30px;
+    height: 30px;
+    display: block;
+    float: left;
+    margin-right: 15px;
+}
+.navbarMessageButton {
+    width: 32px;
+    height: 32px;
+    display: block;
+    float: left;
+}
 .navbarLogoutButton {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     display: block;
     float: left;
 }
 .navbarSettingsButton {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     display: block;
     float: left;
-    margin-right: 5px;
+    margin-right: 15px;
 }
 .editProfileContainer {
     margin: 0 -15px 0 -15px;
@@ -551,4 +572,99 @@ body.loading .modal {
 }
 .messageLink:hover {
     background-color: rgb(0,0,0);
+}
+.messageRecipientInfo {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.messageRecipientInfoImage {
+    width: auto;
+    position: relative;
+}
+.messageRecipientInfoProfileImage {
+    height: 80px;
+}
+.messageRecipientInfoName {
+    margin: 30px 20px 25px 151px;
+}
+.messageArea {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+    overflow: hidden;
+    background-color: #232323;
+}
+.inputArea {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 5px;
+}
+.userMessage {
+    background-color: #000000;
+    border: 1px solid #D71717 !important;
+    float: right;
+    /* width: 70%; */
+    text-align: right;
+    margin: 15px;
+    padding: 8px;
+    border-radius: 5px;
+}
+.recipientMessage {
+    background-color: #000000;
+    border: 1px solid #D71717 !important;
+    text-align: left;
+    float: left;
+    /* width: 70%; */
+    margin: 15px;
+    padding: 8px;
+    border-radius: 5px;
+}
+.messageContainer {
+    width: 100%;
+    overflow: hidden;
+}
+#chat {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow-y: auto;
+    background-color: #000000;
+    border: 1px solid #D71717 !important;
+}
+#message {
+    background-color: #000000;
+    border : 1px solid #D71717 !important;
+}
+.messageName {
+    color: grey;
+    margin: 0 0 0 0;
+}
+.messageText {
+    margin: 5px 0 0 0;
+}
+.messageLine {
+    margin: 0px;
+}
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background-color: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #303030; 
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-button {
+    background-color: black;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: black;
 }
