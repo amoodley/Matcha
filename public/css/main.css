@@ -48,9 +48,6 @@ a {
 a:hover {
     color: #D71717;
 }
-a:visited {
-    color: darkred !important;
-}
 p, label { 
     font-size: 14px;
     font-weight: normal;
@@ -393,7 +390,7 @@ p, label {
      margin-bottom: 35px;
      background-color: #232323;
  }
- .modal {
+ .modalLoad {
     display:    none;
     position:   fixed;
     z-index:    1000;
@@ -409,7 +406,7 @@ p, label {
 body.loading {
     overflow: hidden;   
 }
-body.loading .modal {
+body.loading .modalLoad {
     display: block;
 }
 .sortButton {
@@ -667,4 +664,10 @@ body.loading .modal {
 
 ::-webkit-scrollbar-corner {
     background-color: black;
+}
+.modal-content {
+    background-color: black;
+}
+.modal-dialog {
+    margin: 100px auto;
 }
