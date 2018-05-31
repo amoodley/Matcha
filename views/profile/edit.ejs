@@ -33,6 +33,7 @@
 					<button class="menuItem tablinks" onclick="openTab(event, 'editProfile')" id="defaultOpen">Edit profile</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'editPicture')">Upload pictures</button>
 					<button class="menuItem tablinks" onclick="openTab(event, 'editLocation')">Update location</button>
+					<button class="menuItem tablinks" onclick="openTab(event, 'blockedUsers')">Blocked users</button>
 				</div>
 			</div>
 			<div id="editProfile" class="col-md-9 col-lg-7 tabcontent">
@@ -208,6 +209,19 @@
 							<button class="btn button" type="button" onclick="editLocation()">Save</button>
 						</div>
 					</form>
+				</div>
+			</div>
+			<div id="blockedUsers" class="col-md-9 col-lg-7 tabcontent">
+				<div class="editProfileContainer">
+					<div>
+						<h2 class="pull-left">Blocked users</h2>
+						<p id="successMessage2" class="pull-right successMessage" hidden>Updated successfully</p>
+						<br>
+						<br>
+						<br>
+						<hr>
+					</div>
+					
 				</div>
 			</div>
 		</div>
