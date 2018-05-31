@@ -9,11 +9,11 @@ box-sizing: border-box;
 * {
 margin: 0;
 padding: 0;
--webkit-transition: all 0.5s ease;
--moz-transition: all 0.5s ease;
--o-transition: all 0.5s ease;
--ms-transition: all 0.5s ease;
-transition: all 0.5s ease;
+-webkit-transition: all 0.8s ease;
+-moz-transition: all 0.8s ease;
+-o-transition: all 0.8s ease;
+-ms-transition: all 0.8s ease;
+transition: all 0.8s ease;
 }
 html {
     height: 100%;
@@ -107,6 +107,17 @@ p, label {
     -o-background-size: cover;
     background-size: cover;
     height: 92% !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+}
+.mainBody{
+    position: relative;
+    background: url('https://i.imgur.com/pQ8clkT.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100% !important;
     width: 100% !important;
     overflow-x: hidden !important;
 }
@@ -243,7 +254,9 @@ p, label {
     margin-right: 15px;
 }
 .editProfileContainer {
-    margin: 0 -15px 0 -15px;
+    background-color: rgba(0,0,0, 0.9);
+    margin: 0px -10px 30px -10px;
+    padding: 10px;
 }
 .panel {
     background-color: #000000;
@@ -388,7 +401,8 @@ p, label {
      overflow: hidden;
      padding: 20px;
      margin-bottom: 35px;
-     background-color: #232323;
+    background-color: rgba(0,0,0, 0.9);
+     
  }
  .modalLoad {
     display:    none;
@@ -448,8 +462,8 @@ body.loading .modalLoad {
 .grid-item {
     float: left;
     width: 245px;
-    border: 2px solid hsla(0, 0%, 0%, 0.5);
-    background-color: #232323;
+    margin: 4px 4px 0px 0px;
+    background-color: rgba(0,0,0, 0.9);
 }
 .main {
     margin-left: 300px;
@@ -494,9 +508,9 @@ body.loading .modalLoad {
   .isotope,
   .isotope .isotope-item {
     /* change duration value to whatever you like */
-    -webkit-transition-duration: 0.8s;
-       -moz-transition-duration: 0.8s;
-            transition-duration: 0.8s;
+    -webkit-transition-duration: 1.8s;
+       -moz-transition-duration: 1.8s;
+            transition-duration: 1.8s;
   }
    
   .isotope {
@@ -592,7 +606,7 @@ body.loading .modalLoad {
     width: 100%;
     padding: 15px;
     overflow: hidden;
-    background-color: #232323;
+    background-color: rgba(0,0,0, 0.9);
 }
 .inputArea {
     position: relative;
@@ -629,7 +643,7 @@ body.loading .modalLoad {
     width: 100%;
     height: 300px;
     overflow-y: auto;
-    background-color: #000000;
+    background-color: rgba(0,0,0, 0.7);
     border: 1px solid #D71717 !important;
 }
 #message {
@@ -654,11 +668,11 @@ body.loading .modalLoad {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #303030; 
-    border-radius: 20px;
+    background-color: #232323;
+    border-radius: 10px;
 }
 
-::-webkit-scrollbar-button {
+::-webkit-scrollbar-button:no-button {
     background-color: black;
 }
 
@@ -670,4 +684,17 @@ body.loading .modalLoad {
 }
 .modal-dialog {
     margin: 100px auto;
+}
+.profileContainer {
+    background-color: rgba(0,0,0, 0.9);
+    margin: 0px -10px 0px -10px;
+    padding: 10px;
+}
+.headerContainer{
+    background-color: rgba(0,0,0, 0.9);
+    margin: 0px 0px 0px -10px;
+    padding: 10px;
+}
+.grid {
+    margin: 0px -10px 0px -10px;
 }

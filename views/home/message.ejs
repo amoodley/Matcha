@@ -2,7 +2,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-3">
-				<div class="">
+				<div class="profileContainer">
 					<div class="profileImageContainer">
 						<img src="<%= profile.profileimg %>" class="img-circle">
 					</div>
@@ -49,11 +49,11 @@
 							<% messages.forEach(element => { %>
 								<div class="messageContainer">
 								<% if (element.user_id == user.username) { %>
-									<div class="recipientMessage">
-								<% } else { %>
 									<div class="userMessage">
+								<% } else { %>
+									<div class="recipientMessage">
 								<% } %>
-										<p class="messageName"><%= element.recipient_id %></p>
+										<p class="messageName"><%= element.user_id %></p>
 										<hr class="messageLine">
 										<p class="messageText"><%= element.message %></p>
 									</div>

@@ -1,65 +1,153 @@
 <% include ../partials/header.ejs %>
-<div id="messages" class="col-md-9 tabcontent">
-    <div class="">
-        <div>
-            <h3 class="pull-left">Messages</h3>
-            <p id="successMessage1" class="pull-right successMessage" hidden>Updated successfully</p>
-            <p id="errorMessage1" class="pull-right errorMessage" hidden>Error</p>
-            <br>
-            <br> 
-            <br>
-        </div>
-        </div>
-    <hr>
-    <div class="container">
-        <div id="messageArea" class="row">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-md-3">
-                <div class="well">
-                    <h3>Matches</h3>
-                    <ul class="list-group" id="users">
-                        <button href="" class="messageLink" onclick="openMessageTab(event, 'AlexisRen')" id="`AlexisRenMessageTab">
-                            <div class="messageUser">
-                                <img src="/uploads/profileImg-1526904099766.jpeg" class="messageImg">
-                                <div class="pull-right">
-                                    <h4 class="messageUsername">AlexisRen</h4>
-                                </div>
-                            </div>
-                        </button>
-                        <button href="" class="messageLink" onclick="openMessageTab(event, 'AlexisRen')" id="RejanicedMessageTab">
-                            <div class="messageUser">
-                                <img src="/uploads/profileImg-1526904266848.jpeg" class="messageImg">
-                                <div class="pull-right">
-                                    <h4 class="messageUsername">Rejaniced</h4>
-                                </div>
-                            </div>
-                        </button>
-                    </ul>
+                <div class="">
+                    <div class="profileImageContainer">
+                        <img src="/uploads/profileImg-1526903349829.jpeg" class="img-circle">
+                    </div>
+                    <div class="profileCardUsernameContainer text-center">
+                        <h4 class="username">
+                            <a href="/profile/user.username" class="wordwrap" id="username">
+                                AshleighM
+                            </a>
+                        </h4>
+                        <p id="birthday" style="display: none;">
+                            profile.birthday
+                        </p>
+                        <p>
+                            age profile.city
+                        </p>
+                    </div>
+                    <div class="profileCardTagLine">
+                        <p>
+                            profile.bio
+                        </p>
+                        <p class="profileCardLabel">Interests</p>
+                        <p>
+                            profile.interests
+                        </p>
+                    </div>
+                    <hr>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div id="AlexisRen" class="chat">
-                    <div id="chat"></div>
-                    <form action="" id="messageForm">
-                        <div class="form-group">
-                            <label for="">Enter message</label>
-                            <textarea class="form-control" name="" id="message" cols="5" rows="2"></textarea>
-                            <input type="submit" class="btn btn-primary" value="Send Message">
+            <div id="messageBox" class="col-md-9">
+                <div class="messageArea">
+                    <div class="messageRecipientInfo">
+                        <div class="messageRecipientInfoImage pull-left">
+                            <img src="/uploads/profileImg-1526904099766.jpeg" class="img-circle messageRecipientInfoProfileImage">
                         </div>
-                    </form>
-                </div>
-                <div id="Rejaniced" class="chat">
-                    <div id="chat"></div>
-                    <form action="" id="messageForm">
-                        <div class="form-group">
-                            <label for="">Enter message</label>
-                            <textarea class="form-control" name="" id="message" cols="5" rows="2"></textarea>
-                            <input type="submit" class="btn btn-primary" value="Send Message">
+                        <h3 class="messageRecipientInfoName" id="recipient">
+                            AlexisRen
+                        </h3>
+                    </div>
+                    <div id="chat">
+                        <div class="messageContainer">
+                            <div class="recipientMessage">
+                                <p class="messageName">AlexisRen</p>
+                                <hr class="messageLine">
+                                <p class="messageText">Hey there, How are you doing?</p>
+                            </div>
                         </div>
-                    </form>
+                        <div class="messageContainer">
+                            <div class="userMessage">
+                                <p class="messageName">AshleighM</p>
+                                <hr class="messageLine">
+                                <p class="messageText">I'm Awesome, I just saved an orphanage</p>
+                            </div>
+                        </div>
+                        <div class="messageContainer">
+                            <div class="recipientMessage">
+                                <p class="messageName">AlexisRen</p>
+                                <hr class="messageLine">
+                                <p class="messageText">Wow, That's incredible!</p>
+                            </div>
+                        </div>
+                        <div class="messageContainer">
+                            <div class="userMessage">
+                                <p class="messageName">AshleighM</p>
+                                <hr class="messageLine">
+                                <p class="messageText">Not bad for a Tuesday</p>
+                            </div>
+                        </div>
+                        <div class="messageContainer">
+                                <div class="recipientMessage">
+                                    <p class="messageName">AlexisRen</p>
+                                    <hr class="messageLine">
+                                    <p class="messageText">Hey there, How are you doing?</p>
+                                </div>
+                            </div>
+                            <div class="messageContainer">
+                                <div class="userMessage">
+                                    <p class="messageName">AshleighM</p>
+                                    <hr class="messageLine">
+                                    <p class="messageText">I'm Awesome, I just saved an orphanage</p>
+                                </div>
+                            </div>
+                            <div class="messageContainer">
+                                <div class="recipientMessage">
+                                    <p class="messageName">AlexisRen</p>
+                                    <hr class="messageLine">
+                                    <p class="messageText">Wow, That's incredible!</p>
+                                </div>
+                            </div>
+                            <div class="messageContainer">
+                                <div class="userMessage">
+                                    <p class="messageName">AshleighM</p>
+                                    <hr class="messageLine">
+                                    <p class="messageText">Not bad for a Tuesday</p>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="inputArea">
+                        <form action="" id="messageForm">
+                            <div class="form-group">
+                                <label for="">Enter message</label>
+                                <textarea class="form-control" name="" id="message" cols="5" rows="2"></textarea>
+                                <input type="submit" class="btn button pull-right" id="SendButton" value="Send Message">
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script type="text/javascript" src="/js/openTab.js"></script>
-<% include ../partials/footer.ejs %>
+    </div>
+    <!-- <script>
+		$(function () {
+			var socket = io.connect();
+			var $messageForm = $('#messageForm');
+			var $message = $('#message');
+			var $chat = $('#chat');
+			var $username = $('#username');
+			var $recipient = $('#recipient');
+
+			var $username = $username.html();
+			$username = $username.trim();
+			
+			var $recipient = $recipient.html();
+			$recipient = $recipient.trim();
+
+			console.log($message.val());
+
+			$('#messageForm').submit(function (e) {
+				e.preventDefault();
+				socket.emit('send message', {
+					msg: $message.val(),
+					username: $username,
+					recipient: $recipient
+				});
+				$message.val('');
+			});
+
+			socket.on('new message', function (data) {
+				if (data.recipient  == $username) {
+					$chat.append('<div class="recipientMessage">' + data.username + ' : ' + data.msg + '</div>');
+				} else if (data.username == $username) {
+					$chat.append('<div class="userMessage">' + data.username + ' : ' + data.msg + '</div>');
+				}
+			});
+		});
+	</script> -->
+
+    <% include ../partials/footer.ejs %>

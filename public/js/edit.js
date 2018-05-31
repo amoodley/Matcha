@@ -1,5 +1,5 @@
 function editProfile() {
-
+    console.log('in Ajax');
     var profile = {
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
@@ -60,6 +60,7 @@ function editProfile() {
                 'interests': profile.interests
             },
             success: (result) => {
+                console.log(result);
                 if (result == 'Success'){
                     document.getElementById('successMessage').hidden = false;
                 }
