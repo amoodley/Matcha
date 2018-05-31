@@ -698,3 +698,6 @@ body.loading .modalLoad {
 .grid {
     margin: 0px -10px 0px -10px;
 }
+.profileLinkGroup {
+    margin-top: 10px;
+}
