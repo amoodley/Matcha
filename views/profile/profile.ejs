@@ -264,5 +264,28 @@
             });
         });
 
+        $('#blockUserButton').click(function (){
+            var username = document.getElementById('profileUsername').innerHTML;
+            var username = username.trim();
+            var viewername = document.getElementById('username').innerHTML;
+            var viewername = viewername.trim();
+            $.ajax({
+                url: "/blockUser",
+                type: "POST",
+                data: {
+                    'username': username,
+                    'viewername': viewername
+                },
+                success: (result) => {
+                    if (result == 'Success') {
+                        $("#blockUserModal").modal("hide");
+                    }
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            });
+        });
+
     </script>
     <% include ../partials/footer.ejs %>

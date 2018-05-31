@@ -124,6 +124,20 @@ router.get('/verifyMatch', (req, res) => {
 	res.send(matched);
 });
 
+// POST: Block User
+router.post('/blockUser', (req, res) => {
+	var username = req.body.username;
+	var viewername = req.body.viewername;
+	var user = users.getUserByUsername(username);
+	var viewer = users.getUserByUsername(viewername);
+	
+	var sql = 'INSERT INTO `blocked` (id, user_id, blocked_id) VALUES(?)';
+	var values = [null, viewer.id, user.id];
+	var result = db.query(sql, [values]);
+	
+	res.send('Success');
+});
+
 // GET: Suggestions
 router.get('/suggestions', (req, res) => {
 	var userId = users.isLoggedIn(req);
