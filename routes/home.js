@@ -23,9 +23,13 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Load Models
 const db = require('../database/db');
 const users = require('../models/users.js');
 const profiles = require('../models/profiles.js');
+
+// Load Helpers
+const sendMail = require('../helpers/sendMail');
 
 
 // GET: Home/Index
@@ -131,10 +135,27 @@ router.post('/blockUser', (req, res) => {
 	var user = users.getUserByUsername(username);
 	var viewer = users.getUserByUsername(viewername);
 	
-	var sql = 'INSERT INTO `blocked` (id, user_id, blocked_id) VALUES(?)';
-	var values = [null, viewer.id, user.id];
-	var result = db.query(sql, [values]);
+	var result = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + viewer.id +'\' AND blocked_id=\'' + user.id +'\'').data.rows[0];
+	if (!result) {
+		var sql = 'INSERT INTO `blocked` (id, user_id, blocked_id) VALUES(?)';
+		var values = [null, viewer.id, user.id];
+		var result = db.query(sql, [values]);
+	}
+	res.send('Success');
+});
+
+// POST: unblock User
+router.post('/unblockUser', (req, res) => {
+	var username = req.body.username;
+	var blockedUsername = req.body.blockedUser;
+	var user = users.getUserByUsername(username);
+	var blockedUser = users.getUserByUsername(blockedUsername);
 	
+	var rowId = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + user.id +'\' AND blocked_id=\'' + blockedUser.id +'\'').data.rows[0].id;
+	if (rowId) {
+		var sql = 'DELETE FROM `blocked` WHERE id=\'' + rowId +'\'';
+		var result = db.query(sql);
+	}
 	res.send('Success');
 });
 
@@ -143,6 +164,16 @@ router.get('/suggestions', (req, res) => {
 	var userId = users.isLoggedIn(req);
 	var suggestions = profiles.getSuggestions(userId);
 	res.send(suggestions);
+});
+
+// POST: Report User
+router.post('/reportUser', (req, res) => {
+	var username = req.body.username;
+	var viewername = req.body.viewername;
+	var user = users.getUserByUsername(username);
+	var viewer = users.getUserByUsername(viewername);
+	sendMail.report(username, viewername);
+	res.send('Success');
 });
 
 router.get('/message/:username', (req, res) => {

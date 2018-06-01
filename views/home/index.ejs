@@ -450,5 +450,13 @@
 		<script>
 			// Get the element with id="defaultOpen" and click on it
 			document.getElementById("suggestionsTab").click();
+
+			$(function () {
+				var socket = io.connect();
+
+				socket.on('new view', function (data) {
+					console.log(data);
+				});
+			});
 		</script>
 		<% include ../partials/footer.ejs %>

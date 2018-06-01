@@ -18,8 +18,6 @@ const home = require('./routes/home');
 const account = require('./routes/account');
 const profile = require('./routes/profile');
 
-var connections = [];
-
 // Create App
 const app = express();
 
@@ -55,40 +53,47 @@ app.use('/account', account);
 app.use('/profile', profile);
 
 
-io.sockets.on('connection', function(socket){
+var connections = [];
+
+io.sockets.on('connection', function (socket) {
   connections.push(socket);
   console.log('Connected: %s sockets connected', connections.length);
 
   // Disconnect
-  socket.on('disconnect', function(data){
-    connections.splice(connections.indexOf(socket), 1);
-    console.log('Disconnected: %s sockets', connections.length);
+  socket.on('disconnect', function (data) {
+      connections.splice(connections.indexOf(socket), 1);
+      console.log('Disconnected: %s sockets', connections.length);
   });
 
   // Send Message
-  socket.on('send message', function(data){
-    io.sockets.emit('new message', {msg: data.msg, username: data.username, recipient: data.recipient});
-    var chatResult = db.query('SELECT chat_id FROM chats WHERE user_id=\'' + data.username + '\' AND recipient_id=\'' + data.recipient + '\'').data.rows;
-    if (chatResult[0] == undefined) {
-      chatResult = db.query('SELECT chat_id FROM chats WHERE user_id=\'' + data.recipient + '\' AND recipient_id=\'' + data.username + '\'').data.rows;
+ socket.on('send message', function (data) {
+      io.sockets.emit('new message', { msg: data.msg, username: data.username, recipient: data.recipient });
+      var chatResult = db.query('SELECT chat_id FROM chats WHERE user_id=\'' + data.username + '\' AND recipient_id=\'' + data.recipient + '\'').data.rows;
       if (chatResult[0] == undefined) {
-        var sql = 'INSERT INTO `chats` (id, chat_id, user_id, recipient_id, message) VALUES(?)';
-        var values = [null, null, data.username, data.recipient, data.msg];
-        var chatId = db.query(sql, [values]).data.rows.insertId;
-        var result = db.query('UPDATE `chats` SET chat_id=\'' + chatId + '\' WHERE id=\'' + chatId + '\'');
+          chatResult = db.query('SELECT chat_id FROM chats WHERE user_id=\'' + data.recipient + '\' AND recipient_id=\'' + data.username + '\'').data.rows;
+          if (chatResult[0] == undefined) {
+              var sql = 'INSERT INTO `chats` (id, chat_id, user_id, recipient_id, message) VALUES(?)';
+              var values = [null, null, data.username, data.recipient, data.msg];
+              var chatId = db.query(sql, [values]).data.rows.insertId;
+              var result = db.query('UPDATE `chats` SET chat_id=\'' + chatId + '\' WHERE id=\'' + chatId + '\'');
+          } else {
+              var sql = 'INSERT INTO `chats` (id, chat_id, user_id, recipient_id, message) VALUES(?)';
+              var values = [null, null, data.username, data.recipient, data.msg];
+              var id = db.query(sql, [values]).data.rows.insertId;
+              var chatId = chatResult[0].chat_id;
+              var result = db.query('UPDATE `chats` SET chat_id=\'' + chatId + '\' WHERE id=\'' + id + '\'');
+          }
       } else {
-        var sql = 'INSERT INTO `chats` (id, chat_id, user_id, recipient_id, message) VALUES(?)';
-        var values = [null, null, data.username, data.recipient, data.msg];
-        var id = db.query(sql, [values]).data.rows.insertId;
-        var chatId = chatResult[0].chat_id;
-        var result = db.query('UPDATE `chats` SET chat_id=\'' + chatId + '\' WHERE id=\'' + id + '\'');
+          var sql = 'INSERT INTO `chats` (id, chat_id, user_id, recipient_id, message) VALUES(?)';
+          var values = [null, null, data.username, data.recipient, data.msg];
+          var id = db.query(sql, [values]).data.rows.insertId;
+          var chatId = chatResult[0].chat_id;
+          var result = db.query('UPDATE `chats` SET chat_id=\'' + chatId + '\' WHERE id=\'' + id + '\'');
       }
-    } else {
-        var sql = 'INSERT INTO `chats` (id, chat_id, user_id, recipient_id, message) VALUES(?)';
-        var values = [null, null, data.username, data.recipient, data.msg];
-        var id = db.query(sql, [values]).data.rows.insertId;
-        var chatId = chatResult[0].chat_id;
-        var result = db.query('UPDATE `chats` SET chat_id=\'' + chatId + '\' WHERE id=\'' + id + '\'');
-    }
+  });
+
+  socket.on('send view', function (data) {
+    console.log(data);
+    io.sockets.emit('new view', { viewer: data.viewername, user: data.username });
   });
 });

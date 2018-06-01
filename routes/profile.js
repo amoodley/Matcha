@@ -35,11 +35,20 @@ router.get('/edit', (req, res) => {
 		var birthday = profile.birthday;
 		birthday = birthday.substring(0, 10);
 		let ageFromString = new AgeFromDateString(birthday).age;
+		var result = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + userId +'\'').data.rows;
+		var blockedUsers = [];
+		result.forEach(element => {
+			var profile = profiles.getProfileById(element.blocked_id);
+			var user = users.getUserById(element.blocked_id);
+			profile.username = user.username;			
+			blockedUsers.push(profile);
+		});
 		res.render('profile/edit', {
 			title: 'Edit profile',
 			user: user,
 			profile: profile,
-			age: ageFromString
+			age: ageFromString,
+			blockedUsers: blockedUsers
 		});
 	} else {
 		res.redirect('/account/login');

@@ -7,6 +7,7 @@ let { AgeFromDateString, AgeFromDate } = require('age-calculator');
 
 const users = require('./users');
 
+
 exports.insertNewProfile = function (newProfile) {
     var sql = 'INSERT INTO `profiles` (id, user_id, first_name, last_name, birthday, city, gender, preference, bio, interests, profileimg, latitude, longitude, img1, img2, img3, img4, fame) VALUES(?)';
     var values = [null, newProfile.userId, newProfile.firstName, newProfile.lastName, newProfile.birthday, newProfile.city, newProfile.gender, newProfile.preference, newProfile.bio, newProfile.interests, null, null, null, null, null, null, null, null];
@@ -66,6 +67,10 @@ exports.searchProfiles = function (searchQuery) {
                         }
                     }
                     searchResult[i].commonTags = commonTags;
+                    var result = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + searchQuery.userId +'\' AND blocked_id=\'' + searchResult[i].user_id +'\'').data.rows[0];
+                    if (result) {
+                        searchResult.splice(i, 1);
+                    }
                 } else {
                     searchResult.splice(i, 1);
                 }
@@ -87,8 +92,8 @@ exports.updateFameRating = function (userId) {
 }
 
 exports.addToProfileViews = function (userId, viewerId) {
-    var sql = 'INSERT INTO `profile_views` (id, user_id, viewer_id) VALUES(?)';
-    var values = [null, userId, viewerId];
+    var sql = 'INSERT INTO `profile_views` (id, user_id, viewer_id, seen) VALUES(?)';
+    var values = [null, userId, viewerId, 0];
     var result = db.query(sql, [values]);
 
     return (result.data.rows.insertId);
@@ -123,7 +128,10 @@ exports.getViews = function (userId) {
             }
         }
         viewerProfile.commonTags = commonTags;
-        views.push(viewerProfile);
+        var isBlocked = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + userId +'\' AND blocked_id=\'' + viewerProfile.user_id +'\'').data.rows[0];
+        if (!isBlocked) {
+            views.push(viewerProfile);
+        }
     })
     return views;
 }
@@ -160,7 +168,10 @@ exports.getMatches = function (userId) {
         var sql = 'SELECT * FROM `likes` WHERE liker_id=\'' + userId + '\' AND user_id=\'' + user.id + '\'';
         var result = db.query(sql).data.rows;
         if (result[0] != undefined) {
-            matches.push(matchProfile);
+            var isBlocked = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + userId +'\' AND blocked_id=\'' + matchProfile.user_id +'\'').data.rows[0];
+            if (!isBlocked) {
+                matches.push(matchProfile);
+            }
         }
     })
     return matches;
@@ -209,7 +220,11 @@ exports.getLikes = function (userId) {
             }
         }
         likerProfile.commonTags = commonTags;
-        likes.push(likerProfile);
+        var isBlocked = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + userId +'\' AND blocked_id=\'' + likerProfile.user_id +'\'').data.rows[0];
+        if (!isBlocked) {
+            likes.push(likerProfile);
+        }
+        
     })
     return likes;
 }
@@ -252,7 +267,10 @@ exports.getSuggestions = function (userId) {
         suggestionProfile.commonTags = commonTags;
         suggestionProfile.age = new AgeFromDateString(suggestionBirthday).age;
         if (suggestionProfile.age > ageMin && suggestionProfile.age < ageMax) {
-            suggestions.push(suggestionProfile);
+            var result = db.query('SELECT * FROM `blocked` WHERE user_id=\'' + userId +'\' AND blocked_id=\'' + suggestionUser.id +'\'').data.rows[0];
+            if (!result) {
+                suggestions.push(suggestionProfile);
+            }
         }
     })
     return suggestions;

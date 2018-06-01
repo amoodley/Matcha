@@ -8,7 +8,7 @@
 					</div>
 					<div class="profileCardUsernameContainer text-center">
 						<h4 class="username">
-							<a href="/profile/<%= user.username %>" class="wordwrap">
+							<a href="/profile/<%= user.username %>" class="wordwrap" id="username">
 								<%= user.username %>
 							</a>
 						</h4>
@@ -221,7 +221,21 @@
 						<br>
 						<hr>
 					</div>
-					
+					<div>
+						<% blockedUsers.forEach(element => { %>
+							<div class="blockedUsers">
+								<img src="<%= element.profileimg %>" class="blockedUserImage pull-left">
+								<div class="blockedUsersName pull-left">
+									<h4>
+										<a href="/profile/<%= element.username %>"><%= element.username %></a>
+									</h4>
+								</div>
+								<div>
+									<button class="btn button pull-right unblockUserButton" id="<%= element.username %>" onclick="unblockUser('<%= element.username %>')">Unblock</button>
+								</div>
+							</div>
+						<% }); %>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -307,6 +321,28 @@
 				}
 			};
 			xhr.send(formData);
+		}
+
+		function unblockUser(blockedUser) {
+			var username = document.getElementById('username').innerHTML
+			var username = username.trim();
+
+			$.ajax({
+                url: "/unblockUser",
+                type: "POST",
+                data: {
+                    'username': username,
+                    'blockedUser': blockedUser
+                },
+                success: (result) => {
+                    if (result == 'Success') {
+                        document.getElementById(blockedUser).disabled = true;
+                    }
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            });
 		}
 
 	</script>

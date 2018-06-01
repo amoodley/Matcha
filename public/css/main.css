@@ -257,6 +257,7 @@ p, label {
     background-color: rgba(0,0,0, 0.9);
     margin: 0px -10px 30px -10px;
     padding: 10px;
+    overflow: hidden;
 }
 .panel {
     background-color: #000000;
@@ -700,4 +701,17 @@ body.loading .modalLoad {
 }
 .profileLinkGroup {
     margin-top: 10px;
+}
+.blockedUserImage {
+    height: 80px;
+}
+.blockedUsers {
+    width: 100%;
+    height: 80px;
+}
+.blockedUsersName {
+    margin: 20px 0px 20px 90px;
+}
+.unblockUserButton {
+    margin: 20px 0px 20px 0px;
 }

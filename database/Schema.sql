@@ -71,3 +71,10 @@ CREATE TABLE `chats` (
     `recipient_id` varchar(32) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB COLLATE utf8_general_ci;
+
+CREATE TABLE `blocked` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `user_id` varchar(32) DEFAULT NULL,
+    `blocked_id` varchar(32) DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB COLLATE utf8_general_ci;
